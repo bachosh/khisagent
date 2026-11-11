@@ -1,0 +1,269 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/breakpoints" as *;
+
+// Landing page and auth pages (layouts/public)
+.public {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    padding: 2rem 4rem;
+    max-width: 128rem;
+    width: 100%;
+    margin: 0 auto;
+
+    @include respond($bp-small) { padding: 1.6rem; }
+  }
+
+  &__nav-actions { display: flex; align-items: center; gap: 1rem; }
+
+  &__flash { max-width: 128rem; width: 100%; margin: 0 auto; padding: 0 4rem; display: grid; gap: .8rem; }
+
+  &__footer {
+    margin-top: auto;
+    padding: 3rem 4rem;
+    text-align: center;
+    font-size: 1.3rem;
+    color: var(--text-faint);
+  }
+}
+
+.landing-top {
+  padding-bottom: 4rem;
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, rgba(106, 77, 255, .35), transparent 70%),
+    radial-gradient(70rem 50rem at -10% 10%, rgba(61, 107, 255, .35), transparent 70%),
+    #0b1736;
+}
+
+.public--landing {
+  .public__nav { color: #fff; }
+  .public__nav .btn--ghost { --btn-color: #dfe6fb; --btn-hover: rgba(255, 255, 255, .08); }
+}
+
+.hero {
+  max-width: 128rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 6rem 4rem 4rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 5rem;
+  align-items: center;
+  color: #fff;
+
+  @include respond($bp-large) { grid-template-columns: minmax(0, 1fr); padding: 3rem 2rem; gap: 3rem; }
+
+  &__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .6rem 1.4rem;
+    border-radius: 99rem;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .14);
+    font-size: 1.3rem;
+    color: #cdd7f5;
+
+    svg { width: 1.6rem; height: 1.6rem; color: var(--accent); }
+  }
+
+  h1 {
+    margin-top: 2rem;
+    font-size: clamp(3.4rem, 5vw, 5.6rem);
+    line-height: 1.08;
+    font-weight: 750;
+    letter-spacing: -.035em;
+
+    em {
+      font-style: normal;
+      background: linear-gradient(90deg, #8fb0ff, #c3a8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  &__lead {
+    margin-top: 2rem;
+    max-width: 56rem;
+    font-size: 1.8rem;
+    line-height: 1.6;
+    color: #b9c6e8;
+  }
+
+  &__cta { display: flex; gap: 1.2rem; margin-top: 3.2rem; flex-wrap: wrap; }
+
+  &__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 3.2rem;
+    font-size: 1.35rem;
+    color: #9fb0d6;
+
+    span { display: inline-flex; align-items: center; gap: .7rem; }
+    svg { width: 1.8rem; height: 1.8rem; color: #6ee7a8; }
+  }
+}
+
+// Product preview card on the landing page (static mock of a report)
+.preview {
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 2rem;
+  box-shadow: 0 30px 80px rgba(3, 8, 25, .5);
+  border: 1px solid rgba(255, 255, 255, .1);
+  overflow: hidden;
+
+  &__bar {
+    display: flex;
+    gap: .6rem;
+    padding: 1.2rem 1.6rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+
+    i { width: 1rem; height: 1rem; border-radius: 50%; background: var(--border-strong); }
+  }
+
+  &__body { padding: 2.4rem; display: flex; flex-direction: column; gap: 2rem; }
+  &__top { display: flex; align-items: center; gap: 2rem; }
+  &__rows { display: flex; flex-direction: column; gap: 1rem; }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.1rem 1.4rem;
+    border-radius: $radius;
+    background: var(--surface-2);
+    font-size: 1.35rem;
+
+    svg { width: 2rem; height: 2rem; flex-shrink: 0; }
+    span { flex: 1; }
+  }
+}
+
+.features {
+  max-width: 128rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+
+  @include respond($bp-large) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include respond($bp-medium) { grid-template-columns: minmax(0, 1fr); padding: 2rem; }
+}
+
+.feature {
+  padding: 2.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  box-shadow: var(--shadow-sm);
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 1.2rem;
+    background: var(--primary-soft);
+    color: var(--primary);
+    margin-bottom: 1.6rem;
+
+    svg { width: 2.4rem; height: 2.4rem; }
+  }
+
+  h3 { font-size: 1.75rem; }
+  p { margin-top: .8rem; font-size: 1.45rem; color: var(--text-muted); }
+}
+
+// Auth pages: form on the left, brand panel on the right
+.auth {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  @include respond($bp-medium) { grid-template-columns: minmax(0, 1fr); }
+
+  &__form-side {
+    display: flex;
+    flex-direction: column;
+    padding: 3.2rem 4rem;
+
+    @include respond($bp-small) { padding: 2rem 1.6rem; }
+  }
+
+  &__top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+
+  &__box {
+    width: 100%;
+    max-width: 42rem;
+    margin: auto;
+    padding: 4rem 0;
+  }
+
+  h1 { font-size: 3rem; font-weight: 750; letter-spacing: -.025em; }
+  &__lead { margin-top: .6rem; margin-bottom: 3rem; color: var(--text-muted); font-size: 1.5rem; }
+
+  &__switch {
+    margin-top: 2.4rem;
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    a { color: var(--primary); font-weight: 600; }
+  }
+
+  &__brand-side {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+    padding: 6rem;
+    color: #fff;
+    overflow: hidden;
+    background:
+      radial-gradient(50rem 40rem at 100% 0%, rgba(106, 77, 255, .45), transparent 70%),
+      radial-gradient(50rem 40rem at 0% 100%, rgba(61, 107, 255, .4), transparent 70%),
+      #0b1736;
+
+    @include respond($bp-medium) { display: none; }
+
+    h2 { font-size: 3.2rem; line-height: 1.2; letter-spacing: -.02em; max-width: 48rem; }
+    p { color: #b9c6e8; font-size: 1.6rem; max-width: 48rem; }
+  }
+
+  &__points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    font-size: 1.5rem;
+    color: #dfe6fb;
+
+    li { display: flex; gap: 1.2rem; align-items: center; }
+
+    svg {
+      width: 3.6rem;
+      height: 3.6rem;
+      padding: .8rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, .08);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+  }
+}

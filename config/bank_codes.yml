@@ -1,0 +1,106 @@
+# Card operation codes used to classify bank statement operations for credit risk analysis.
+# Source: the risk team's notes in tmp/bankcodes (კოდები.odt, კოდები2.docx), based on the
+# Mastercard MCC Quick Reference Booklet and Visa documentation.
+#
+# Two-stage approach from those notes:
+#   I.  every operation gets a category and one of the `groups` below (Transaction Classification);
+#   II. the risk indicators are computed from the groups (Financial Risk Indicators).
+# A single operation is never proof of insolvency, and MCC describes the merchant's business,
+# not necessarily what was bought (MCC 6051 alone does not prove a crypto purchase).
+#
+# To add a code: put it under `mcc` (or `processing_codes`) with a category from `categories`.
+
+# Stage I classes
+groups:
+  income: { ka: "შემოსავალი", en: "Income" }
+  essential: { ka: "აუცილებელი ხარჯი", en: "Essential expense" }
+  discretionary: { ka: "დისკრეციული ხარჯი", en: "Discretionary expense" }
+  loan_payment: { ka: "სესხის გადახდა", en: "Loan payment" }
+  transfer: { ka: "გადარიცხვა", en: "Transfer" }
+  cash_withdrawal: { ka: "ნაღდის გატანა", en: "Cash withdrawal" }
+  investment: { ka: "ინვესტიცია", en: "Investment" }
+  gambling: { ka: "აზარტული თამაშები", en: "Gambling" }
+  unknown: { ka: "დაუდგენელი", en: "Unknown" }
+
+# category => stage I group (risky: shown as a risk signal)
+categories:
+  salary: { group: income }
+  pension_social: { group: income }
+  transfer_in: { group: transfer }
+  cash_deposit: { group: transfer }
+  account_funding: { group: transfer }
+  money_transfer: { group: transfer }
+  p2p_transfer_out: { group: transfer }
+  refund: { group: transfer }
+  loan_disbursement: { group: transfer }
+  groceries: { group: essential }
+  fast_food: { group: essential }
+  fuel: { group: essential }
+  utilities: { group: essential }
+  telecom: { group: essential }
+  rent: { group: essential }
+  tax: { group: essential }
+  insurance: { group: essential }
+  restaurants: { group: discretionary }
+  card_purchase: { group: discretionary }
+  cash_withdrawal: { group: cash_withdrawal }
+  loan_repayment: { group: loan_payment }
+  financial_institution: { group: loan_payment }
+  pawn_shop: { group: loan_payment, risky: true }
+  securities: { group: investment }
+  quasi_cash: { group: investment, risky: true }
+  crypto: { group: investment, risky: true }
+  gambling: { group: gambling, risky: true }
+  fees_penalties: { group: essential, risky: true }
+  overdraft_fee: { group: essential, risky: true }
+  returned_payment: { group: unknown, risky: true }
+  other: { group: unknown }
+
+# Merchant Category Codes. Ranges are written as "7800-7802".
+mcc:
+  "5411": { category: groceries, ka: "სუპერმარკეტები", en: "Supermarkets", use: "ყოველდღიური ხარჯები" }
+  "5812": { category: restaurants, ka: "რესტორნები", en: "Restaurants", use: "დისკრეციული ხარჯები" }
+  "5814": { category: fast_food, ka: "სწრაფი კვება", en: "Fast food", use: "ყოველდღიური ხარჯები" }
+  "5541": { category: fuel, ka: "ბენზინგასამართი სადგურები", en: "Service stations", use: "ტრანსპორტის ხარჯები" }
+  "4900": { category: utilities, ka: "კომუნალური მომსახურება", en: "Utilities", use: "რეგულარული ვალდებულებები" }
+  "4814": { category: telecom, ka: "ტელეკომუნიკაციები", en: "Telecommunications", use: "რეგულარული ხარჯები" }
+  "6011": { category: cash_withdrawal, ka: "ATM-ით ნაღდი ფულის გაცემა", en: "ATM cash disbursement", use: "ნაღდი ფულის გამოყენების სიხშირე" }
+  "6012": { category: financial_institution, ka: "ფინანსური ინსტიტუტების მომსახურება", en: "Financial institutions", use: "შესაძლო სასესხო ვალდებულებები" }
+  "6051": { category: quasi_cash, ka: "Quasi-cash ოპერაციები", en: "Quasi-cash", use: "აქტივებთან დაკავშირებული ტრანზაქციები; კრიპტო მხოლოდ Merchant Name-ით დასტურდება" }
+  "6211": { category: securities, ka: "ფასიანი ქაღალდების ბროკერები", en: "Securities brokers", use: "საინვესტიციო აქტივობა" }
+  "7995": { category: gambling, ka: "ფსონები და აზარტული თამაშები", en: "Betting and gambling", use: "მაღალი რისკის ქცევის ინდიკატორი" }
+  "7800-7802": { category: gambling, ka: "აზარტული თამაშები (ლატარია, დოღი)", en: "Gambling (lottery, horse racing)", use: "მაღალი რისკის ქცევის ინდიკატორი" }
+  "9406": { category: gambling, ka: "სახელმწიფო ლატარია", en: "Government lotteries", use: "მაღალი რისკის ქცევის ინდიკატორი" }
+  "5933": { category: pawn_shop, ka: "ლომბარდები", en: "Pawn shops", use: "მოკლევადიანი ლიკვიდობის საჭიროება" }
+  "4829": { category: money_transfer, ka: "ფულადი გადარიცხვების მომსახურება", en: "Money transfers", use: "გადარიცხვების ხასიათის დადგენა" }
+  "6540": { category: account_funding, ka: "ანგარიშის დაფინანსების ოპერაციები", en: "Account funding", use: "საკუთარი ანგარიშებისა და საფულეების გადარიცხვები" }
+
+# ISO 8583 Processing Code (DE 3): the first two digits give the operation type.
+# Values can differ by network and processor; check them against the bank's interface.
+processing_codes:
+  "00": { category: card_purchase, ka: "შესყიდვა", en: "Purchase" }
+  "01": { category: cash_withdrawal, ka: "ნაღდი ფულის გატანა", en: "Cash withdrawal" }
+  "09": { category: card_purchase, ka: "შენაძენი თანხის განაღდებით", en: "Purchase with cashback" }
+  "10": { category: account_funding, ka: "ანგარიშის/საფულის დაფინანსება", en: "Account funding transaction" }
+  "20": { category: refund, ka: "დაბრუნებული თანხა", en: "Refund" }
+  "21": { category: cash_deposit, ka: "თანხის შეტანა", en: "Deposit" }
+  "26": { category: transfer_in, ka: "შემომავალი Visa OCT", en: "Incoming Visa OCT" }
+  "28": { category: transfer_in, ka: "შემომავალი Mastercard გადარიცხვა", en: "Incoming Mastercard payment" }
+
+# Stage II indicators, as listed in the notes. The agent reports on each of them.
+indicators:
+  avg_monthly_income: "საშუალო თვიური შემოსავალი — გადახდისუნარიანობის საფუძველი"
+  income_variation: "შემოსავლის ვარიაცია — შემოსავლის სტაბილურობა"
+  avg_monthly_expense: "საშუალო თვიური ხარჯი — ხარჯების დონე"
+  avg_free_cash_flow: "საშუალო თავისუფალი ფულადი ნაკადი — სესხის მომსახურების პოტენციალი"
+  gambling_per_month: "აზარტულ თამაშებზე ხარჯი — დამატებითი შესწავლის ინდიკატორი"
+  cash_withdrawals_per_month: "ATM განაღდებები — ხარჯების ხილვადობა"
+  financial_payments_per_month: "ფინანსური ორგანიზაციების გადახდები — შესაძლო სასესხო ტვირთი"
+  min_monthly_balance: "თვის მინიმალური ნაშთი — ლიკვიდობის შესაძლო პრობლემა"
+
+# Changes over time that justify a deeper check (notes, section 3A)
+warning_trends:
+  - "აზარტულ თამაშებზე დანახარჯის მნიშვნელოვანი ზრდა"
+  - "ხელფასის ჩარიცხვიდან რამდენიმე დღეში ანგარიშზე თანხა თითქმის აღარ რჩება"
+  - "ნაღდი ფულის განაღდების სიხშირის ზრდა"
+  - "ახალი რეგულარული გადახდები რამდენიმე საფინანსო ორგანიზაციაში"

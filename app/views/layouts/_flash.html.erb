@@ -1,0 +1,10 @@
+<% flash.each do |name, msg| %>
+  <% next unless msg.is_a?(String) %>
+  <div class="flash-message flash-message--<%= name %>" data-controller="flash">
+    <%= svg_icon(name.to_s.in?(%w[ alert danger ]) ? "exclamation-triangle" : "check-circle") %>
+    <div><%= msg %></div>
+    <button type="button" class="flash-message__close" data-action="click->flash#close" aria-label="<%= t("app.close") %>">
+      <%= svg_icon("x-mark") %>
+    </button>
+  </div>
+<% end %>

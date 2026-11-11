@@ -1,0 +1,68 @@
+@use "../abstracts/variables" as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .3rem 1rem;
+  border-radius: 99rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  background: var(--surface-3);
+  color: var(--text-muted);
+
+  svg { width: 1.4rem; height: 1.4rem; }
+
+  &--dot::before {
+    content: "";
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  &--low { background: color-mix(in srgb, var(--risk-low) 14%, transparent); color: var(--risk-low); }
+  &--medium { background: color-mix(in srgb, var(--risk-medium) 16%, transparent); color: var(--warning); }
+  &--high { background: color-mix(in srgb, var(--risk-high) 14%, transparent); color: var(--risk-high); }
+  &--critical { background: color-mix(in srgb, var(--risk-critical) 14%, transparent); color: var(--risk-critical); }
+  &--info { background: var(--info-soft); color: var(--info); }
+
+  &--success { background: var(--success-soft); color: var(--success); }
+  &--danger { background: var(--danger-soft); color: var(--danger); }
+  &--processing { background: var(--primary-soft); color: var(--primary); }
+  &--muted { background: var(--surface-3); color: var(--text-muted); }
+
+  &--outline { background: transparent; border: 1px solid var(--border); }
+}
+
+// Recommendation pill (approve / decline ...)
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .7rem 1.4rem;
+  border-radius: $radius;
+  font-weight: 650;
+  font-size: 1.45rem;
+
+  svg { width: 2rem; height: 2rem; }
+
+  &--approve { background: var(--success-soft); color: var(--success); }
+  &--approve_with_conditions { background: var(--info-soft); color: var(--info); }
+  &--manual_review { background: var(--warning-soft); color: var(--warning); }
+  &--decline { background: var(--danger-soft); color: var(--danger); }
+}
+
+.spinner {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: .2rem solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }

@@ -1,0 +1,62 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/breakpoints" as *;
+
+.main-header {
+  grid-area: main-header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+  padding: 2.4rem 3.2rem 1.6rem;
+
+  @include respond($bp-small) { padding: 1.6rem 1.6rem 1.2rem; }
+
+  &__titles { min-width: 0; }
+
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-faint);
+    margin-bottom: .4rem;
+
+    a:hover { color: var(--primary); }
+    svg { width: 1.4rem; height: 1.4rem; }
+  }
+
+  &__title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    overflow-wrap: anywhere;
+
+    @include respond($bp-small) { font-size: 2.1rem; }
+  }
+
+  &__subtitle {
+    margin-top: .3rem;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+  }
+
+  &__actions {
+    display: flex;
+    gap: .8rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  // Compact variant for the chat page
+  &--chat {
+    padding: 1.2rem 2.4rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+
+    .main-header__title { font-size: 1.8rem; }
+
+    @include respond($bp-small) { padding: 1rem 1.4rem; }
+  }
+}

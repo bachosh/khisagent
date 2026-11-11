@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <title><%= [ content_for(:title), t("app.name") ].compact.join(" · ") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="application-name" content="<%= t("app.name") %>">
+    <meta name="theme-color" content="#0b1736">
+    <meta name="description" content="<%= t("landing.meta_description") %>">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="public <%= content_for(:public_class) %>">
+      <%= yield %>
+    </div>
+  </body>
+</html>

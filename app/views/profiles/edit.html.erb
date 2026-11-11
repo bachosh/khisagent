@@ -1,0 +1,58 @@
+<% content_for :title, t("nav.profile") %>
+
+<header class="main-header">
+  <div class="main-header__titles">
+    <h1 class="main-header__title"><%= t("profile.title") %></h1>
+    <p class="main-header__subtitle"><%= @user.email_address %></p>
+  </div>
+</header>
+
+<main class="main-content-narrow">
+  <%= form_with model: @user, url: profile_path, method: :patch, class: "form" do |form| %>
+    <% if @user.errors.any? %>
+      <div class="form-errors"><ul><% @user.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul></div>
+    <% end %>
+
+    <section class="card">
+      <div class="card__header"><h2 class="card__title"><%= svg_icon("user-circle") %> <%= t("profile.details") %></h2></div>
+      <div class="card__body form">
+        <div class="form__row">
+          <div class="field">
+            <%= form.label :name, t("auth.name"), class: "field__label" %>
+            <%= form.text_field :name, required: true, class: "input" %>
+          </div>
+          <div class="field">
+            <%= form.label :company, t("auth.company"), class: "field__label" %>
+            <%= form.text_field :company, class: "input" %>
+          </div>
+        </div>
+        <div class="field">
+          <%= form.label :locale, t("profile.language"), class: "field__label" %>
+          <%= form.select :locale, User::LOCALES.map { |l| [ t("app.locales.#{l}"), l ] }, {}, class: "select" %>
+          <span class="field__hint"><%= t("profile.language_hint") %></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card__header"><h2 class="card__title"><%= svg_icon("key") %> <%= t("profile.password") %></h2></div>
+      <div class="card__body form">
+        <div class="form__row">
+          <div class="field">
+            <%= form.label :password, t("auth.new_password"), class: "field__label" %>
+            <%= form.password_field :password, autocomplete: "new-password", class: "input", minlength: 8, maxlength: 72 %>
+          </div>
+          <div class="field">
+            <%= form.label :password_confirmation, t("auth.password_confirmation"), class: "field__label" %>
+            <%= form.password_field :password_confirmation, autocomplete: "new-password", class: "input", maxlength: 72 %>
+          </div>
+        </div>
+        <span class="field__hint"><%= t("profile.password_hint") %></span>
+      </div>
+    </section>
+
+    <div class="form__actions">
+      <%= form.button t("app.save"), class: "btn btn--primary" %>
+    </div>
+  <% end %>
+</main>

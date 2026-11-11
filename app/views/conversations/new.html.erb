@@ -1,0 +1,27 @@
+<% content_for :title, t("nav.new_analysis") %>
+<% content_for :body_class, "page-chat" %>
+
+<main class="main-content-chat">
+  <div class="chat__scroll">
+    <div class="chat-welcome">
+      <div class="chat-welcome__mark"><%= svg_icon("sparkles") %></div>
+      <h2><%= t("chat.welcome_title", name: current_user.first_name) %></h2>
+      <p><%= t("chat.welcome_lead") %></p>
+
+      <div class="dropzone" data-controller="dropzone" data-action="click->dropzone#open" role="button" tabindex="0">
+        <div class="dropzone__icon"><%= svg_icon("arrow-up-tray") %></div>
+        <strong><%= t("chat.drop_title") %></strong>
+        <span><%= t("chat.drop_hint", max: Statement::MAX_FILE_SIZE / 1.megabyte) %></span>
+        <div class="formats">
+          <% %w[ CSV XLSX XLS PDF JPG PNG ].each do |format| %>
+            <span class="badge badge--outline"><%= format %></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat__footer">
+    <%= render "messages/composer", conversation: nil, suggestions: true %>
+  </div>
+</main>

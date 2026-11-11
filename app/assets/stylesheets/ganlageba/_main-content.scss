@@ -1,0 +1,30 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/breakpoints" as *;
+
+.main-content-root {
+  grid-area: main-content;
+  width: 100%;
+  max-width: 140rem;
+  padding: 0 3.2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  min-width: 0;
+
+  @include respond($bp-small) { padding: 0 1.6rem 3rem; gap: 1.6rem; }
+}
+
+.main-content-narrow {
+  @extend .main-content-root;
+  max-width: 80rem;
+}
+
+// Chat fills the remaining height; the message list scrolls inside it
+.main-content-chat {
+  grid-area: main-content;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}

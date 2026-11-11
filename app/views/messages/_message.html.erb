@@ -1,0 +1,58 @@
+<% user = message.conversation.user %>
+<div id="<%= dom_id(message) %>" class="message message--<%= message.role %>">
+  <% if message.user? %>
+    <span class="avatar avatar--user" aria-hidden="true"><%= user.initials %></span>
+  <% else %>
+    <span class="avatar avatar--assistant" aria-hidden="true"><%= svg_icon("sparkles") %></span>
+  <% end %>
+
+  <div class="message__body">
+    <div class="message__meta">
+      <strong><%= message.user? ? user.first_name : t("app.name") %></strong>
+      <time datetime="<%= message.created_at.iso8601 %>"><%= l(message.created_at, format: :time_only) %></time>
+    </div>
+
+    <% if message.user? %>
+      <% if message.content.present? %>
+        <div class="message__bubble"><%= message.content %></div>
+      <% end %>
+      <% if message.statements.any? %>
+        <div class="message__files">
+          <% message.statements.each do |statement| %>
+            <%= render "statements/statement", statement: statement %>
+          <% end %>
+        </div>
+      <% end %>
+
+    <% elsif message.pending? %>
+      <div class="thinking">
+        <span class="thinking__dots"><span></span><span></span><span></span></span>
+        <span>
+          <% if message.progress == "waiting_for_files" %>
+            <%= t("chat.waiting_for_files") %>
+          <% elsif message.progress.present? %>
+            <%= tool_label(message.progress) %>
+          <% else %>
+            <%= t("chat.thinking") %>
+          <% end %>
+        </span>
+      </div>
+
+    <% elsif message.failed? %>
+      <div class="message__failed"><%= svg_icon("exclamation-triangle") %> <span><%= message.content %></span></div>
+
+    <% else %>
+      <div class="prose"><%= markdown(message.content) %></div>
+      <% if message.tool_steps.any? %>
+        <div class="message__steps">
+          <% message.tool_steps.uniq.each do |step| %>
+            <span class="badge badge--outline"><%= svg_icon("bolt") %> <%= tool_label(step) %></span>
+          <% end %>
+          <% if message.duration_ms %>
+            <span class="message__footer-note"><%= t("chat.took", seconds: (message.duration_ms / 1000.0).round(1)) %></span>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

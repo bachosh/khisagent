@@ -1,0 +1,319 @@
+<% content_for :title, @statement.account_holder.presence || @statement.filename %>
+<% currency = @statement.display_currency %>
+<% ind = @metrics&.dig("indicators") || {} %>
+
+<header class="main-header">
+  <div class="main-header__titles">
+    <div class="main-header__eyebrow">
+      <%= link_to statements_path do %><%= t("nav.reports") %><% end %>
+      <%= svg_icon("chevron-right") %>
+      <span><%= @statement.filename %></span>
+    </div>
+    <h1 class="main-header__title"><%= @statement.account_holder.presence || @statement.filename %></h1>
+    <p class="main-header__subtitle">
+      <%= [ @statement.bank_name, @statement.account_number, @statement.period_label,
+            t("statements.operations_count", count: @statement.operations_count) ].compact_blank.join(" · ") %>
+    </p>
+  </div>
+  <div class="main-header__actions">
+    <%= link_to conversation_path(@statement.conversation), class: "btn" do %>
+      <%= svg_icon("chat-bubble-left-right") %> <%= t("report.ask") %>
+    <% end %>
+    <button type="button" class="btn" onclick="window.print()"><%= svg_icon("arrow-down-tray") %> <%= t("report.print") %></button>
+    <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+      <summary class="btn btn--icon" aria-label="<%= t("app.more") %>"><%= svg_icon("ellipsis-horizontal") %></summary>
+      <div class="menu__panel">
+        <%= link_to download_statement_path(@statement), class: "menu__item", data: { turbo: false } do %>
+          <%= svg_icon("document-text") %> <%= t("report.download_original") %>
+        <% end %>
+        <%= button_to reanalyze_statement_path(@statement), class: "menu__item" do %>
+          <%= svg_icon("arrow-path") %> <%= t("report.reanalyze") %>
+        <% end %>
+        <%= button_to statement_path(@statement), method: :delete, class: "menu__item menu__item--danger",
+              form: { data: { turbo_confirm: t("statements.delete_confirm") } } do %>
+          <%= svg_icon("trash") %> <%= t("statements.delete") %>
+        <% end %>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main class="main-content-root">
+  <% if @report.nil? %>
+    <div class="card">
+      <div class="empty-state">
+        <div class="empty-state__icon"><%= svg_icon(@statement.failed? ? "exclamation-triangle" : "cpu-chip") %></div>
+        <h3><%= @statement.failed? ? t("statements.status.failed") : t("report.not_ready") %></h3>
+        <p><%= @statement.error.presence || @statement.progress.presence || t("report.not_ready_text") %></p>
+        <%= link_to t("report.back_to_chat"), conversation_path(@statement.conversation), class: "btn btn--primary" %>
+      </div>
+    </div>
+  <% else %>
+    <%# Score %>
+    <section class="card score-hero">
+      <div class="gauge gauge--<%= @report.risk_level %>" style="--value: <%= @report.risk_score %>" role="img"
+           aria-label="<%= t("report.score_aria", score: @report.risk_score, level: t("risk_levels.#{@report.risk_level}")) %>">
+        <div class="gauge__inner">
+          <span class="gauge__value"><%= @report.risk_score %></span>
+          <span class="gauge__max"><%= t("report.of_100") %></span>
+          <%= risk_badge(@report.risk_level) %>
+        </div>
+      </div>
+      <div class="score-hero__text">
+        <span class="verdict verdict--<%= @report.recommendation %>">
+          <%= svg_icon(recommendation_icon(@report.recommendation)) %> <%= t("recommendations.#{@report.recommendation}") %>
+        </span>
+        <p class="score-hero__summary"><%= @report.summary %></p>
+        <div class="report-meta">
+          <span><%= svg_icon("cpu-chip") %> <%= @report.model %></span>
+          <span><%= svg_icon("clock") %> <%= l(@report.updated_at, format: :short) %></span>
+          <% if @report.duration_ms %><span><%= svg_icon("bolt") %> <%= t("report.duration", seconds: (@report.duration_ms / 1000.0).round) %></span><% end %>
+          <span><%= svg_icon("information-circle") %> <%= t("report.decision_support") %></span>
+        </div>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @metrics %>
+    <%# Stage II indicators %>
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><%= svg_icon("scale") %> <%= t("report.indicators") %></h2>
+        <span class="card__subtitle"><%= t("report.per_month") %></span>
+      </div>
+      <dl class="indicators">
+        <div><dt><%= t("indicators.avg_monthly_income") %></dt><dd><%= money(ind["avg_monthly_income"], currency, precision: 0) %><small><%= t("indicators.income_months", count: ind["income_months"].to_i, total: @metrics.dig("overview", "months_covered").to_i) %></small></dd></div>
+        <div><dt><%= t("indicators.income_variation_pct") %></dt><dd><%= percent(ind["income_variation_pct"]) %><small><%= t("indicators.income_variation_hint") %></small></dd></div>
+        <div><dt><%= t("indicators.avg_monthly_expense") %></dt><dd><%= money(ind["avg_monthly_expense"], currency, precision: 0) %></dd></div>
+        <div><dt><%= t("indicators.avg_free_cash_flow") %></dt><dd class="<%= "text-in" if ind["avg_free_cash_flow"].to_f.positive? %>" style="<%= "color: var(--danger)" if ind["avg_free_cash_flow"].to_f.negative? %>"><%= money(ind["avg_free_cash_flow"], currency, precision: 0) %></dd></div>
+        <div><dt><%= t("indicators.financial_payments_per_month") %></dt><dd><%= money(ind["financial_payments_per_month"], currency, precision: 0) %><small><%= t("indicators.debt_service_ratio_pct") %>: <%= percent(ind["debt_service_ratio_pct"]) %></small></dd></div>
+        <div><dt><%= t("indicators.gambling_per_month") %></dt><dd style="<%= "color: var(--risk-high)" if ind["gambling_per_month"].to_f.positive? %>"><%= money(ind["gambling_per_month"], currency, precision: 0) %></dd></div>
+        <div><dt><%= t("indicators.cash_withdrawals_per_month") %></dt><dd><%= money(ind["cash_withdrawals_per_month"], currency, precision: 0) %><small><%= t("indicators.times_per_month", count: ind["cash_withdrawal_count_per_month"]) %></small></dd></div>
+        <div><dt><%= t("indicators.min_monthly_balance") %></dt><dd><%= money(ind["min_monthly_balance"], currency, precision: 0) %></dd></div>
+      </dl>
+    </section>
+  <% end %>
+
+  <% if @report %>
+    <div class="grid grid--main-side">
+      <section class="card">
+        <div class="card__header">
+          <h2 class="card__title"><%= svg_icon("shield-exclamation") %> <%= t("report.findings") %></h2>
+          <span class="card__subtitle"><%= @report.findings.size %></span>
+        </div>
+        <% if @report.findings.any? %>
+          <% evidence = @statement.operations.where(position: @report.findings.flat_map { |f| f["evidence"] }).index_by(&:position) %>
+          <ul class="findings">
+            <% @report.sorted_findings.each do |finding| %>
+              <li class="finding finding--<%= finding["severity"] %>">
+                <span class="finding__icon"><%= svg_icon(finding["severity"].in?(%w[ high critical ]) ? "exclamation-triangle" : "information-circle") %></span>
+                <div>
+                  <div class="finding__head">
+                    <span class="finding__title"><%= finding["title"] %></span>
+                    <%= risk_badge(finding["severity"] == "info" ? nil : finding["severity"], label: t("severities.#{finding["severity"]}")) %>
+                  </div>
+                  <p class="finding__text"><%= finding["description"] %></p>
+                  <% ops = Array(finding["evidence"]).filter_map { |id| evidence[id] } %>
+                  <% if ops.any? %>
+                    <div class="finding__evidence">
+                      <% ops.each do |op| %>
+                        <div class="finding__op">
+                          <span class="faint mono">#<%= op.position %></span>
+                          <span class="muted finding__op-date"><%= short_date(op.booked_on) %></span>
+                          <span title="<%= op.description %>"><%= op.counterparty.presence || op.description %></span>
+                          <span class="mono <%= op.incoming? ? "text-in" : "" %>"><%= signed_money(op.amount) %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <div class="card__body muted"><%= t("report.no_findings") %></div>
+        <% end %>
+      </section>
+
+      <div style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+        <% if @report.strengths.any? %>
+          <section class="card">
+            <div class="card__header"><h2 class="card__title"><%= svg_icon("check-circle") %> <%= t("report.strengths") %></h2></div>
+            <div class="card__body">
+              <ul class="strengths">
+                <% @report.strengths.each do |s| %><li><%= svg_icon("check-circle") %><span><%= s %></span></li><% end %>
+              </ul>
+            </div>
+          </section>
+        <% end %>
+
+        <% score = @metrics&.dig("indicator_score") %>
+        <% if score %>
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title"><%= svg_icon("list-bullet") %> <%= t("report.rule_score") %></h2>
+              <span class="badge badge--outline"><%= score["score"] %> / 100</span>
+            </div>
+            <div class="card__body">
+              <% if score["factors"].any? %>
+                <ul class="factor-list">
+                  <% score["factors"].each do |f| %>
+                    <li><span><%= t("factors.#{f["factor"]}", default: f["factor"].humanize) %></span><b>+<%= f["points"] %></b></li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="muted"><%= t("report.no_factors") %></p>
+              <% end %>
+              <p class="faint" style="margin-top:1.4rem;font-size:1.25rem"><%= t("report.rule_score_hint") %></p>
+            </div>
+          </section>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @metrics && @metrics["monthly"].present? %>
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><%= svg_icon("presentation-chart-line") %> <%= t("report.cashflow") %></h2>
+        <span class="card__subtitle"><%= currency %></span>
+      </div>
+      <div class="card__body">
+        <%= render "statements/cashflow_chart", metrics: @metrics, currency: currency %>
+      </div>
+      <div class="table-wrap" style="border-top:1px solid var(--border)">
+        <table class="table table--compact">
+          <thead>
+            <tr>
+              <th><%= t("report.month") %></th>
+              <th class="text-right"><%= t("report.incoming") %></th>
+              <th class="text-right"><%= t("indicators.income") %></th>
+              <th class="text-right"><%= t("report.outgoing") %></th>
+              <th class="text-right"><%= t("report.loan_payments") %></th>
+              <th class="text-right"><%= t("report.gambling") %></th>
+              <th class="text-right"><%= t("report.atm") %></th>
+              <th class="text-right"><%= t("report.min_balance") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @metrics["monthly"].each do |m| %>
+              <tr>
+                <td class="nowrap"><%= l(Date.parse("#{m["month"]}-01"), format: :month_year) rescue m["month"] %></td>
+                <td class="num text-in"><%= money(m["incoming"], nil, precision: 0) %></td>
+                <td class="num"><%= money(m["income"], nil, precision: 0) %></td>
+                <td class="num"><%= money(m["outgoing"], nil, precision: 0) %></td>
+                <td class="num"><%= money(m["loan_payments"], nil, precision: 0) %></td>
+                <td class="num" style="<%= "color: var(--risk-high)" if m["gambling"].to_f.positive? %>"><%= money(m["gambling"], nil, precision: 0) %></td>
+                <td class="num"><%= money(m["cash_withdrawals"], nil, precision: 0) %> <span class="faint">(<%= m["cash_withdrawal_count"] %>)</span></td>
+                <td class="num"><%= money(m["min_balance"], nil, precision: 0) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid grid--2">
+      <section class="card viz">
+        <div class="card__header">
+          <h2 class="card__title"><%= svg_icon("chart-bar") %> <%= t("report.by_group") %></h2>
+          <span class="card__subtitle"><%= t("report.outgoing") %></span>
+        </div>
+        <div class="card__body">
+          <% groups = @metrics["groups"].select { |_, v| v["out"].to_f.positive? }.sort_by { |_, v| -v["out"].to_f } %>
+          <% max_out = groups.map { |_, v| v["out"].to_f }.max.to_f %>
+          <ul class="hbars">
+            <% groups.each do |group, v| %>
+              <li class="<%= "is-risky" if group.in?(%w[ gambling ]) %>">
+                <span class="hbars__label"><%= group_label(group) %> <span class="faint">· <%= v["count"] %></span></span>
+                <span class="hbars__value"><%= money(v["out"], currency, precision: 0) %></span>
+                <span class="hbars__track"><span class="hbars__fill" style="display:block;width: <%= max_out.positive? ? (v["out"].to_f / max_out * 100).round(2) : 0 %>%"></span></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <h2 class="card__title"><%= svg_icon("building-library") %> <%= t("report.lenders") %></h2>
+        </div>
+        <% lenders = @metrics["financial_counterparties"].to_a %>
+        <% if lenders.any? %>
+          <div class="table-wrap">
+            <table class="table table--compact">
+              <thead><tr><th><%= t("report.payee") %></th><th class="text-right"><%= t("report.payments") %></th><th class="text-right"><%= t("report.total") %></th><th><%= t("report.active") %></th></tr></thead>
+              <tbody>
+                <% lenders.first(12).each do |c| %>
+                  <tr>
+                    <td class="table__primary"><%= c["name"] %></td>
+                    <td class="num"><%= c["payments"] %></td>
+                    <td class="num"><%= money(c["total"], nil, precision: 0) %></td>
+                    <td class="muted nowrap"><%= [ c["first_month"], c["last_month"] ].uniq.join(" – ") %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="card__body muted"><%= t("report.no_lenders") %></div>
+        <% end %>
+      </section>
+    </div>
+  <% end %>
+
+  <% if @statement.operations_count.positive? %>
+    <section class="card" data-controller="table-search" id="operations">
+      <div class="card__header" style="flex-wrap:wrap">
+        <h2 class="card__title"><%= svg_icon("table-cells") %> <%= t("report.operations") %>
+          <span class="card__subtitle"><span data-table-search-target="count"><%= @operations.size %></span></span>
+        </h2>
+        <div class="toolbar" style="flex:1;justify-content:flex-end">
+          <nav class="segmented">
+            <%= link_to t("statements.all"), statement_path(@statement, anchor: "operations"), class: ("is-active" if params[:group].blank? && params[:risky].blank?) %>
+            <%= link_to t("report.risky_only"), statement_path(@statement, risky: 1, anchor: "operations"), class: ("is-active" if params[:risky] == "1") %>
+            <% %w[ income loan_payment gambling cash_withdrawal transfer ].each do |group| %>
+              <%= link_to group_label(group), statement_path(@statement, group: group, anchor: "operations"), class: ("is-active" if params[:group] == group) %>
+            <% end %>
+          </nav>
+          <div class="input-with-icon">
+            <%= svg_icon("magnifying-glass") %>
+            <input type="search" class="input" placeholder="<%= t("report.search_operations") %>" data-table-search-target="input" data-action="input->table-search#filter">
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap" style="max-height: 70rem">
+        <table class="table table--compact">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th><%= t("report.date") %></th>
+              <th><%= t("report.description") %></th>
+              <th><%= t("report.category") %></th>
+              <th>MCC</th>
+              <th class="text-right"><%= t("report.amount") %></th>
+              <th class="text-right"><%= t("report.balance") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @operations.first(3000).each do |op| %>
+              <tr data-table-search-target="row" class="<%= "is-risky" if op.risky? || op.category_group == "gambling" %>">
+                <td class="faint mono"><%= op.position %></td>
+                <td class="nowrap muted"><%= short_date(op.booked_on) %></td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere"><%= op.counterparty.presence || op.description.truncate(90) %></div>
+                  <% if op.counterparty.present? && op.description.present? %><div class="table__secondary"><%= op.description.truncate(110) %></div><% end %>
+                </td>
+                <td><span class="badge <%= op.risky? || op.category_group == "gambling" ? "badge--high" : "badge--muted" %>"><%= category_label(op.category) %></span></td>
+                <td class="mono faint"><%= op.mcc || "" %></td>
+                <td class="num nowrap <%= op.incoming? ? "text-in" : "" %>"><%= signed_money(op.amount) %></td>
+                <td class="num nowrap muted"><%= money(op.balance) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="empty-state" data-table-search-target="empty" hidden><p><%= t("report.no_operations_match") %></p></div>
+      </div>
+    </section>
+  <% end %>
+</main>

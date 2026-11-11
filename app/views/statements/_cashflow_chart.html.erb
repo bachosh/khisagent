@@ -1,0 +1,39 @@
+<%# Grouped columns per month: incoming (series 1) vs outgoing (series 2). The monthly table below is the table view. %>
+<% months = metrics["monthly"] %>
+<% peak = months.flat_map { |m| [ m["incoming"].to_f, m["outgoing"].to_f ] }.max.to_f %>
+<% magnitude = peak.positive? ? 10**Math.log10(peak).floor : 1 %>
+<% axis_max = [ 1, 2, 2.5, 5, 10 ].map { |s| s * magnitude }.find { |v| v >= peak } || peak %>
+<% axis_max = 1 if axis_max.zero? %>
+<div class="viz cashflow">
+  <div class="cashflow__legend">
+    <span><i style="background: var(--series-in)"></i><%= t("report.incoming") %></span>
+    <span><i style="background: var(--series-out)"></i><%= t("report.outgoing") %></span>
+  </div>
+  <div class="cashflow__plot" role="img" aria-label="<%= t("report.cashflow_aria") %>">
+    <div class="cashflow__grid" aria-hidden="true">
+      <% 4.downto(0) do |i| %>
+        <div><span><%= money(axis_max * i / 4.0, nil, precision: 0) %></span></div>
+      <% end %>
+    </div>
+    <% months.each do |m| %>
+      <div class="cashflow__month">
+        <div class="cashflow__bar cashflow__bar--in" style="height: <%= (m["incoming"].to_f / axis_max * 100).round(2) %>%"></div>
+        <div class="cashflow__bar cashflow__bar--out" style="height: <%= (m["outgoing"].to_f / axis_max * 100).round(2) %>%"></div>
+        <div class="cashflow__tip">
+          <strong><%= l(Date.parse("#{m["month"]}-01"), format: :month_year) rescue m["month"] %></strong>
+          <div><span><i style="background: var(--series-in)"></i><%= t("report.incoming") %></span><b><%= money(m["incoming"], currency, precision: 0) %></b></div>
+          <div><span><i style="background: var(--series-out)"></i><%= t("report.outgoing") %></span><b><%= money(m["outgoing"], currency, precision: 0) %></b></div>
+          <div><span><%= t("indicators.income") %></span><b><%= money(m["income"], currency, precision: 0) %></b></div>
+          <% if m["min_balance"] %>
+            <div><span><%= t("report.min_balance") %></span><b><%= money(m["min_balance"], currency, precision: 0) %></b></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="cashflow__labels" aria-hidden="true">
+    <% months.each do |m| %>
+      <span><%= l(Date.parse("#{m["month"]}-01"), format: :month_short) rescue m["month"] %></span>
+    <% end %>
+  </div>
+</div>

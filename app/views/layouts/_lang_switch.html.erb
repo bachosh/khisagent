@@ -1,0 +1,8 @@
+<%# Language switcher. variant: nil (on dark header) or "light" %>
+<div class="lang-switch <%= "lang-switch--#{local_assigns[:variant]}" if local_assigns[:variant] %>" role="group" aria-label="<%= t("app.language") %>">
+  <% User::LOCALES.each do |locale| %>
+    <%= button_to locale.upcase, locale_path(locale), method: :patch,
+          class: ("is-active" if I18n.locale.to_s == locale), form: { data: { turbo: false } },
+          aria: { pressed: I18n.locale.to_s == locale }, title: t("app.locales.#{locale}") %>
+  <% end %>
+</div>

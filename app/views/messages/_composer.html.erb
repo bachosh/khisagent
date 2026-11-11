@@ -1,0 +1,36 @@
+<%# Chat input with file upload. conversation: nil on a new chat (the form creates it). %>
+<% conversation = local_assigns[:conversation] %>
+<%= form_with url: (conversation ? conversation_messages_path(conversation) : conversations_path),
+      id: "composer", multipart: true,
+      data: { controller: "composer",
+              action: "turbo:submit-start->composer#submitStart turbo:submit-end->composer#submitEnd" } do |f| %>
+  <div class="composer" data-composer-target="box">
+    <div class="composer__files" data-composer-target="chips"></div>
+    <div class="composer__row">
+      <label class="composer__attach" title="<%= t("chat.attach") %>">
+        <%= svg_icon("paper-clip") %>
+        <span class="sr-only"><%= t("chat.attach") %></span>
+        <%= f.file_field :files, multiple: true, name: "files[]", accept: Statement.accepted_extensions,
+              data: { composer_target: "files", action: "change->composer#pick" } %>
+      </label>
+      <%= f.text_area :content, name: "content", rows: 1, class: "composer__input",
+            placeholder: t(conversation ? "chat.placeholder" : "chat.placeholder_new"), autofocus: true,
+            aria: { label: t("chat.placeholder") },
+            data: { composer_target: "input", action: "input->composer#resize keydown->composer#keydown" } %>
+      <button type="submit" class="composer__send" data-composer-target="send" aria-label="<%= t("chat.send") %>" disabled>
+        <%= svg_icon("paper-airplane") %>
+      </button>
+    </div>
+  </div>
+  <p class="chat__disclaimer"><%= t("chat.disclaimer") %></p>
+
+  <% if local_assigns[:suggestions] %>
+    <div class="suggestions">
+      <% t("chat.suggestions").each do |s| %>
+        <button type="button" data-action="composer#suggest" data-prompt="<%= s[:prompt] %>">
+          <%= svg_icon(s[:icon]) %> <span><%= s[:label] %></span>
+        </button>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

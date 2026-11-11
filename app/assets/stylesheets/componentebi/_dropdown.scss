@@ -1,0 +1,84 @@
+@use "../abstracts/variables" as *;
+
+// <details class="menu"> based dropdown: works without JS, closes on outside click via menu_controller
+.menu {
+  position: relative;
+
+  > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    border-radius: 99rem;
+    padding: .3rem .8rem .3rem .3rem;
+
+    &::-webkit-details-marker { display: none; }
+    &:hover { background: rgba(255, 255, 255, .08); }
+
+    svg { width: 1.6rem; height: 1.6rem; opacity: .7; }
+  }
+
+  &__name {
+    font-weight: 550;
+    max-width: 16rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @media (max-width: 50em) { display: none; }
+  }
+
+  &__panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + .8rem);
+    min-width: 24rem;
+    padding: .6rem;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: $radius;
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    animation: menu-in .14s ease-out;
+
+    &--left { right: auto; left: 0; }
+  }
+
+  &__header {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: .4rem;
+
+    strong { display: block; font-size: 1.45rem; }
+    span { font-size: 1.25rem; color: var(--text-muted); }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: .9rem 1.2rem;
+    border: 0;
+    border-radius: $radius-sm;
+    background: none;
+    font-size: 1.4rem;
+    text-align: left;
+    cursor: pointer;
+    color: var(--text);
+
+    svg { width: 1.8rem; height: 1.8rem; color: var(--text-muted); opacity: 1; }
+    &:hover { background: var(--surface-3); }
+
+    &--danger, &--danger svg { color: var(--danger); }
+  }
+
+  form { display: block; }
+}
+
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-.4rem); }
+  to { opacity: 1; transform: none; }
+}

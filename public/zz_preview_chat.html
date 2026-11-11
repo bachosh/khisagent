@@ -1,0 +1,371 @@
+<!-- BEGIN app/views/layouts/application.html.erb
+--><!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <title>რამდენს იხდის თვეში სესხებში და რომელ ორგანიზაციებს? · KhisAgent</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="KhisAgent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0b1736">
+    <meta name="turbo-refresh-method" content="morph">
+    <meta name="turbo-refresh-scroll" content="preserve">
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="fUf9eUSIGQn0m4fGR38Z_4Xmda-mDyMb6ylpNxkL_4m0SHoPWYcWEx87aNG0WfBg86vmCQT8ZOqFv2P5SXGgSQ" />
+    
+
+    
+
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="stylesheet" href="/assets/application-3dc77f13.css" data-turbo-track="reload" />
+    <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "/assets/application-bfcdf840.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-9fd88cd5.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-4b1e420e.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-1fc53fe7.js",
+    "controllers/application": "/assets/controllers/application-3affb389.js",
+    "controllers/chat_scroll_controller": "/assets/controllers/chat_scroll_controller-4fbda368.js",
+    "controllers/composer_controller": "/assets/controllers/composer_controller-22b296de.js",
+    "controllers/drawer_controller": "/assets/controllers/drawer_controller-4a6c2987.js",
+    "controllers/dropzone_controller": "/assets/controllers/dropzone_controller-38d463f7.js",
+    "controllers/flash_controller": "/assets/controllers/flash_controller-1d51f3f0.js",
+    "controllers": "/assets/controllers/index-ee64e1f1.js",
+    "controllers/menu_controller": "/assets/controllers/menu_controller-2110ba2f.js",
+    "controllers/table_search_controller": "/assets/controllers/table_search_controller-a87801c0.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/application-bfcdf840.js">
+<link rel="modulepreload" href="/assets/turbo.min-9fd88cd5.js">
+<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
+<link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
+<link rel="modulepreload" href="/assets/controllers/chat_scroll_controller-4fbda368.js">
+<link rel="modulepreload" href="/assets/controllers/composer_controller-22b296de.js">
+<link rel="modulepreload" href="/assets/controllers/drawer_controller-4a6c2987.js">
+<link rel="modulepreload" href="/assets/controllers/dropzone_controller-38d463f7.js">
+<link rel="modulepreload" href="/assets/controllers/flash_controller-1d51f3f0.js">
+<link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<link rel="modulepreload" href="/assets/controllers/menu_controller-2110ba2f.js">
+<link rel="modulepreload" href="/assets/controllers/table_search_controller-a87801c0.js">
+<script type="module">import "application"</script>
+  </head>
+
+  <body class="page-chat has-right-nav" data-controller="drawer" data-action="keydown.esc@window->drawer#close">
+    <div class="container">
+      <!-- BEGIN app/views/layouts/_header.html.erb
+--><header class="header">
+  <div class="header__left-box">
+    <button type="button" class="header__menu-button" data-action="drawer#toggleSidebar" aria-label="მენიუ">
+      <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+</svg>
+    </button>
+    <!-- BEGIN app/views/layouts/_brand.html.erb
+--><a class="brand" aria-label="KhisAgent" href="/dashboard">
+  <span class="brand__mark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+</svg></span>
+  <span>Khis<span class="brand__accent">Agent</span></span>
+</a><!-- END app/views/layouts/_brand.html.erb -->
+  </div>
+
+  <nav class="header__middle-box" aria-label="მთავარი ნავიგაცია">
+    <a class="header__nav-link" href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg><span>მიმოხილვა</span></a>
+    <a class="header__nav-link is-active" aria-current="page" href="/conversations"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg><span>ჩატები</span></a>
+    <a class="header__nav-link" href="/statements"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg><span>რეპორტები</span></a>
+  </nav>
+
+  <div class="header__auth-box">
+    <!-- BEGIN app/views/layouts/_lang_switch.html.erb
+--><div class="lang-switch " role="group" aria-label="ენა">
+    <form data-turbo="false" class="button_to" method="post" action="/locale/ka"><input type="hidden" name="_method" value="patch" /><button class="is-active" aria-pressed="true" title="ქართული" type="submit">KA</button><input type="hidden" name="authenticity_token" value="5m5Kh9WzsRoe1okef_I5eNepidODNZZHs8Y__E5_axuc_z0XbsQeEztIpktK8HBBxvz34SX7oK-9zeVMiMEa3Q" /></form>
+    <form data-turbo="false" class="button_to" method="post" action="/locale/en"><input type="hidden" name="_method" value="patch" /><button aria-pressed="false" title="English" type="submit">EN</button><input type="hidden" name="authenticity_token" value="MK0STOjVdm18n6z6Mtdp9g7efofBeCjg-KCuS86Yqm-0FefOp1ezweuBvUrSCHx37WtidEz0y0rZjUFdztwliQ" /></form>
+</div>
+<!-- END app/views/layouts/_lang_switch.html.erb -->
+
+      <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+        <summary aria-label="ანგარიში">
+          <span class="avatar">ᲓᲠ</span>
+          <span class="menu__name">დემო რისკ-მენეჯერი</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+</svg>
+        </summary>
+        <div class="menu__panel">
+          <div class="menu__header">
+            <strong>დემო რისკ-მენეჯერი</strong>
+            <span>demo@khisagent.ge</span>
+          </div>
+          <a class="menu__item" href="/profile/edit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg> პროფილი
+</a>          <form class="button_to" method="post" action="/session"><input type="hidden" name="_method" value="delete" /><button class="menu__item menu__item--danger" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"/>
+</svg> გასვლა
+</button><input type="hidden" name="authenticity_token" value="47vqJvjFE8TksMTleYUcxAjcd4z11M0BHYMwjoAnXaK179EUygbHyvEdZBiqGrL7uA_O2IRXse-t94zp8UqIFQ" /></form>        </div>
+      </details>
+  </div>
+</header>
+<!-- END app/views/layouts/_header.html.erb -->
+      <!-- BEGIN app/views/layouts/_left-nav.html.erb
+--><nav class="left-nav" aria-label="ჩატების ისტორია">
+  <a class="btn-new-chat" href="/conversations/new">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg> ახალი ანალიზი
+</a>
+  <div class="left-nav__mobile-only">
+    <a class="chat-list__item" href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg><span>მიმოხილვა</span></a>
+    <a class="chat-list__item" href="/conversations"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg><span>ჩატები</span></a>
+    <a class="chat-list__item" href="/statements"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg><span>რეპორტები</span></a>
+  </div>
+
+  <div>
+    <div class="left-nav__section-title">ბოლო ჩატები</div>
+    <ul class="chat-list" id="sidebar_conversations">
+        <li>
+          <a class="chat-list__item is-active" href="/conversations/1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg>
+            <span class="chat-list__title">რამდენს იხდის თვეში სესხებში და რომელ ორგანიზაციებს?</span>
+</a>        </li>
+        <li>
+          <a class="chat-list__item" href="/conversations/2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg>
+            <span class="chat-list__title">ახალი ანალიზი</span>
+</a>        </li>
+    </ul>
+  </div>
+
+  <div class="left-nav__footer">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/>
+</svg> ლოკალური მოდელი · gemma4:12b
+  </div>
+</nav>
+<!-- END app/views/layouts/_left-nav.html.erb -->
+      <!-- BEGIN app/views/layouts/_messages-header.html.erb
+--><div class="messages-header" id="flash" role="status" aria-live="polite">
+  <!-- BEGIN app/views/layouts/_flash.html.erb
+--><!-- END app/views/layouts/_flash.html.erb -->
+</div>
+<!-- END app/views/layouts/_messages-header.html.erb -->
+      <!-- BEGIN app/views/conversations/show.html.erb
+-->
+<turbo-cable-stream-source channel="Turbo::StreamsChannel" signed-stream-name="IloybGtPaTh2YTJocGMyRm5aVzUwTDBOdmJuWmxjbk5oZEdsdmJpOHgi--efcb6806d71808f27bb353f8f8219757a0765e70b055e5effe730cb95887ec61"></turbo-cable-stream-source>
+
+<header class="main-header main-header--chat">
+  <div class="main-header__titles">
+    <h1 class="main-header__title">რამდენს იხდის თვეში სესხებში და რომელ ორგანიზაციებს?</h1>
+  </div>
+  <div class="main-header__actions">
+    <button type="button" class="btn btn--sm insights-toggle" data-action="drawer#toggleInsights">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/>
+</svg> ანალიზი
+    </button>
+    <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+      <summary class="btn btn--ghost btn--icon btn--sm" aria-label="მეტი"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+</svg></summary>
+      <div class="menu__panel">
+        <form class="menu__header" action="/conversations/1" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="UIAN31nkyzCBggkLbocyecspj4R14mzZ3Hl_iVbPSmAi7W48ao77M-UWHMG1O-TADvqqMDFTUt7GM_MaAgZgeg" />
+          <input value="რამდენს იხდის თვეში სესხებში და რომელ ორგანიზაციებს?" class="input" placeholder="სათაურის შეცვლა" maxlength="80" aria-label="სათაურის შეცვლა" size="80" type="text" name="conversation[title]" id="conversation_title" />
+          <button type="submit" class="btn btn--icon" aria-label="შენახვა"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+</svg></button>
+</form>        <form data-turbo-confirm="წაიშალოს ჩატი, მისი ფაილები და რეპორტები?" class="button_to" method="post" action="/conversations/1"><input type="hidden" name="_method" value="delete" /><button class="menu__item menu__item--danger" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+</svg> ჩატის წაშლა
+</button><input type="hidden" name="authenticity_token" value="x_X4d0npdptFbn5w0O3SYTgoLt3vIuSZFWrwYOaaVMe4qvh8Xo_sQcaPCn8OWRyRO2ejfSw77y5g8Z8EDNjp2w" /></form>      </div>
+    </details>
+  </div>
+</header>
+
+<main class="main-content-chat">
+  <div class="chat__scroll" data-controller="chat-scroll">
+    <div class="chat__messages" id="messages" data-chat-scroll-target="list">
+      <!-- BEGIN app/views/messages/_message.html.erb
+--><div id="message_1" class="message message--assistant">
+    <span class="avatar avatar--assistant" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
+</svg></span>
+
+  <div class="message__body">
+    <div class="message__meta">
+      <strong>KhisAgent</strong>
+      <time datetime="2026-11-11T22:14:32+04:00">22:14</time>
+    </div>
+
+      <div class="prose"><p><strong>sample_statement.csv</strong> გაანალიზდა — რისკის ქულა <strong>45/100</strong> (საშუალო), რეკომენდაცია: <strong>ხელით შემოწმება</strong>.</p>
+
+<p>მომხმარებლის შემოსავალი სტაბილურია, თუმცა დაფიქსირდა აზარტულ თამაშებზე დანახარჯების მკვეთრი ზრდა (560%-ით) საბოლოოს ბოლო 3 თვის განმავლობაში. ასევე, აღინიშნა ახალი სესხის მიღება (კრისტალი მფო) და სესხის გადახდის ყოველთვიური თანხის ზრდა.<br>
+სესხის გადახდის შეფარდება (DSR) მიმდინარეობს კონტროლებადი დიაპაზონში (19.7%), თუმცა აზარტული თამაშების ზრდა მაღალი რისკის ფაქტორია.<br>
+რეკომენდებულია დამატებითი გადამოწმება ან პირდაპირი კომუნიკაცია სესხის მიღების მიზეზის დასადგენად.</p>
+</div>
+  </div>
+</div>
+<!-- END app/views/messages/_message.html.erb --><!-- BEGIN app/views/messages/_message.html.erb
+--><div id="message_2" class="message message--assistant">
+    <span class="avatar avatar--assistant" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
+</svg></span>
+
+  <div class="message__body">
+    <div class="message__meta">
+      <strong>KhisAgent</strong>
+      <time datetime="2026-11-11T22:15:33+04:00">22:15</time>
+    </div>
+
+      <div class="prose"><p><strong>sample_statement.csv</strong> გაანალიზდა — რისკის ქულა <strong>65/100</strong> (მაღალი), რეკომენდაცია: <strong>ხელით შემოწმება</strong>.</p>
+
+<p>აპლიკანტის შემოსავალი სტაბილურია და მოდის ერთიანი წყაროდან. თუმცა, ანალიზის პერიოდის განმავლობაში აზარტულ თამაშებზე დანახარჯები მკვეთრად გაიზარდა (0-დან 540 GEL-მდე). ასევე, ივლისიდან გამოჩნდა ახალი სესხის გადახდები კრედო ბანკში. ეს ტენდენციები საჭიროებს დამატებით გადამოწმებას.</p>
+</div>
+  </div>
+</div>
+<!-- END app/views/messages/_message.html.erb --><!-- BEGIN app/views/messages/_message.html.erb
+--><div id="message_3" class="message message--user">
+    <span class="avatar avatar--user" aria-hidden="true">ᲓᲠ</span>
+
+  <div class="message__body">
+    <div class="message__meta">
+      <strong>დემო</strong>
+      <time datetime="2026-11-11T22:21:19+04:00">22:21</time>
+    </div>
+
+        <div class="message__bubble">რამდენს იხდის თვეში სესხებში და რომელ ორგანიზაციებს?</div>
+
+  </div>
+</div>
+<!-- END app/views/messages/_message.html.erb --><!-- BEGIN app/views/messages/_message.html.erb
+--><div id="message_4" class="message message--assistant">
+    <span class="avatar avatar--assistant" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
+</svg></span>
+
+  <div class="message__body">
+    <div class="message__meta">
+      <strong>KhisAgent</strong>
+      <time datetime="2026-11-11T22:21:19+04:00">22:21</time>
+    </div>
+
+      <div class="prose"><p>აპლიკანტი ყოველთვიურად იხდის შემდეგ ორ ორგანიზაციაში:</p>
+
+<ul>
+<li>  <strong>TBC ბანკი:</strong> ყოველთვიურად იხდის <strong>380 GEL</strong> (ხელშეკრულება 77812) (ოპერაციები: id 6, 18, 31, 44, 60, 75).</li>
+<li>  <strong>კრედო ბანკი:</strong> ივლისიდან დაიწყო გადახდები <strong>210 GEL</strong> ოდენობით (ოპერაციები: id 49, 65).</li>
+</ul>
+</div>
+        <div class="message__steps">
+            <span class="badge badge--outline"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/>
+</svg> ამონაწერის მიმოხილვა</span>
+            <span class="message__footer-note">12.4 წმ</span>
+        </div>
+  </div>
+</div>
+<!-- END app/views/messages/_message.html.erb -->
+    </div>
+  </div>
+
+  <div class="chat__footer">
+    <!-- BEGIN app/views/messages/_composer.html.erb
+--><form id="composer" data-controller="composer" data-action="turbo:submit-start-&gt;composer#submitStart turbo:submit-end-&gt;composer#submitEnd" enctype="multipart/form-data" action="/conversations/1/messages" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="dBX5K4MyqseHyHAfj3cWklCOqBE16iwThaTMlBIsmyTCz768pBpZpk9DN4b5KaQKQqX0T3kQHqGQqsi9Pn-IyA" />
+  <div class="composer" data-composer-target="box">
+    <div class="composer__files" data-composer-target="chips"></div>
+    <div class="composer__row">
+      <label class="composer__attach" title="ფაილის მიმაგრება">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"/>
+</svg>
+        <span class="sr-only">ფაილის მიმაგრება</span>
+        <input name="files[]" type="hidden" value="" /><input multiple="multiple" name="files[]" accept=".csv,.txt,.xlsx,.xls,.pdf,.png,.jpg,.jpeg,.webp" data-composer-target="files" data-action="change-&gt;composer#pick" type="file" id="files" />
+      </label>
+      <textarea name="content" rows="1" class="composer__input" placeholder="ჰკითხეთ ამონაწერზე ან მიამაგრეთ ახალი ფაილი…" autofocus="autofocus" aria-label="ჰკითხეთ ამონაწერზე ან მიამაგრეთ ახალი ფაილი…" data-composer-target="input" data-action="input-&gt;composer#resize keydown-&gt;composer#keydown" id="content">
+</textarea>
+      <button type="submit" class="composer__send" data-composer-target="send" aria-label="გაგზავნა" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/>
+</svg>
+      </button>
+    </div>
+  </div>
+  <p class="chat__disclaimer">AI შეიძლება შეცდეს. საბოლოო გადაწყვეტილებას იღებს რისკ-მენეჯერი.</p>
+
+</form><!-- END app/views/messages/_composer.html.erb -->
+  </div>
+</main>
+<!-- END app/views/conversations/show.html.erb -->
+      <!-- BEGIN app/views/layouts/_right-nav.html.erb
+--><aside class="right-nav">  <!-- BEGIN app/views/conversations/_insights.html.erb
+--><div id="conversation_insights" class="insights">
+  <div class="insights__title">
+    <span>ანალიზი</span>
+    <button type="button" class="btn btn--ghost btn--icon btn--sm insights__close" data-action="drawer#close" aria-label="დახურვა">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+</svg>
+    </button>
+  </div>
+
+      <div class="card">
+        <div class="card__body" style="display:flex;flex-direction:column;gap:1.4rem">
+          <div class="statement-card__top">
+            <span class="file-icon file-icon--csv">csv</span>
+            <div class="statement-card__name">
+              <strong title="sample_statement.csv">sample_statement.csv</strong>
+              <span>CSV ცხრილი</span>
+            </div>
+          </div>
+            <div style="display:flex;align-items:center;gap:1.4rem">
+              <div class="gauge gauge--sm gauge--high" style="--value: 65">
+                <div class="gauge__inner"><span class="gauge__value">65</span></div>
+              </div>
+              <div>
+                <span class="badge badge--dot badge--high">მაღალი</span>
+                <div class="statement-card__summary">ხელით შემოწმება</div>
+              </div>
+            </div>
+            <dl class="facts">
+              <dt>საშუალო თვიური შემოსავალი</dt><dd class="num">2 462 GEL</dd>
+              <dt>თავისუფალი ფულადი ნაკადი</dt><dd class="num">585 GEL</dd>
+              <dt>ვალის მომსახურების კოეფ.</dt><dd class="num">19,7%</dd>
+              <dt>აზარტულ თამაშებზე ხარჯი</dt><dd class="num">253 GEL</dd>
+            </dl>
+            <a class="btn btn--block" href="/statements/1">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg> რეპორტი
+</a>        </div>
+      </div>
+</div>
+<!-- END app/views/conversations/_insights.html.erb -->
+</aside>
+<!-- END app/views/layouts/_right-nav.html.erb -->
+    </div>
+    <div class="scrim" data-action="click->drawer#close"></div>
+  </body>
+</html>
+<!-- END app/views/layouts/application.html.erb -->

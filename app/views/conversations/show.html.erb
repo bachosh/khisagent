@@ -1,0 +1,43 @@
+<% content_for :title, @conversation.display_title %>
+<% content_for :body_class, "page-chat" %>
+<% content_for :right_nav do %>
+  <%= render "conversations/insights", conversation: @conversation %>
+<% end %>
+
+<%= turbo_stream_from @conversation %>
+
+<header class="main-header main-header--chat">
+  <div class="main-header__titles">
+    <h1 class="main-header__title"><%= @conversation.display_title %></h1>
+  </div>
+  <div class="main-header__actions">
+    <button type="button" class="btn btn--sm insights-toggle" data-action="drawer#toggleInsights">
+      <%= svg_icon("presentation-chart-line") %> <%= t("insights.title") %>
+    </button>
+    <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+      <summary class="btn btn--ghost btn--icon btn--sm" aria-label="<%= t("app.more") %>"><%= svg_icon("ellipsis-horizontal") %></summary>
+      <div class="menu__panel">
+        <%= form_with model: @conversation, class: "menu__header", style: "display:flex;gap:.6rem" do |f| %>
+          <%= f.text_field :title, value: @conversation.title, class: "input", placeholder: t("conversations.rename"), maxlength: 80, aria: { label: t("conversations.rename") } %>
+          <button type="submit" class="btn btn--icon" aria-label="<%= t("app.save") %>"><%= svg_icon("check") %></button>
+        <% end %>
+        <%= button_to conversation_path(@conversation), method: :delete, class: "menu__item menu__item--danger",
+              form: { data: { turbo_confirm: t("conversations.delete_confirm") } } do %>
+          <%= svg_icon("trash") %> <%= t("conversations.delete") %>
+        <% end %>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main class="main-content-chat">
+  <div class="chat__scroll" data-controller="chat-scroll">
+    <div class="chat__messages" id="messages" data-chat-scroll-target="list">
+      <%= render partial: "messages/message", collection: @messages, as: :message %>
+    </div>
+  </div>
+
+  <div class="chat__footer">
+    <%= render "messages/composer", conversation: @conversation %>
+  </div>
+</main>

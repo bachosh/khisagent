@@ -1,0 +1,119 @@
+@use "../abstracts/variables" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.6rem;
+
+    @media (max-width: 37.5em) { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text);
+
+    a { font-weight: 500; color: var(--primary); }
+  }
+
+  &__hint { font-size: 1.25rem; color: var(--text-faint); }
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 1.1rem 1.4rem;
+  border: 1px solid var(--border-strong);
+  border-radius: $radius-sm + .2rem;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.5rem;
+  transition: border-color .15s ease, box-shadow .15s ease;
+
+  &::placeholder { color: var(--text-faint); }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: var(--ring);
+  }
+}
+
+.input-with-icon {
+  position: relative;
+
+  svg {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.8rem;
+    height: 1.8rem;
+    color: var(--text-faint);
+    pointer-events: none;
+  }
+
+  .input { padding-left: 4rem; }
+}
+
+.form-errors {
+  padding: 1.2rem 1.6rem;
+  border-radius: $radius;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 1.35rem;
+
+  ul { margin-left: 1.8rem; }
+}
+
+// Segmented filter links
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  padding: .4rem;
+  border-radius: $radius;
+  background: var(--surface-3);
+
+  a {
+    padding: .6rem 1.3rem;
+    border-radius: $radius-sm;
+    font-size: 1.3rem;
+    font-weight: 550;
+    color: var(--text-muted);
+
+    &:hover { color: var(--text); }
+    &.is-active { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+  }
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+
+  .input-with-icon { width: min(32rem, 100%); }
+}

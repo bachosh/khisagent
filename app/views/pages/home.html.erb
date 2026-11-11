@@ -1,0 +1,63 @@
+<% content_for :public_class, "public--landing" %>
+
+<div class="landing-top">
+<nav class="public__nav">
+  <%= render "layouts/brand" %>
+  <div class="public__nav-actions">
+    <%= render "layouts/lang_switch" %>
+    <%= link_to t("auth.sign_in"), new_session_path, class: "btn btn--ghost" %>
+    <%= link_to t("landing.start"), new_registration_path, class: "btn btn--primary" %>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <span class="hero__eyebrow"><%= svg_icon("sparkles") %> <%= t("landing.eyebrow") %></span>
+    <h1><%= t("landing.title_html") %></h1>
+    <p class="hero__lead"><%= t("landing.lead") %></p>
+    <div class="hero__cta">
+      <%= link_to new_registration_path, class: "btn btn--primary btn--lg" do %>
+        <%= t("landing.start") %> <%= svg_icon("chevron-right") %>
+      <% end %>
+      <%= link_to t("auth.sign_in"), new_session_path, class: "btn btn--lg", style: "--btn-bg: rgba(255,255,255,.08); --btn-color: #fff; --btn-border: rgba(255,255,255,.2); --btn-hover: rgba(255,255,255,.14)" %>
+    </div>
+    <div class="hero__trust">
+      <span><%= svg_icon("lock-closed") %> <%= t("landing.trust_local") %></span>
+      <span><%= svg_icon("language") %> <%= t("landing.trust_languages") %></span>
+      <span><%= svg_icon("document-text") %> <%= t("landing.trust_formats") %></span>
+    </div>
+  </div>
+
+  <div class="preview" aria-hidden="true">
+    <div class="preview__bar"><i></i><i></i><i></i></div>
+    <div class="preview__body">
+      <div class="preview__top">
+        <div class="gauge gauge--high" style="--value: 64; width: 11rem; height: 11rem">
+          <div class="gauge__inner"><span class="gauge__value" style="font-size: 3.2rem">64</span><span class="gauge__max"><%= t("report.of_100") %></span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.8rem;align-items:flex-start">
+          <%= risk_badge("high") %>
+          <span class="verdict verdict--manual_review"><%= svg_icon("eye") %> <%= t("recommendations.manual_review") %></span>
+        </div>
+      </div>
+      <div class="preview__rows">
+        <div class="preview__row" style="color: var(--risk-high)"><%= svg_icon("exclamation-triangle") %><span><%= t("landing.preview.gambling") %></span><b>18%</b></div>
+        <div class="preview__row" style="color: var(--warning)"><%= svg_icon("building-library") %><span><%= t("landing.preview.lenders") %></span><b>3</b></div>
+        <div class="preview__row" style="color: var(--success)"><%= svg_icon("check-circle") %><span><%= t("landing.preview.salary") %></span><b>12/12</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<section class="features">
+  <% t("landing.features").each do |feature| %>
+    <div class="feature">
+      <div class="feature__icon"><%= svg_icon(feature[:icon]) %></div>
+      <h3><%= feature[:title] %></h3>
+      <p><%= feature[:text] %></p>
+    </div>
+  <% end %>
+</section>
+
+<footer class="public__footer">© <%= Date.current.year %> <%= t("app.name") %> · <%= t("landing.footer") %></footer>

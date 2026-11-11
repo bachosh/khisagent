@@ -1,0 +1,4 @@
+<%= link_to (authenticated? ? dashboard_path : root_path), class: "brand", aria: { label: t("app.name") } do %>
+  <span class="brand__mark"><%= svg_icon("shield-check") %></span>
+  <span>Khis<span class="brand__accent">Agent</span></span>
+<% end %>

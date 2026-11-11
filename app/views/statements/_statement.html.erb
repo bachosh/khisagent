@@ -1,0 +1,53 @@
+<% report = statement.risk_report %>
+<div id="<%= dom_id(statement) %>" class="statement-card">
+  <div class="statement-card__top">
+    <%= file_badge(statement) %>
+    <div class="statement-card__name">
+      <strong title="<%= statement.filename %>"><%= statement.filename %></strong>
+      <span>
+        <% if statement.operations_count.positive? %>
+          <%= t("statements.operations_count", count: statement.operations_count) %><%= " · #{statement.period_label}" if statement.period_label %>
+        <% else %>
+          <%= t("statements.kinds.#{statement.file_kind}") %>
+        <% end %>
+      </span>
+    </div>
+    <%= statement_status_badge(statement) %>
+  </div>
+
+  <% if statement.stalled? %>
+    <div class="statement-card__error"><%= svg_icon("clock") %> <span><%= t("statements.stalled") %></span></div>
+    <div class="statement-card__actions">
+      <%= button_to t("statements.retry"), reanalyze_statement_path(statement), class: "btn btn--sm" %>
+    </div>
+
+  <% elsif statement.processing? %>
+    <div class="statement-card__progress">
+      <%= svg_icon("cpu-chip", class: "icon-sm") %>
+      <span><%= statement.progress.presence || t("statements.status.#{statement.status}") %></span>
+    </div>
+    <div class="statement-card__bar"><span></span></div>
+
+  <% elsif statement.failed? %>
+    <div class="statement-card__error"><%= svg_icon("exclamation-triangle") %> <span><%= statement.error %></span></div>
+    <div class="statement-card__actions">
+      <%= button_to t("statements.retry"), reanalyze_statement_path(statement), class: "btn btn--sm" %>
+    </div>
+
+  <% elsif report %>
+    <div class="statement-card__result">
+      <div class="gauge gauge--sm gauge--<%= report.risk_level %>" style="--value: <%= report.risk_score %>">
+        <div class="gauge__inner"><span class="gauge__value"><%= report.risk_score %></span></div>
+      </div>
+      <div>
+        <%= risk_badge(report.risk_level) %>
+        <div class="statement-card__summary"><%= t("recommendations.#{report.recommendation}") %></div>
+      </div>
+      <div class="statement-card__actions">
+        <%= link_to statement_path(statement), class: "btn btn--sm btn--primary", data: { turbo_frame: "_top" } do %>
+          <%= svg_icon("document-chart-bar") %> <%= t("statements.open_report") %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

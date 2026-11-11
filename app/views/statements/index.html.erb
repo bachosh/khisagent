@@ -1,0 +1,43 @@
+<% content_for :title, t("nav.reports") %>
+
+<header class="main-header">
+  <div class="main-header__titles">
+    <h1 class="main-header__title"><%= t("statements.index_title") %></h1>
+    <p class="main-header__subtitle"><%= t("statements.index_subtitle") %></p>
+  </div>
+  <div class="main-header__actions">
+    <%= link_to new_conversation_path, class: "btn btn--primary" do %>
+      <%= svg_icon("arrow-up-tray") %> <%= t("statements.upload") %>
+    <% end %>
+  </div>
+</header>
+
+<main class="main-content-root">
+  <div class="toolbar">
+    <nav class="segmented" aria-label="<%= t("statements.filter") %>">
+      <%= link_to t("statements.all"), statements_path(q: params[:q]), class: ("is-active" if params[:level].blank? && params[:status].blank?) %>
+      <% RiskReport::LEVELS.each do |level| %>
+        <%= link_to t("risk_levels.#{level}"), statements_path(level: level, q: params[:q]), class: ("is-active" if params[:level] == level) %>
+      <% end %>
+      <%= link_to t("statements.status.failed"), statements_path(status: "failed", q: params[:q]), class: ("is-active" if params[:status] == "failed") %>
+    </nav>
+    <%= form_with url: statements_path, method: :get, class: "input-with-icon" do %>
+      <%= hidden_field_tag :level, params[:level] if params[:level].present? %>
+      <%= svg_icon("magnifying-glass") %>
+      <%= search_field_tag :q, params[:q], class: "input", placeholder: t("statements.search") %>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <% if @statements.any? %>
+      <%= render "statements/table", statements: @statements %>
+    <% else %>
+      <div class="empty-state">
+        <div class="empty-state__icon"><%= svg_icon("document-chart-bar") %></div>
+        <h3><%= t("statements.empty_title") %></h3>
+        <p><%= t("statements.empty_text") %></p>
+        <%= link_to t("statements.upload"), new_conversation_path, class: "btn btn--primary" %>
+      </div>
+    <% end %>
+  </div>
+</main>

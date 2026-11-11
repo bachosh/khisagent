@@ -1,0 +1,23 @@
+<% content_for :title, t("auth.sign_in") %>
+<%= render layout: "shared/auth_shell" do %>
+  <h1><%= t("auth.sign_in_title") %></h1>
+  <p class="auth__lead"><%= t("auth.sign_in_lead") %></p>
+
+  <%= form_with url: session_path, class: "form" do |form| %>
+    <div class="field">
+      <%= form.label :email_address, t("auth.email"), class: "field__label" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", class: "input",
+            placeholder: "name@company.ge", value: params[:email_address] %>
+    </div>
+    <div class="field">
+      <div class="field__label">
+        <%= form.label :password, t("auth.password") %>
+        <%= link_to t("auth.forgot"), new_password_path %>
+      </div>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", class: "input", maxlength: 72 %>
+    </div>
+    <%= form.button t("auth.sign_in"), class: "btn btn--primary btn--lg btn--block" %>
+  <% end %>
+
+  <p class="auth__switch"><%= t("auth.no_account") %> <%= link_to t("auth.sign_up"), new_registration_path %></p>
+<% end %>

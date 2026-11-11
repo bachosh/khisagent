@@ -1,0 +1,69 @@
+<% content_for :title, t("nav.chats") %>
+
+<header class="main-header">
+  <div class="main-header__titles">
+    <h1 class="main-header__title"><%= t("conversations.title") %></h1>
+    <p class="main-header__subtitle"><%= t("conversations.subtitle") %></p>
+  </div>
+  <div class="main-header__actions">
+    <%= link_to new_conversation_path, class: "btn btn--primary" do %>
+      <%= svg_icon("plus") %> <%= t("nav.new_analysis") %>
+    <% end %>
+  </div>
+</header>
+
+<main class="main-content-root">
+  <div class="toolbar">
+    <%= form_with url: conversations_path, method: :get, class: "input-with-icon" do %>
+      <%= svg_icon("magnifying-glass") %>
+      <%= search_field_tag :q, params[:q], class: "input", placeholder: t("conversations.search") %>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <% if @conversations.any? %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th><%= t("conversations.columns.title") %></th>
+              <th><%= t("conversations.columns.files") %></th>
+              <th><%= t("conversations.columns.risk") %></th>
+              <th class="text-right"><%= t("conversations.columns.updated") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @conversations.each do |conversation| %>
+              <% reports = conversation.statements.filter_map(&:risk_report) %>
+              <tr>
+                <td>
+                  <%= link_to conversation, class: "table__link" do %>
+                    <span class="stat__icon"><%= svg_icon("chat-bubble-left-right") %></span>
+                    <span class="table__primary"><%= conversation.display_title %></span>
+                  <% end %>
+                </td>
+                <td class="muted"><%= t("conversations.files_count", count: conversation.statements.size) %></td>
+                <td>
+                  <% if reports.any? %>
+                    <% worst = reports.max_by(&:risk_score) %>
+                    <%= risk_badge(worst.risk_level, label: "#{worst.risk_score} · #{t("risk_levels.#{worst.risk_level}")}") %>
+                  <% else %>
+                    <span class="faint">—</span>
+                  <% end %>
+                </td>
+                <td class="text-right muted nowrap"><%= l(conversation.last_activity_at, format: :short) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <div class="empty-state__icon"><%= svg_icon("chat-bubble-left-right") %></div>
+        <h3><%= t("conversations.empty_title") %></h3>
+        <p><%= t("conversations.empty_text") %></p>
+        <%= link_to t("nav.new_analysis"), new_conversation_path, class: "btn btn--primary" %>
+      </div>
+    <% end %>
+  </div>
+</main>

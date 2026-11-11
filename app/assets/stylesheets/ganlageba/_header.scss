@@ -1,0 +1,164 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/breakpoints" as *;
+
+.header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  height: $header-height;
+  display: grid;
+  grid-template-columns: $left-nav-width 1fr auto;
+  align-items: center;
+  background: linear-gradient(100deg, var(--header-bg) 0%, var(--header-bg-2) 100%);
+  color: var(--header-text);
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+
+  @include respond($bp-medium) {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 1.2rem;
+    gap: .8rem;
+  }
+
+  &__left-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 2rem;
+    height: 100%;
+
+    @include respond($bp-medium) { padding-left: 0; }
+  }
+
+  &__menu-button {
+    display: none;
+    background: none;
+    border: 0;
+    color: inherit;
+    padding: .6rem;
+    border-radius: $radius-sm;
+    cursor: pointer;
+
+    &:hover { background: rgba(255, 255, 255, .08); }
+
+    @include respond($bp-medium) { display: inline-flex; }
+  }
+
+  &__middle-box {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    padding-left: 2.4rem;
+
+    @include respond($bp-medium) { display: none; }
+  }
+
+  &__nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .8rem 1.4rem;
+    border-radius: 99rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--header-muted);
+    transition: background-color .15s ease, color .15s ease;
+
+    svg { width: 1.8rem; height: 1.8rem; }
+
+    &:hover { color: var(--header-text); background: rgba(255, 255, 255, .07); }
+
+    &.is-active {
+      color: #fff;
+      background: rgba(255, 255, 255, .12);
+      svg { color: var(--accent); }
+    }
+  }
+
+  &__auth-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 2rem;
+    font-size: 1.4rem;
+
+    @include respond($bp-medium) { padding-right: 0; }
+  }
+}
+
+// Brand mark: shield with a check, the product's logo
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: inherit;
+
+  &__mark {
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #3d6bff 0%, #6a4dff 100%);
+    box-shadow: 0 4px 14px rgba(61, 107, 255, .45), inset 0 1px 0 rgba(255, 255, 255, .25);
+
+    svg { width: 2rem; height: 2rem; color: #fff; }
+  }
+
+  &__accent { color: var(--accent); }
+}
+
+// KA | EN switcher
+.lang-switch {
+  display: inline-flex;
+  padding: .3rem;
+  border-radius: 99rem;
+  background: rgba(255, 255, 255, .08);
+
+  button, a {
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: .3rem 1rem;
+    border-radius: 99rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--header-muted);
+
+    &.is-active { background: #fff; color: var(--header-bg); }
+    &:not(.is-active):hover { color: #fff; }
+  }
+
+  form { display: contents; }
+
+  &--light {
+    background: var(--surface-3);
+    button:not(.is-active) { color: var(--text-muted); }
+    button:not(.is-active):hover { color: var(--text); }
+    button.is-active { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+  }
+}
+
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #f5b301, #f07b16);
+  flex-shrink: 0;
+
+  &--assistant {
+    background: linear-gradient(135deg, #3d6bff 0%, #6a4dff 100%);
+    svg { width: 1.8rem; height: 1.8rem; }
+  }
+
+  &--user { background: linear-gradient(135deg, #64748b, #334155); }
+}

@@ -1,0 +1,51 @@
+<% compact = local_assigns[:compact] %>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t("statements.columns.file") %></th>
+        <% unless compact %><th><%= t("statements.columns.holder") %></th><% end %>
+        <% unless compact %><th><%= t("statements.columns.period") %></th><% end %>
+        <th class="text-right"><%= t("statements.columns.operations") %></th>
+        <th><%= t("statements.columns.score") %></th>
+        <% unless compact %><th><%= t("statements.columns.recommendation") %></th><% end %>
+        <th class="text-right"><%= t("statements.columns.uploaded") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% statements.each do |statement| %>
+        <% report = statement.risk_report %>
+        <tr>
+          <td>
+            <%= link_to (report ? statement_path(statement) : conversation_path(statement.conversation)), class: "table__link" do %>
+              <%= file_badge(statement) %>
+              <span>
+                <span class="table__primary"><%= statement.filename.truncate(42) %></span><br>
+                <span class="table__secondary"><%= statement.bank_name.presence || t("statements.kinds.#{statement.file_kind}") %></span>
+              </span>
+            <% end %>
+          </td>
+          <% unless compact %>
+            <td><%= statement.account_holder.presence || content_tag(:span, "—", class: "faint") %></td>
+            <td class="nowrap muted"><%= statement.period_label || "—" %></td>
+          <% end %>
+          <td class="num"><%= statement.operations_count.positive? ? number_with_delimiter(statement.operations_count, delimiter: " ") : "—" %></td>
+          <td>
+            <% if report %>
+              <div style="display:flex;align-items:center;gap:1rem">
+                <div class="gauge gauge--sm gauge--<%= report.risk_level %>" style="--value: <%= report.risk_score %>;width:4rem;height:4rem">
+                  <div class="gauge__inner"><span class="gauge__value" style="font-size:1.3rem"><%= report.risk_score %></span></div>
+                </div>
+                <%= risk_badge(report.risk_level) %>
+              </div>
+            <% else %>
+              <%= statement_status_badge(statement) %>
+            <% end %>
+          </td>
+          <% unless compact %><td class="muted"><%= report ? t("recommendations.#{report.recommendation}") : "—" %></td><% end %>
+          <td class="text-right muted nowrap"><%= l(statement.created_at, format: :short) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

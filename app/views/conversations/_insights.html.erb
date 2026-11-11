@@ -1,0 +1,54 @@
+<% statements = conversation.statements.includes(:risk_report).to_a %>
+<div id="conversation_insights" class="insights">
+  <div class="insights__title">
+    <span><%= t("insights.title") %></span>
+    <button type="button" class="btn btn--ghost btn--icon btn--sm insights__close" data-action="drawer#close" aria-label="<%= t("app.close") %>">
+      <%= svg_icon("x-mark") %>
+    </button>
+  </div>
+
+  <% if statements.empty? %>
+    <div class="empty-state" style="padding: 3rem 1rem">
+      <div class="empty-state__icon"><%= svg_icon("document-arrow-up") %></div>
+      <p><%= t("insights.empty") %></p>
+    </div>
+  <% else %>
+    <% statements.each do |statement| %>
+      <% report = statement.risk_report %>
+      <div class="card">
+        <div class="card__body" style="display:flex;flex-direction:column;gap:1.4rem">
+          <div class="statement-card__top">
+            <%= file_badge(statement) %>
+            <div class="statement-card__name">
+              <strong title="<%= statement.filename %>"><%= statement.filename %></strong>
+              <span><%= statement.account_holder.presence || statement.bank_name.presence || t("statements.kinds.#{statement.file_kind}") %></span>
+            </div>
+          </div>
+          <% if report %>
+            <div style="display:flex;align-items:center;gap:1.4rem">
+              <div class="gauge gauge--sm gauge--<%= report.risk_level %>" style="--value: <%= report.risk_score %>">
+                <div class="gauge__inner"><span class="gauge__value"><%= report.risk_score %></span></div>
+              </div>
+              <div>
+                <%= risk_badge(report.risk_level) %>
+                <div class="statement-card__summary"><%= t("recommendations.#{report.recommendation}") %></div>
+              </div>
+            </div>
+            <% ind = report.metrics["indicators"] || {} %>
+            <dl class="facts">
+              <dt><%= t("indicators.avg_monthly_income") %></dt><dd class="num"><%= money(ind["avg_monthly_income"], statement.display_currency, precision: 0) %></dd>
+              <dt><%= t("indicators.avg_free_cash_flow") %></dt><dd class="num"><%= money(ind["avg_free_cash_flow"], statement.display_currency, precision: 0) %></dd>
+              <dt><%= t("indicators.debt_service_ratio_pct") %></dt><dd class="num"><%= percent(ind["debt_service_ratio_pct"]) %></dd>
+              <dt><%= t("indicators.gambling_per_month") %></dt><dd class="num"><%= money(ind["gambling_per_month"], statement.display_currency, precision: 0) %></dd>
+            </dl>
+            <%= link_to statement_path(statement), class: "btn btn--block" do %>
+              <%= svg_icon("document-chart-bar") %> <%= t("statements.open_report") %>
+            <% end %>
+          <% else %>
+            <%= statement_status_badge(statement) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

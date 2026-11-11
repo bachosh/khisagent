@@ -1,0 +1,67 @@
+@use "abstracts/variables" as *;
+@use "abstracts/breakpoints" as *;
+@use "ganlageba/header";
+@use "ganlageba/leftright-nav";
+@use "ganlageba/main-header";
+@use "ganlageba/messages-header";
+@use "ganlageba/main-content";
+
+// Same grid areas as khisfari; the left nav holds the chat history, the right nav the page's context
+.container {
+  display: grid;
+  grid-template-areas:
+    "header    header           header"
+    "left-nav  messages-header  right-nav"
+    "left-nav  main-header      right-nav"
+    "left-nav  main-content     right-nav";
+  grid-template-columns: $left-nav-width minmax(0, 1fr) 0;
+  grid-template-rows: $header-height auto auto 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  .has-right-nav & {
+    grid-template-columns: $left-nav-width minmax(0, 1fr) $right-nav-width;
+  }
+
+  // Chat: the page is exactly one screen high; only the message list scrolls
+  .page-chat & {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  @include respond($bp-large) {
+    .has-right-nav & {
+      grid-template-columns: $left-nav-width minmax(0, 1fr) 0;
+    }
+  }
+
+  @include respond($bp-medium) {
+    grid-template-areas:
+      "header"
+      "messages-header"
+      "main-header"
+      "main-content";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: $header-height auto auto 1fr;
+
+    .has-right-nav & {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+// Mobile drawers
+.scrim {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 25, .45);
+  backdrop-filter: blur(2px);
+  z-index: 140;
+
+  .sidebar-open &,
+  .insights-open & {
+    display: block;
+  }
+}

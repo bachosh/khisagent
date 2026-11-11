@@ -1,0 +1,88 @@
+<% content_for :title, t("nav.dashboard") %>
+
+<header class="main-header">
+  <div class="main-header__titles">
+    <h1 class="main-header__title"><%= t("dashboard.title") %></h1>
+    <p class="main-header__subtitle"><%= l(Date.current, format: :long) %></p>
+  </div>
+</header>
+
+<main class="main-content-root">
+  <section class="welcome-banner">
+    <div>
+      <h2><%= t("dashboard.greeting", name: current_user.first_name) %></h2>
+      <p><%= t("dashboard.lead") %></p>
+    </div>
+    <%= link_to new_conversation_path, class: "btn btn--lg" do %>
+      <%= svg_icon("arrow-up-tray") %> <%= t("dashboard.upload") %>
+    <% end %>
+  </section>
+
+  <section class="stats" aria-label="<%= t("dashboard.kpis") %>">
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon"><%= svg_icon("document-chart-bar") %></span><%= t("dashboard.analyzed") %></div>
+      <div class="stat__value"><%= @stats[:analyzed] %></div>
+      <div class="stat__hint"><%= t("dashboard.processing", count: @stats[:processing]) %></div>
+    </div>
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon stat__icon--warning"><%= svg_icon("scale") %></span><%= t("dashboard.average_score") %></div>
+      <div class="stat__value"><%= @stats[:average_score] || "—" %><span class="stat__unit">/ 100</span></div>
+      <div class="stat__hint"><%= t("dashboard.average_hint") %></div>
+    </div>
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon stat__icon--danger"><%= svg_icon("shield-exclamation") %></span><%= t("dashboard.high_risk") %></div>
+      <div class="stat__value"><%= @stats[:high_risk] %></div>
+      <div class="stat__hint"><%= t("dashboard.high_risk_hint") %></div>
+    </div>
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon stat__icon--success"><%= svg_icon("table-cells") %></span><%= t("dashboard.operations") %></div>
+      <div class="stat__value"><%= number_with_delimiter(@stats[:operations], delimiter: " ") %></div>
+      <div class="stat__hint"><%= t("dashboard.operations_hint") %></div>
+    </div>
+  </section>
+
+  <div class="grid grid--main-side">
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><%= svg_icon("clock") %> <%= t("dashboard.recent") %></h2>
+        <%= link_to t("dashboard.all_reports"), statements_path, class: "btn btn--sm btn--ghost" %>
+      </div>
+      <% if @recent_statements.any? %>
+        <%= render "statements/table", statements: @recent_statements, compact: true %>
+      <% else %>
+        <div class="empty-state">
+          <div class="empty-state__icon"><%= svg_icon("document-arrow-up") %></div>
+          <h3><%= t("dashboard.empty_title") %></h3>
+          <p><%= t("dashboard.empty_text") %></p>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><%= svg_icon("chart-bar") %> <%= t("dashboard.distribution") %></h2>
+      </div>
+      <div class="card__body">
+        <% total = @level_counts.values.sum %>
+        <% if total.positive? %>
+          <div class="level-split" role="img" aria-label="<%= RiskReport::LEVELS.map { |l| "#{t("risk_levels.#{l}")}: #{@level_counts[l].to_i}" }.join(", ") %>">
+            <% RiskReport::LEVELS.each do |level| %>
+              <% next unless @level_counts[level].to_i.positive? %>
+              <span class="<%= level %>" style="width: <%= (@level_counts[level] * 100.0 / total).round(2) %>%" title="<%= t("risk_levels.#{level}") %>: <%= @level_counts[level] %>"></span>
+            <% end %>
+          </div>
+          <ul class="level-legend">
+            <% RiskReport::LEVELS.each do |level| %>
+              <li>
+                <%= link_to risk_badge(level), statements_path(level: level) %>
+                <b><%= @level_counts[level].to_i %> <span class="faint">· <%= percent(@level_counts[level].to_i * 100.0 / total) %></span></b>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="muted"><%= t("dashboard.no_reports") %></p>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</main>

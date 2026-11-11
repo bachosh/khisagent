@@ -1,0 +1,135 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/breakpoints" as *;
+
+.left-nav,
+.right-nav {
+  align-self: start;
+  position: sticky;
+  top: $header-height;
+  height: calc(100vh - #{$header-height});
+  height: calc(100dvh - #{$header-height});
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  scrollbar-width: thin;
+}
+
+.left-nav {
+  grid-area: left-nav;
+  border-right: 1px solid var(--border);
+  padding: 1.6rem 1.2rem;
+  gap: 1.6rem;
+
+  @include respond($bp-medium) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100dvh;
+    width: min(32rem, 86vw);
+    z-index: 160;
+    transform: translateX(-102%);
+    transition: transform .25s ease;
+    box-shadow: var(--shadow-lg);
+
+    .sidebar-open & { transform: none; }
+  }
+
+  &__section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-faint);
+    padding: 0 1rem;
+    margin-bottom: .6rem;
+  }
+
+  &__mobile-only {
+    display: none;
+    @include respond($bp-medium) { display: flex; flex-direction: column; gap: .2rem; }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding: 1.2rem 1rem 0;
+    border-top: 1px solid var(--border);
+    font-size: 1.2rem;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+
+    svg { width: 1.6rem; height: 1.6rem; color: var(--success); }
+  }
+}
+
+.right-nav {
+  grid-area: right-nav;
+  border-left: 1px solid var(--border);
+  padding: 2rem 1.6rem;
+  gap: 1.6rem;
+
+  &:empty { display: none; }
+
+  @include respond($bp-large) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100dvh;
+    width: min(38rem, 92vw);
+    z-index: 160;
+    transform: translateX(102%);
+    transition: transform .25s ease;
+    box-shadow: var(--shadow-lg);
+
+    .insights-open & { transform: none; }
+  }
+}
+
+// Chat history list
+.chat-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .9rem 1rem;
+    border-radius: $radius-sm;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    transition: background-color .12s ease, color .12s ease;
+
+    svg { width: 1.8rem; height: 1.8rem; flex-shrink: 0; color: var(--text-faint); }
+
+    &:hover { background: var(--surface-3); color: var(--text); }
+
+    &.is-active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 550;
+      svg { color: var(--primary); }
+    }
+  }
+
+  &__title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__empty {
+    padding: 1rem;
+    font-size: 1.35rem;
+    color: var(--text-faint);
+  }
+}

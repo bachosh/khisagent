@@ -1,0 +1,23 @@
+<%# Two-column auth page: the form (yield) on the left, the product pitch on the right %>
+<div class="auth">
+  <div class="auth__form-side">
+    <div class="auth__top">
+      <%= render "layouts/brand" %>
+      <%= render "layouts/lang_switch", variant: "light" %>
+    </div>
+    <div class="auth__box">
+      <div class="public__flash" style="padding:0;margin-bottom:2rem"><%= render "layouts/flash" %></div>
+      <%= yield %>
+    </div>
+  </div>
+  <div class="auth__brand-side">
+    <h2><%= t("auth.pitch_title") %></h2>
+    <p><%= t("auth.pitch_text") %></p>
+    <ul class="auth__points">
+      <li><%= svg_icon("document-arrow-up") %> <%= t("auth.point_formats") %></li>
+      <li><%= svg_icon("scale") %> <%= t("auth.point_indicators") %></li>
+      <li><%= svg_icon("chat-bubble-left-right") %> <%= t("auth.point_chat") %></li>
+      <li><%= svg_icon("lock-closed") %> <%= t("auth.point_local") %></li>
+    </ul>
+  </div>
+</div>

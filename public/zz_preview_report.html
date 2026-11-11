@@ -1,0 +1,1717 @@
+<!-- BEGIN app/views/layouts/application.html.erb
+--><!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="utf-8">
+    <title>sample_statement.csv · KhisAgent</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="KhisAgent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0b1736">
+    <meta name="turbo-refresh-method" content="morph">
+    <meta name="turbo-refresh-scroll" content="preserve">
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="NprNXPI4dRbs-ZFvoMi_ILFngiW8C7SkZPHSMFiJvMb_lUoq7zd6DAdZfnhT7la_xyoRgx7481UKZ9j-CPPjBg" />
+    
+
+    
+
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="stylesheet" href="/assets/application-25c9f225.css" data-turbo-track="reload" />
+    <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "/assets/application-bfcdf840.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-9fd88cd5.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-4b1e420e.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-1fc53fe7.js",
+    "controllers/application": "/assets/controllers/application-3affb389.js",
+    "controllers/chat_scroll_controller": "/assets/controllers/chat_scroll_controller-4fbda368.js",
+    "controllers/composer_controller": "/assets/controllers/composer_controller-22b296de.js",
+    "controllers/drawer_controller": "/assets/controllers/drawer_controller-4a6c2987.js",
+    "controllers/dropzone_controller": "/assets/controllers/dropzone_controller-38d463f7.js",
+    "controllers/flash_controller": "/assets/controllers/flash_controller-1d51f3f0.js",
+    "controllers": "/assets/controllers/index-ee64e1f1.js",
+    "controllers/menu_controller": "/assets/controllers/menu_controller-2110ba2f.js",
+    "controllers/table_search_controller": "/assets/controllers/table_search_controller-a87801c0.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/application-bfcdf840.js">
+<link rel="modulepreload" href="/assets/turbo.min-9fd88cd5.js">
+<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
+<link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
+<link rel="modulepreload" href="/assets/controllers/chat_scroll_controller-4fbda368.js">
+<link rel="modulepreload" href="/assets/controllers/composer_controller-22b296de.js">
+<link rel="modulepreload" href="/assets/controllers/drawer_controller-4a6c2987.js">
+<link rel="modulepreload" href="/assets/controllers/dropzone_controller-38d463f7.js">
+<link rel="modulepreload" href="/assets/controllers/flash_controller-1d51f3f0.js">
+<link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<link rel="modulepreload" href="/assets/controllers/menu_controller-2110ba2f.js">
+<link rel="modulepreload" href="/assets/controllers/table_search_controller-a87801c0.js">
+<script type="module">import "application"</script>
+  </head>
+
+  <body class="" data-controller="drawer" data-action="keydown.esc@window->drawer#close">
+    <div class="container">
+      <!-- BEGIN app/views/layouts/_header.html.erb
+--><header class="header">
+  <div class="header__left-box">
+    <button type="button" class="header__menu-button" data-action="drawer#toggleSidebar" aria-label="მენიუ">
+      <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+</svg>
+    </button>
+    <!-- BEGIN app/views/layouts/_brand.html.erb
+--><a class="brand" aria-label="KhisAgent" href="/dashboard">
+  <span class="brand__mark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+</svg></span>
+  <span>Khis<span class="brand__accent">Agent</span></span>
+</a><!-- END app/views/layouts/_brand.html.erb -->
+  </div>
+
+  <nav class="header__middle-box" aria-label="მთავარი ნავიგაცია">
+    <a class="header__nav-link" href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg><span>მიმოხილვა</span></a>
+    <a class="header__nav-link" href="/conversations"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg><span>ჩატები</span></a>
+    <a class="header__nav-link is-active" aria-current="page" href="/statements"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg><span>რეპორტები</span></a>
+  </nav>
+
+  <div class="header__auth-box">
+    <!-- BEGIN app/views/layouts/_lang_switch.html.erb
+--><div class="lang-switch " role="group" aria-label="ენა">
+    <form data-turbo="false" class="button_to" method="post" action="/locale/ka"><input type="hidden" name="_method" value="patch" /><button class="is-active" aria-pressed="true" title="ქართული" type="submit">KA</button><input type="hidden" name="authenticity_token" value="yKGXCwiuUryjPLcP1LgIUkCxdGDup2XyAfxuTPuSLiWyMOCbs9n9tYaimFrhukFrUeQKUkhpUxoP97T8PSxf4w" /></form>
+    <form data-turbo="false" class="button_to" method="post" action="/locale/en"><input type="hidden" name="_method" value="patch" /><button aria-pressed="false" title="English" type="submit">EN</button><input type="hidden" name="authenticity_token" value="l9yqUYlakKmZSbzTtsN99U6LQsm-c67DGpj4galCPEcTZF_TxthVBQ5XrWNWHGh0rT5eOjP_TWk7tReXqQazoQ" /></form>
+</div>
+<!-- END app/views/layouts/_lang_switch.html.erb -->
+
+      <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+        <summary aria-label="ანგარიში">
+          <span class="avatar">ᲓᲠ</span>
+          <span class="menu__name">დემო რისკ-მენეჯერი</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+</svg>
+        </summary>
+        <div class="menu__panel">
+          <div class="menu__header">
+            <strong>დემო რისკ-მენეჯერი</strong>
+            <span>demo@khisagent.ge</span>
+          </div>
+          <a class="menu__item" href="/profile/edit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg> პროფილი
+</a>          <form class="button_to" method="post" action="/session"><input type="hidden" name="_method" value="delete" /><button class="menu__item menu__item--danger" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"/>
+</svg> გასვლა
+</button><input type="hidden" name="authenticity_token" value="KsZvG8AgPJikvy_nAsg28DlcaptJseTSYCfLeLkZy5t8klQp8uPolrESjxrRV5jPiY_TzzgymDzQU3cfyHQeLA" /></form>        </div>
+      </details>
+  </div>
+</header>
+<!-- END app/views/layouts/_header.html.erb -->
+      <!-- BEGIN app/views/layouts/_left-nav.html.erb
+--><nav class="left-nav" aria-label="ჩატების ისტორია">
+  <a class="btn-new-chat" href="/conversations/new">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg> ახალი ანალიზი
+</a>
+  <div class="left-nav__mobile-only">
+    <a class="chat-list__item" href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg><span>მიმოხილვა</span></a>
+    <a class="chat-list__item" href="/conversations"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg><span>ჩატები</span></a>
+    <a class="chat-list__item" href="/statements"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg><span>რეპორტები</span></a>
+  </div>
+
+  <div>
+    <div class="left-nav__section-title">ბოლო ჩატები</div>
+    <ul class="chat-list" id="sidebar_conversations">
+        <li>
+          <a class="chat-list__item" href="/conversations/1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg>
+            <span class="chat-list__title">რამდენს იხდის თვეში სესხებში და რომელ ორგანიზაციებს?</span>
+</a>        </li>
+        <li>
+          <a class="chat-list__item" href="/conversations/2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg>
+            <span class="chat-list__title">ახალი ანალიზი</span>
+</a>        </li>
+    </ul>
+  </div>
+
+  <div class="left-nav__footer">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/>
+</svg> ლოკალური მოდელი · gemma4:12b
+  </div>
+</nav>
+<!-- END app/views/layouts/_left-nav.html.erb -->
+      <!-- BEGIN app/views/layouts/_messages-header.html.erb
+--><div class="messages-header" id="flash" role="status" aria-live="polite">
+  <!-- BEGIN app/views/layouts/_flash.html.erb
+--><!-- END app/views/layouts/_flash.html.erb -->
+</div>
+<!-- END app/views/layouts/_messages-header.html.erb -->
+      <!-- BEGIN app/views/statements/show.html.erb
+-->
+<header class="main-header">
+  <div class="main-header__titles">
+    <div class="main-header__eyebrow">
+      <a href="/statements">რეპორტები</a>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+</svg>
+      <span>sample_statement.csv</span>
+    </div>
+    <h1 class="main-header__title">sample_statement.csv</h1>
+    <p class="main-header__subtitle">
+      GE29TB7123456789012345 · 03.04.2026 – 26.09.2026 · 85 ოპერაცია
+    </p>
+  </div>
+  <div class="main-header__actions">
+    <a class="btn" href="/conversations/1">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg> კითხვა ჩატში
+</a>    <button type="button" class="btn" onclick="window.print()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+</svg> PDF / ბეჭდვა</button>
+    <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+      <summary class="btn btn--icon" aria-label="მეტი"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+</svg></summary>
+      <div class="menu__panel">
+        <a class="menu__item" data-turbo="false" href="/statements/1/download">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg> ორიგინალი ფაილი
+</a>        <form class="button_to" method="post" action="/statements/1/reanalyze"><button class="menu__item" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+</svg> ხელახალი ანალიზი
+</button><input type="hidden" name="authenticity_token" value="eppNuy-lNiPlpcaQ4_2NWHOL3Fy0PZNEIkuo__2pZL9eyE4n83dzEE64pO6ugVKUXgzY27p2dgq8QiTZ6gIOUw" /></form>        <form data-turbo-confirm="წაიშალოს ამონაწერი და მისი რეპორტი?" class="button_to" method="post" action="/statements/1"><input type="hidden" name="_method" value="delete" /><button class="menu__item menu__item--danger" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+</svg> ამონაწერის წაშლა
+</button><input type="hidden" name="authenticity_token" value="f35ge6oEBfM-xqYuC5RZ5yWX5xc8Zkw46Tcbq7iJZPY0yl0lPrR1k-z1rIXQ5-zrYw0JeFL15tE1LwGtqc7x_A" /></form>      </div>
+    </details>
+  </div>
+</header>
+
+<main class="main-content-root">
+    <section class="card score-hero">
+      <div class="gauge gauge--high" style="--value: 65" role="img"
+           aria-label="რისკის ქულა 65 100-დან, მაღალი">
+        <div class="gauge__inner">
+          <span class="gauge__value">65</span>
+          <span class="gauge__max">100-დან</span>
+          <span class="badge badge--dot badge--high">მაღალი</span>
+        </div>
+      </div>
+      <div class="score-hero__text">
+        <span class="verdict verdict--manual_review">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg> ხელით შემოწმება
+        </span>
+        <p class="score-hero__summary">აპლიკანტის შემოსავალი სტაბილურია და მოდის ერთიანი წყაროდან. თუმცა, ანალიზის პერიოდის განმავლობაში აზარტულ თამაშებზე დანახარჯები მკვეთრად გაიზარდა (0-დან 540 GEL-მდე). ასევე, ივლისიდან გამოჩნდა ახალი სესხის გადახდები კრედო ბანკში. ეს ტენდენციები საჭიროებს დამატებით გადამოწმებას.</p>
+        <div class="report-meta">
+          <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z"/>
+</svg> gemma4:12b</span>
+          <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg> 11.11.2026 22:15</span>
+          <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/>
+</svg> 23 წმ</span>
+          <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+</svg> გადაწყვეტილების მხარდაჭერა, არა ავტომატური გადაწყვეტილება</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z"/>
+</svg> ფინანსური ინდიკატორები</h2>
+        <span class="card__subtitle">თვიური საშუალო</span>
+      </div>
+      <dl class="indicators">
+        <div><dt>საშუალო თვიური შემოსავალი</dt><dd>2 462 GEL<small>შემოსავალი 6 / 6 თვეში</small></dd></div>
+        <div><dt>შემოსავლის ვარიაცია</dt><dd>1,5%<small>რაც ნაკლები, მით სტაბილური</small></dd></div>
+        <div><dt>საშუალო თვიური ხარჯი</dt><dd>1 877 GEL</dd></div>
+        <div><dt>თავისუფალი ფულადი ნაკადი</dt><dd class="text-in" style="">585 GEL</dd></div>
+        <div><dt>საფინანსო ორგანიზაციების გადახდები</dt><dd>485 GEL<small>ვალის მომსახურების კოეფ.: 19,7%</small></dd></div>
+        <div><dt>აზარტულ თამაშებზე ხარჯი</dt><dd style="color: var(--risk-high)">253 GEL</dd></div>
+        <div><dt>ATM განაღდებები</dt><dd>625 GEL<small>თვეში 2.0-ჯერ</small></dd></div>
+        <div><dt>თვის მინიმალური ნაშთი</dt><dd>1 369 GEL</dd></div>
+      </dl>
+    </section>
+
+    <div class="grid grid--main-side">
+      <section class="card">
+        <div class="card__header">
+          <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z"/>
+</svg> მიგნებები</h2>
+          <span class="card__subtitle">2</span>
+        </div>
+          <ul class="findings">
+              <li class="finding finding--high">
+                <span class="finding__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+</svg></span>
+                <div>
+                  <div class="finding__head">
+                    <span class="finding__title">აზარტულ თამაშებზე დანახარჯის მკვეთრი ზრდა</span>
+                    <span class="badge badge--dot badge--high">მაღალი</span>
+                  </div>
+                  <p class="finding__text">ანალიზის პერიოდის განმავლობაში აზარტულ თამაშებზე დანახარჯები მკვეთრად გაიზარდა 560%-ით. აპრილში დანახარჯი 0 GEL იყო, ხოლო სექტემბერში — 540 GEL.</p>
+                    <div class="finding__evidence">
+                        <div class="finding__op">
+                          <span class="faint mono">#21</span>
+                          <span class="muted finding__op-date">15.05.2026</span>
+                          <span title="CRYSTALBET.GE ONLINE MCC:7995">CRYSTALBET.GE ONLINE MCC:7995</span>
+                          <span class="mono ">-80,00</span>
+                        </div>
+                        <div class="finding__op">
+                          <span class="faint mono">#34</span>
+                          <span class="muted finding__op-date">15.06.2026</span>
+                          <span title="CRYSTALBET.GE ONLINE MCC:7995">CRYSTALBET.GE ONLINE MCC:7995</span>
+                          <span class="mono ">-120,00</span>
+                        </div>
+                        <div class="finding__op">
+                          <span class="faint mono">#47</span>
+                          <span class="muted finding__op-date">15.07.2026</span>
+                          <span title="CRYSTALBET.GE ONLINE MCC:7995">CRYSTALBET.GE ONLINE MCC:7995</span>
+                          <span class="mono ">-160,00</span>
+                        </div>
+                        <div class="finding__op">
+                          <span class="faint mono">#48</span>
+                          <span class="muted finding__op-date">16.07.2026</span>
+                          <span title="ADJARABET MCC:7995">ADJARABET MCC:7995</span>
+                          <span class="mono ">-180,00</span>
+                        </div>
+                        <div class="finding__op">
+                          <span class="faint mono">#63</span>
+                          <span class="muted finding__op-date">15.08.2026</span>
+                          <span title="CRYSTALBET.GE ONLINE MCC:7995">CRYSTALBET.GE ONLINE MCC:7995</span>
+                          <span class="mono ">-200,00</span>
+                        </div>
+                    </div>
+                </div>
+              </li>
+              <li class="finding finding--medium">
+                <span class="finding__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+</svg></span>
+                <div>
+                  <div class="finding__head">
+                    <span class="finding__title">ახალი სესხის ვალდებულების გამოჩენა</span>
+                    <span class="badge badge--dot badge--medium">საშუალო</span>
+                  </div>
+                  <p class="finding__text">ივლისიდან ანგარიშზე გამოჩნდა ახალი რეგულარული გადახდები კრედო ბანკში, რაც მიუთითებს ახალი სესხის აღებაზე.</p>
+                    <div class="finding__evidence">
+                        <div class="finding__op">
+                          <span class="faint mono">#49</span>
+                          <span class="muted finding__op-date">17.07.2026</span>
+                          <span title="სესხის დაფარვა კრედო ბანკი">სესხის დაფარვა კრედო ბანკი</span>
+                          <span class="mono ">-210,00</span>
+                        </div>
+                        <div class="finding__op">
+                          <span class="faint mono">#65</span>
+                          <span class="muted finding__op-date">17.08.2026</span>
+                          <span title="სესხის დაფარვა კრედო ბანკი">სესხის დაფარვა კრედო ბანკი</span>
+                          <span class="mono ">-210,00</span>
+                        </div>
+                    </div>
+                </div>
+              </li>
+          </ul>
+      </section>
+
+      <div style="display:flex;flex-direction:column;gap:2rem;min-width:0">
+          <section class="card">
+            <div class="card__header"><h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg> დადებითი ფაქტორები</h2></div>
+            <div class="card__body">
+              <ul class="strengths">
+                <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg><span>სტაბილური შემოსავალი ერთიანი წყაროდან (Alpha Trade LLC)</span></li><li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg><span>დადებითი თავისუფალი ფულადი ნაკადი</span></li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card__header">
+              <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+</svg> ინდიკატორების ქულა</h2>
+              <span class="badge badge--outline">39 / 100</span>
+            </div>
+            <div class="card__body">
+                <ul class="factor-list">
+                    <li><span>აზარტული თამაშები &gt; შემოსავლის 10%</span><b>+25</b></li>
+                    <li><span>ჯარიმები / ოვერდრაფტი / უარყოფილი გადახდა</span><b>+8</b></li>
+                    <li><span>აზარტულ თამაშებზე ხარჯი იზრდება</span><b>+6</b></li>
+                </ul>
+              <p class="faint" style="margin-top:1.4rem;font-size:1.25rem">წესებზე დაფუძნებული საწყისი ქულა. AI-ს საბოლოო ქულა ითვალისწინებს ოპერაციების დეტალებსაც.</p>
+            </div>
+          </section>
+      </div>
+    </div>
+
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/>
+</svg> ფულადი ნაკადები თვეების მიხედვით</h2>
+        <span class="card__subtitle">GEL</span>
+      </div>
+      <div class="card__body">
+        <!-- BEGIN app/views/statements/_cashflow_chart.html.erb
+--><div class="viz cashflow">
+  <div class="cashflow__legend">
+    <span><i style="background: var(--series-in)"></i>შემოსული</span>
+    <span><i style="background: var(--series-out)"></i>გასული</span>
+  </div>
+  <div class="cashflow__plot" role="img" aria-label="ყოველთვიური შემოსული და გასული თანხები">
+    <div class="cashflow__grid" aria-hidden="true">
+        <div><span>5 000</span></div>
+        <div><span>3 750</span></div>
+        <div><span>2 500</span></div>
+        <div><span>1 250</span></div>
+        <div><span>0</span></div>
+    </div>
+      <div class="cashflow__month">
+        <div class="cashflow__bar cashflow__bar--in" style="height: 50.04%"></div>
+        <div class="cashflow__bar cashflow__bar--out" style="height: 30.9%"></div>
+        <div class="cashflow__tip">
+          <strong>აპრილი 2026</strong>
+          <div><span><i style="background: var(--series-in)"></i>შემოსული</span><b>2 502 GEL</b></div>
+          <div><span><i style="background: var(--series-out)"></i>გასული</span><b>1 545 GEL</b></div>
+          <div><span>შემოსავალი</span><b>2 502 GEL</b></div>
+            <div><span>მინ. ნაშთი</span><b>1 369 GEL</b></div>
+        </div>
+      </div>
+      <div class="cashflow__month">
+        <div class="cashflow__bar cashflow__bar--in" style="height: 50.04%"></div>
+        <div class="cashflow__bar cashflow__bar--out" style="height: 33.44%"></div>
+        <div class="cashflow__tip">
+          <strong>მაისი 2026</strong>
+          <div><span><i style="background: var(--series-in)"></i>შემოსული</span><b>2 502 GEL</b></div>
+          <div><span><i style="background: var(--series-out)"></i>გასული</span><b>1 672 GEL</b></div>
+          <div><span>შემოსავალი</span><b>2 502 GEL</b></div>
+            <div><span>მინ. ნაშთი</span><b>2 199 GEL</b></div>
+        </div>
+      </div>
+      <div class="cashflow__month">
+        <div class="cashflow__bar cashflow__bar--in" style="height: 49.74%"></div>
+        <div class="cashflow__bar cashflow__bar--out" style="height: 35.28%"></div>
+        <div class="cashflow__tip">
+          <strong>ივნისი 2026</strong>
+          <div><span><i style="background: var(--series-in)"></i>შემოსული</span><b>2 487 GEL</b></div>
+          <div><span><i style="background: var(--series-out)"></i>გასული</span><b>1 764 GEL</b></div>
+          <div><span>შემოსავალი</span><b>2 487 GEL</b></div>
+            <div><span>მინ. ნაშთი</span><b>2 922 GEL</b></div>
+        </div>
+      </div>
+      <div class="cashflow__month">
+        <div class="cashflow__bar cashflow__bar--in" style="height: 78.42%"></div>
+        <div class="cashflow__bar cashflow__bar--out" style="height: 44.82%"></div>
+        <div class="cashflow__tip">
+          <strong>ივლისი 2026</strong>
+          <div><span><i style="background: var(--series-in)"></i>შემოსული</span><b>3 921 GEL</b></div>
+          <div><span><i style="background: var(--series-out)"></i>გასული</span><b>2 241 GEL</b></div>
+          <div><span>შემოსავალი</span><b>2 421 GEL</b></div>
+            <div><span>მინ. ნაშთი</span><b>3 717 GEL</b></div>
+        </div>
+      </div>
+      <div class="cashflow__month">
+        <div class="cashflow__bar cashflow__bar--in" style="height: 48.74%"></div>
+        <div class="cashflow__bar cashflow__bar--out" style="height: 47.28%"></div>
+        <div class="cashflow__tip">
+          <strong>აგვისტო 2026</strong>
+          <div><span><i style="background: var(--series-in)"></i>შემოსული</span><b>2 437 GEL</b></div>
+          <div><span><i style="background: var(--series-out)"></i>გასული</span><b>2 364 GEL</b></div>
+          <div><span>შემოსავალი</span><b>2 437 GEL</b></div>
+            <div><span>მინ. ნაშთი</span><b>4 675 GEL</b></div>
+        </div>
+      </div>
+      <div class="cashflow__month">
+        <div class="cashflow__bar cashflow__bar--in" style="height: 48.42%"></div>
+        <div class="cashflow__bar cashflow__bar--out" style="height: 51.54%"></div>
+        <div class="cashflow__tip">
+          <strong>სექტემბერი 2026</strong>
+          <div><span><i style="background: var(--series-in)"></i>შემოსული</span><b>2 421 GEL</b></div>
+          <div><span><i style="background: var(--series-out)"></i>გასული</span><b>2 577 GEL</b></div>
+          <div><span>შემოსავალი</span><b>2 421 GEL</b></div>
+            <div><span>მინ. ნაშთი</span><b>4 519 GEL</b></div>
+        </div>
+      </div>
+  </div>
+  <div class="cashflow__labels" aria-hidden="true">
+      <span>აპრ 26</span>
+      <span>მაისი 26</span>
+      <span>ივნ 26</span>
+      <span>ივლ 26</span>
+      <span>აგვ 26</span>
+      <span>სექტ 26</span>
+  </div>
+</div>
+<!-- END app/views/statements/_cashflow_chart.html.erb -->
+      </div>
+      <div class="table-wrap" style="border-top:1px solid var(--border)">
+        <table class="table table--compact">
+          <thead>
+            <tr>
+              <th>თვე</th>
+              <th class="text-right">შემოსული</th>
+              <th class="text-right">შემოსავალი</th>
+              <th class="text-right">გასული</th>
+              <th class="text-right">სესხები</th>
+              <th class="text-right">აზარტ.</th>
+              <th class="text-right">ნაღდი (რაოდ.)</th>
+              <th class="text-right">მინ. ნაშთი</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="nowrap">აპრილი 2026</td>
+                <td class="num text-in">2 502</td>
+                <td class="num">2 502</td>
+                <td class="num">1 545</td>
+                <td class="num">380</td>
+                <td class="num" style="">0</td>
+                <td class="num">500 <span class="faint">(2)</span></td>
+                <td class="num">1 369</td>
+              </tr>
+              <tr>
+                <td class="nowrap">მაისი 2026</td>
+                <td class="num text-in">2 502</td>
+                <td class="num">2 502</td>
+                <td class="num">1 672</td>
+                <td class="num">380</td>
+                <td class="num" style="color: var(--risk-high)">80</td>
+                <td class="num">550 <span class="faint">(2)</span></td>
+                <td class="num">2 199</td>
+              </tr>
+              <tr>
+                <td class="nowrap">ივნისი 2026</td>
+                <td class="num text-in">2 487</td>
+                <td class="num">2 487</td>
+                <td class="num">1 764</td>
+                <td class="num">380</td>
+                <td class="num" style="color: var(--risk-high)">120</td>
+                <td class="num">600 <span class="faint">(2)</span></td>
+                <td class="num">2 922</td>
+              </tr>
+              <tr>
+                <td class="nowrap">ივლისი 2026</td>
+                <td class="num text-in">3 921</td>
+                <td class="num">2 421</td>
+                <td class="num">2 241</td>
+                <td class="num">590</td>
+                <td class="num" style="color: var(--risk-high)">340</td>
+                <td class="num">650 <span class="faint">(2)</span></td>
+                <td class="num">3 717</td>
+              </tr>
+              <tr>
+                <td class="nowrap">აგვისტო 2026</td>
+                <td class="num text-in">2 437</td>
+                <td class="num">2 437</td>
+                <td class="num">2 364</td>
+                <td class="num">590</td>
+                <td class="num" style="color: var(--risk-high)">440</td>
+                <td class="num">700 <span class="faint">(2)</span></td>
+                <td class="num">4 675</td>
+              </tr>
+              <tr>
+                <td class="nowrap">სექტემბერი 2026</td>
+                <td class="num text-in">2 421</td>
+                <td class="num">2 421</td>
+                <td class="num">2 577</td>
+                <td class="num">590</td>
+                <td class="num" style="color: var(--risk-high)">540</td>
+                <td class="num">750 <span class="faint">(2)</span></td>
+                <td class="num">4 519</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="grid grid--2">
+      <section class="card viz">
+        <div class="card__header">
+          <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg> ხარჯები ჯგუფების მიხედვით</h2>
+          <span class="card__subtitle">გასული</span>
+        </div>
+        <div class="card__body">
+          <ul class="hbars">
+              <li class="">
+                <span class="hbars__label">ნაღდის გატანა <span class="faint">· 12</span></span>
+                <span class="hbars__value">3 750 GEL</span>
+                <span class="hbars__track"><span class="hbars__fill" style="display:block;width: 100.0%"></span></span>
+              </li>
+              <li class="">
+                <span class="hbars__label">სესხის გადახდა <span class="faint">· 9</span></span>
+                <span class="hbars__value">2 910 GEL</span>
+                <span class="hbars__track"><span class="hbars__fill" style="display:block;width: 77.6%"></span></span>
+              </li>
+              <li class="">
+                <span class="hbars__label">აუცილებელი ხარჯი <span class="faint">· 37</span></span>
+                <span class="hbars__value">2 774 GEL</span>
+                <span class="hbars__track"><span class="hbars__fill" style="display:block;width: 73.97%"></span></span>
+              </li>
+              <li class="is-risky">
+                <span class="hbars__label">აზარტული თამაშები <span class="faint">· 8</span></span>
+                <span class="hbars__value">1 520 GEL</span>
+                <span class="hbars__track"><span class="hbars__fill" style="display:block;width: 40.53%"></span></span>
+              </li>
+              <li class="">
+                <span class="hbars__label">გადარიცხვა <span class="faint">· 7</span></span>
+                <span class="hbars__value">900 GEL</span>
+                <span class="hbars__track"><span class="hbars__fill" style="display:block;width: 24.0%"></span></span>
+              </li>
+              <li class="">
+                <span class="hbars__label">დისკრეციული ხარჯი <span class="faint">· 6</span></span>
+                <span class="hbars__value">309 GEL</span>
+                <span class="hbars__track"><span class="hbars__fill" style="display:block;width: 8.24%"></span></span>
+              </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/>
+</svg> საფინანსო ორგანიზაციები</h2>
+        </div>
+          <div class="table-wrap">
+            <table class="table table--compact">
+              <thead><tr><th>მიმღები</th><th class="text-right">გადახდა</th><th class="text-right">ჯამი</th><th>პერიოდი</th></tr></thead>
+              <tbody>
+                  <tr>
+                    <td class="table__primary">სესხის დაფარვა TBC ბანკი, ხელშეკრულება</td>
+                    <td class="num">6</td>
+                    <td class="num">2 280</td>
+                    <td class="muted nowrap">2026-04 – 2026-09</td>
+                  </tr>
+                  <tr>
+                    <td class="table__primary">სესხის დაფარვა კრედო ბანკი</td>
+                    <td class="num">3</td>
+                    <td class="num">630</td>
+                    <td class="muted nowrap">2026-07 – 2026-09</td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+      </section>
+    </div>
+
+    <section class="card" data-controller="table-search" id="operations">
+      <div class="card__header" style="flex-wrap:wrap">
+        <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"/>
+</svg> ოპერაციები
+          <span class="card__subtitle"><span data-table-search-target="count">85</span></span>
+        </h2>
+        <div class="toolbar" style="flex:1;justify-content:flex-end">
+          <nav class="segmented">
+            <a class="is-active" href="/statements/1#operations">ყველა</a>
+            <a href="/statements/1?risky=1#operations">რისკიანი</a>
+              <a href="/statements/1?group=income#operations">შემოსავალი</a>
+              <a href="/statements/1?group=loan_payment#operations">სესხის გადახდა</a>
+              <a href="/statements/1?group=gambling#operations">აზარტული თამაშები</a>
+              <a href="/statements/1?group=cash_withdrawal#operations">ნაღდის გატანა</a>
+              <a href="/statements/1?group=transfer#operations">გადარიცხვა</a>
+          </nav>
+          <div class="input-with-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+</svg>
+            <input type="search" class="input" placeholder="ძებნა ოპერაციებში…" data-table-search-target="input" data-action="input->table-search#filter">
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap" style="max-height: 70rem">
+        <table class="table table--compact">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>თარიღი</th>
+              <th>აღწერა</th>
+              <th>კატეგორია</th>
+              <th>MCC</th>
+              <th class="text-right">თანხა</th>
+              <th class="text-right">ნაშთი</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">1</td>
+                <td class="nowrap muted">03.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ხელფასი შპს ალფა ტრეიდი (Alpha Trade LLC) ს/კ 405123456</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">ხელფასი</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap text-in">+2502,00</td>
+                <td class="num nowrap muted">2914,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">2</td>
+                <td class="nowrap muted">04.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით CARREFOUR TBILISI MALL MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-171,00</td>
+                <td class="num nowrap muted">2743,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">3</td>
+                <td class="nowrap muted">05.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა TBC ATM 0453 MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">2443,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">4</td>
+                <td class="nowrap muted">06.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">კომუნალური გადახდა თელასი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კომუნალური</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-59,00</td>
+                <td class="num nowrap muted">2384,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">5</td>
+                <td class="nowrap muted">07.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">MAGTICOM მობილური MCC:4814</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კავშირგაბმულობა</span></td>
+                <td class="mono faint">4814</td>
+                <td class="num nowrap ">-25,00</td>
+                <td class="num nowrap muted">2359,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">6</td>
+                <td class="nowrap muted">09.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა TBC ბანკი, ხელშეკრულება 77812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-380,00</td>
+                <td class="num nowrap muted">1979,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">7</td>
+                <td class="nowrap muted">11.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით NIKORA MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-67,00</td>
+                <td class="num nowrap muted">1912,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">8</td>
+                <td class="nowrap muted">13.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WISSOL PETROLEUM MCC:5541</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">საწვავი</span></td>
+                <td class="mono faint">5541</td>
+                <td class="num nowrap ">-70,00</td>
+                <td class="num nowrap muted">1842,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">9</td>
+                <td class="nowrap muted">19.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა BOG ATM MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-200,00</td>
+                <td class="num nowrap muted">1642,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">10</td>
+                <td class="nowrap muted">21.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WOLT GEORGIA MCC:5812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">რესტორანი</span></td>
+                <td class="mono faint">5812</td>
+                <td class="num nowrap ">-63,00</td>
+                <td class="num nowrap muted">1579,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">11</td>
+                <td class="nowrap muted">23.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადარიცხვა ბარათზე ნ. ბერიძე</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">გასული გადარიცხვა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-150,00</td>
+                <td class="num nowrap muted">1429,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">12</td>
+                <td class="nowrap muted">26.04.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით SPAR MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-60,00</td>
+                <td class="num nowrap muted">1369,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">13</td>
+                <td class="nowrap muted">03.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ხელფასი შპს ალფა ტრეიდი (Alpha Trade LLC) ს/კ 405123456</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">ხელფასი</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap text-in">+2502,00</td>
+                <td class="num nowrap muted">3871,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">14</td>
+                <td class="nowrap muted">04.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით CARREFOUR TBILISI MALL MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-177,00</td>
+                <td class="num nowrap muted">3694,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">15</td>
+                <td class="nowrap muted">05.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა TBC ATM 0453 MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">3394,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">16</td>
+                <td class="nowrap muted">06.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">კომუნალური გადახდა თელასი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კომუნალური</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-63,00</td>
+                <td class="num nowrap muted">3331,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">17</td>
+                <td class="nowrap muted">07.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">MAGTICOM მობილური MCC:4814</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კავშირგაბმულობა</span></td>
+                <td class="mono faint">4814</td>
+                <td class="num nowrap ">-25,00</td>
+                <td class="num nowrap muted">3306,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">18</td>
+                <td class="nowrap muted">09.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა TBC ბანკი, ხელშეკრულება 77812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-380,00</td>
+                <td class="num nowrap muted">2926,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">19</td>
+                <td class="nowrap muted">11.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით NIKORA MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-82,00</td>
+                <td class="num nowrap muted">2844,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">20</td>
+                <td class="nowrap muted">13.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WISSOL PETROLEUM MCC:5541</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">საწვავი</span></td>
+                <td class="mono faint">5541</td>
+                <td class="num nowrap ">-70,00</td>
+                <td class="num nowrap muted">2774,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">21</td>
+                <td class="nowrap muted">15.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">CRYSTALBET.GE ONLINE MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-80,00</td>
+                <td class="num nowrap muted">2694,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">22</td>
+                <td class="nowrap muted">19.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა BOG ATM MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-250,00</td>
+                <td class="num nowrap muted">2444,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">23</td>
+                <td class="nowrap muted">21.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WOLT GEORGIA MCC:5812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">რესტორანი</span></td>
+                <td class="mono faint">5812</td>
+                <td class="num nowrap ">-45,00</td>
+                <td class="num nowrap muted">2399,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">24</td>
+                <td class="nowrap muted">23.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადარიცხვა ბარათზე ნ. ბერიძე</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">გასული გადარიცხვა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-150,00</td>
+                <td class="num nowrap muted">2249,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">25</td>
+                <td class="nowrap muted">26.05.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით SPAR MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-50,00</td>
+                <td class="num nowrap muted">2199,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">26</td>
+                <td class="nowrap muted">03.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ხელფასი შპს ალფა ტრეიდი (Alpha Trade LLC) ს/კ 405123456</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">ხელფასი</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap text-in">+2487,00</td>
+                <td class="num nowrap muted">4686,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">27</td>
+                <td class="nowrap muted">04.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით CARREFOUR TBILISI MALL MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-172,00</td>
+                <td class="num nowrap muted">4514,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">28</td>
+                <td class="nowrap muted">05.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა TBC ATM 0453 MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">4214,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">29</td>
+                <td class="nowrap muted">06.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">კომუნალური გადახდა თელასი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კომუნალური</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-48,00</td>
+                <td class="num nowrap muted">4166,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">30</td>
+                <td class="nowrap muted">07.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">MAGTICOM მობილური MCC:4814</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კავშირგაბმულობა</span></td>
+                <td class="mono faint">4814</td>
+                <td class="num nowrap ">-25,00</td>
+                <td class="num nowrap muted">4141,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">31</td>
+                <td class="nowrap muted">09.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა TBC ბანკი, ხელშეკრულება 77812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-380,00</td>
+                <td class="num nowrap muted">3761,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">32</td>
+                <td class="nowrap muted">11.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით NIKORA MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-99,00</td>
+                <td class="num nowrap muted">3662,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">33</td>
+                <td class="nowrap muted">13.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WISSOL PETROLEUM MCC:5541</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">საწვავი</span></td>
+                <td class="mono faint">5541</td>
+                <td class="num nowrap ">-70,00</td>
+                <td class="num nowrap muted">3592,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">34</td>
+                <td class="nowrap muted">15.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">CRYSTALBET.GE ONLINE MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-120,00</td>
+                <td class="num nowrap muted">3472,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">35</td>
+                <td class="nowrap muted">19.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა BOG ATM MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">3172,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">36</td>
+                <td class="nowrap muted">21.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WOLT GEORGIA MCC:5812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">რესტორანი</span></td>
+                <td class="mono faint">5812</td>
+                <td class="num nowrap ">-58,00</td>
+                <td class="num nowrap muted">3114,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">37</td>
+                <td class="nowrap muted">23.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადარიცხვა ბარათზე ნ. ბერიძე</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">გასული გადარიცხვა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-150,00</td>
+                <td class="num nowrap muted">2964,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">38</td>
+                <td class="nowrap muted">26.06.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით SPAR MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-42,00</td>
+                <td class="num nowrap muted">2922,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">39</td>
+                <td class="nowrap muted">03.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ხელფასი შპს ალფა ტრეიდი (Alpha Trade LLC) ს/კ 405123456</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">ხელფასი</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap text-in">+2421,00</td>
+                <td class="num nowrap muted">5343,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">40</td>
+                <td class="nowrap muted">04.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით CARREFOUR TBILISI MALL MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-172,00</td>
+                <td class="num nowrap muted">5171,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">41</td>
+                <td class="nowrap muted">05.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა TBC ATM 0453 MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">4871,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">42</td>
+                <td class="nowrap muted">06.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">კომუნალური გადახდა თელასი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კომუნალური</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-46,00</td>
+                <td class="num nowrap muted">4825,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">43</td>
+                <td class="nowrap muted">07.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">MAGTICOM მობილური MCC:4814</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კავშირგაბმულობა</span></td>
+                <td class="mono faint">4814</td>
+                <td class="num nowrap ">-25,00</td>
+                <td class="num nowrap muted">4800,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">44</td>
+                <td class="nowrap muted">09.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა TBC ბანკი, ხელშეკრულება 77812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-380,00</td>
+                <td class="num nowrap muted">4420,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">45</td>
+                <td class="nowrap muted">11.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით NIKORA MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-83,00</td>
+                <td class="num nowrap muted">4337,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">46</td>
+                <td class="nowrap muted">13.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WISSOL PETROLEUM MCC:5541</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">საწვავი</span></td>
+                <td class="mono faint">5541</td>
+                <td class="num nowrap ">-70,00</td>
+                <td class="num nowrap muted">4267,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">47</td>
+                <td class="nowrap muted">15.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">CRYSTALBET.GE ONLINE MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-160,00</td>
+                <td class="num nowrap muted">4107,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">48</td>
+                <td class="nowrap muted">16.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ADJARABET MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-180,00</td>
+                <td class="num nowrap muted">3927,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">49</td>
+                <td class="nowrap muted">17.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა კრედო ბანკი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-210,00</td>
+                <td class="num nowrap muted">3717,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">50</td>
+                <td class="nowrap muted">17.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის ჩარიცხვა კრისტალი მფო</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის ჩარიცხვა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap text-in">+1500,00</td>
+                <td class="num nowrap muted">5217,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">51</td>
+                <td class="nowrap muted">19.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა BOG ATM MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-350,00</td>
+                <td class="num nowrap muted">4867,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">52</td>
+                <td class="nowrap muted">21.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WOLT GEORGIA MCC:5812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">რესტორანი</span></td>
+                <td class="mono faint">5812</td>
+                <td class="num nowrap ">-46,00</td>
+                <td class="num nowrap muted">4821,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">53</td>
+                <td class="nowrap muted">23.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადარიცხვა ბარათზე ნ. ბერიძე</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">გასული გადარიცხვა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-150,00</td>
+                <td class="num nowrap muted">4671,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">54</td>
+                <td class="nowrap muted">26.07.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით SPAR MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-69,00</td>
+                <td class="num nowrap muted">4602,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">55</td>
+                <td class="nowrap muted">03.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ხელფასი შპს ალფა ტრეიდი (Alpha Trade LLC) ს/კ 405123456</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">ხელფასი</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap text-in">+2437,00</td>
+                <td class="num nowrap muted">7039,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">56</td>
+                <td class="nowrap muted">04.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით CARREFOUR TBILISI MALL MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-121,00</td>
+                <td class="num nowrap muted">6918,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">57</td>
+                <td class="nowrap muted">05.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა TBC ATM 0453 MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">6618,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">58</td>
+                <td class="nowrap muted">06.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">კომუნალური გადახდა თელასი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კომუნალური</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-65,00</td>
+                <td class="num nowrap muted">6553,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">59</td>
+                <td class="nowrap muted">07.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">MAGTICOM მობილური MCC:4814</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კავშირგაბმულობა</span></td>
+                <td class="mono faint">4814</td>
+                <td class="num nowrap ">-25,00</td>
+                <td class="num nowrap muted">6528,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">60</td>
+                <td class="nowrap muted">09.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა TBC ბანკი, ხელშეკრულება 77812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-380,00</td>
+                <td class="num nowrap muted">6148,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">61</td>
+                <td class="nowrap muted">11.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით NIKORA MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-92,00</td>
+                <td class="num nowrap muted">6056,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">62</td>
+                <td class="nowrap muted">13.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WISSOL PETROLEUM MCC:5541</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">საწვავი</span></td>
+                <td class="mono faint">5541</td>
+                <td class="num nowrap ">-70,00</td>
+                <td class="num nowrap muted">5986,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">63</td>
+                <td class="nowrap muted">15.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">CRYSTALBET.GE ONLINE MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-200,00</td>
+                <td class="num nowrap muted">5786,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">64</td>
+                <td class="nowrap muted">16.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ADJARABET MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-240,00</td>
+                <td class="num nowrap muted">5546,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">65</td>
+                <td class="nowrap muted">17.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა კრედო ბანკი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-210,00</td>
+                <td class="num nowrap muted">5336,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">66</td>
+                <td class="nowrap muted">19.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა BOG ATM MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-400,00</td>
+                <td class="num nowrap muted">4936,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">67</td>
+                <td class="nowrap muted">21.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WOLT GEORGIA MCC:5812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">რესტორანი</span></td>
+                <td class="mono faint">5812</td>
+                <td class="num nowrap ">-46,00</td>
+                <td class="num nowrap muted">4890,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">68</td>
+                <td class="nowrap muted">23.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადარიცხვა ბარათზე ნ. ბერიძე</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">გასული გადარიცხვა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-150,00</td>
+                <td class="num nowrap muted">4740,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">69</td>
+                <td class="nowrap muted">26.08.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით SPAR MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-65,00</td>
+                <td class="num nowrap muted">4675,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">70</td>
+                <td class="nowrap muted">03.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ხელფასი შპს ალფა ტრეიდი (Alpha Trade LLC) ს/კ 405123456</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">ხელფასი</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap text-in">+2421,00</td>
+                <td class="num nowrap muted">7096,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">71</td>
+                <td class="nowrap muted">04.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით CARREFOUR TBILISI MALL MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-180,00</td>
+                <td class="num nowrap muted">6916,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">72</td>
+                <td class="nowrap muted">05.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა TBC ATM 0453 MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">6616,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">73</td>
+                <td class="nowrap muted">06.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">კომუნალური გადახდა თელასი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კომუნალური</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-56,00</td>
+                <td class="num nowrap muted">6560,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">74</td>
+                <td class="nowrap muted">07.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">MAGTICOM მობილური MCC:4814</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">კავშირგაბმულობა</span></td>
+                <td class="mono faint">4814</td>
+                <td class="num nowrap ">-25,00</td>
+                <td class="num nowrap muted">6535,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">75</td>
+                <td class="nowrap muted">09.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა TBC ბანკი, ხელშეკრულება 77812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-380,00</td>
+                <td class="num nowrap muted">6155,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">76</td>
+                <td class="nowrap muted">11.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით NIKORA MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-84,00</td>
+                <td class="num nowrap muted">6071,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">77</td>
+                <td class="nowrap muted">13.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WISSOL PETROLEUM MCC:5541</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">საწვავი</span></td>
+                <td class="mono faint">5541</td>
+                <td class="num nowrap ">-70,00</td>
+                <td class="num nowrap muted">6001,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">78</td>
+                <td class="nowrap muted">15.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">CRYSTALBET.GE ONLINE MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-240,00</td>
+                <td class="num nowrap muted">5761,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">79</td>
+                <td class="nowrap muted">16.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ADJARABET MCC:7995</div>
+                  
+                </td>
+                <td><span class="badge badge--high">აზარტული თამაშები</span></td>
+                <td class="mono faint">7995</td>
+                <td class="num nowrap ">-300,00</td>
+                <td class="num nowrap muted">5461,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">80</td>
+                <td class="nowrap muted">17.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">სესხის დაფარვა კრედო ბანკი</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სესხის გადახდა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-210,00</td>
+                <td class="num nowrap muted">5251,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">81</td>
+                <td class="nowrap muted">19.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ATM ნაღდი ფულის გატანა BOG ATM MCC:6011</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">განაღდება</span></td>
+                <td class="mono faint">6011</td>
+                <td class="num nowrap ">-450,00</td>
+                <td class="num nowrap muted">4801,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="is-risky">
+                <td class="faint mono">82</td>
+                <td class="nowrap muted">20.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">ჯარიმა ვადაგადაცილებისთვის, სესხი 77812</div>
+                  
+                </td>
+                <td><span class="badge badge--high">ჯარიმა / საკომისიო</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-15,00</td>
+                <td class="num nowrap muted">4786,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">83</td>
+                <td class="nowrap muted">21.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">WOLT GEORGIA MCC:5812</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">რესტორანი</span></td>
+                <td class="mono faint">5812</td>
+                <td class="num nowrap ">-51,00</td>
+                <td class="num nowrap muted">4735,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">84</td>
+                <td class="nowrap muted">23.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადარიცხვა ბარათზე ნ. ბერიძე</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">გასული გადარიცხვა</span></td>
+                <td class="mono faint"></td>
+                <td class="num nowrap ">-150,00</td>
+                <td class="num nowrap muted">4585,35</td>
+              </tr>
+              <tr data-table-search-target="row" class="">
+                <td class="faint mono">85</td>
+                <td class="nowrap muted">26.09.2026</td>
+                <td style="max-width:48rem">
+                  <div class="table__primary" style="font-weight:500;overflow-wrap:anywhere">გადახდა ბარათით SPAR MCC:5411</div>
+                  
+                </td>
+                <td><span class="badge badge--muted">სუპერმარკეტი</span></td>
+                <td class="mono faint">5411</td>
+                <td class="num nowrap ">-66,00</td>
+                <td class="num nowrap muted">4519,35</td>
+              </tr>
+          </tbody>
+        </table>
+        <div class="empty-state" data-table-search-target="empty" hidden><p>ოპერაციები ვერ მოიძებნა.</p></div>
+      </div>
+    </section>
+</main>
+<!-- END app/views/statements/show.html.erb -->
+      <!-- BEGIN app/views/layouts/_right-nav.html.erb
+--><aside class="right-nav"></aside>
+<!-- END app/views/layouts/_right-nav.html.erb -->
+    </div>
+    <div class="scrim" data-action="click->drawer#close"></div>
+  </body>
+</html>
+<!-- END app/views/layouts/application.html.erb -->

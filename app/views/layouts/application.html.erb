@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <title><%= [ content_for(:title), t("app.name") ].compact.join(" · ") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="<%= t("app.name") %>">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0b1736">
+    <meta name="turbo-refresh-method" content="morph">
+    <meta name="turbo-refresh-scroll" content="preserve">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="<%= page_classes %>" data-controller="drawer" data-action="keydown.esc@window->drawer#close">
+    <div class="container">
+      <%= render "layouts/header" %>
+      <%= render "layouts/left-nav" %>
+      <%= render "layouts/messages-header" %>
+      <%= yield %>
+      <%= render "layouts/right-nav" %>
+    </div>
+    <div class="scrim" data-action="click->drawer#close"></div>
+  </body>
+</html>

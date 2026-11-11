@@ -1,0 +1,78 @@
+@use "abstracts/variables" as *;
+@use "abstracts/breakpoints" as *;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // 1rem = 10px (khisfari convention)
+  -webkit-text-size-adjust: 100%;
+
+  @include respond($bp-largest) {
+    font-size: 58%;
+  }
+}
+
+body {
+  font-family: $font-sans;
+  font-size: $default-font-size;
+  line-height: 1.55;
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: $radius-sm;
+}
+
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+h1, h2, h3, h4 { line-height: 1.25; font-weight: 650; letter-spacing: -.01em; }
+
+turbo-frame {
+  display: block;
+  width: 100%;
+}
+
+.ukhilavi, .sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.muted { color: var(--text-muted); }
+.faint { color: var(--text-faint); }
+.mono, .num { font-family: $font-mono; font-variant-numeric: tabular-nums; font-size: .92em; }
+.text-in { color: var(--success); }
+.text-out { color: var(--text); }
+.nowrap { white-space: nowrap; }
+
+::selection { background: var(--primary-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

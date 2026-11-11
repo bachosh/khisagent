@@ -1,0 +1,32 @@
+<nav class="left-nav" aria-label="<%= t("nav.history") %>">
+  <%= link_to new_conversation_path, class: "btn-new-chat" do %>
+    <%= svg_icon("plus") %> <%= t("nav.new_analysis") %>
+  <% end %>
+
+  <div class="left-nav__mobile-only">
+    <%= nav_link t("nav.dashboard"), dashboard_path, icon: "chart-bar", css: "chat-list__item" %>
+    <%= nav_link t("nav.chats"), conversations_path, icon: "chat-bubble-left-right", css: "chat-list__item" %>
+    <%= nav_link t("nav.reports"), statements_path, icon: "document-chart-bar", css: "chat-list__item" %>
+  </div>
+
+  <div>
+    <div class="left-nav__section-title"><%= t("nav.recent") %></div>
+    <ul class="chat-list" id="sidebar_conversations">
+      <% sidebar_conversations.each do |conversation| %>
+        <li>
+          <%= link_to conversation, class: [ "chat-list__item", ("is-active" if @conversation == conversation) ] do %>
+            <%= svg_icon("chat-bubble-left-right") %>
+            <span class="chat-list__title"><%= conversation.display_title %></span>
+          <% end %>
+        </li>
+      <% end %>
+      <% if sidebar_conversations.empty? %>
+        <li class="chat-list__empty"><%= t("nav.no_chats") %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="left-nav__footer">
+    <%= svg_icon("lock-closed") %> <%= t("nav.local_model", model: LLM.config.model) %>
+  </div>
+</nav>

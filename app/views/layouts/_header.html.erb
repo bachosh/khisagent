@@ -1,0 +1,41 @@
+<header class="header">
+  <div class="header__left-box">
+    <button type="button" class="header__menu-button" data-action="drawer#toggleSidebar" aria-label="<%= t("nav.menu") %>">
+      <%= svg_icon("bars-3", class: "icon-lg") %>
+    </button>
+    <%= render "layouts/brand" %>
+  </div>
+
+  <nav class="header__middle-box" aria-label="<%= t("nav.main") %>">
+    <%= nav_link t("nav.dashboard"), dashboard_path, icon: "chart-bar" %>
+    <%= nav_link t("nav.chats"), conversations_path, icon: "chat-bubble-left-right",
+          active: controller_name.in?(%w[ conversations messages ]) %>
+    <%= nav_link t("nav.reports"), statements_path, icon: "document-chart-bar", active: controller_name == "statements" %>
+  </nav>
+
+  <div class="header__auth-box">
+    <%= render "layouts/lang_switch" %>
+
+    <% if current_user %>
+      <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+        <summary aria-label="<%= t("nav.account") %>">
+          <span class="avatar"><%= current_user.initials %></span>
+          <span class="menu__name"><%= current_user.name %></span>
+          <%= svg_icon("chevron-down") %>
+        </summary>
+        <div class="menu__panel">
+          <div class="menu__header">
+            <strong><%= current_user.name %></strong>
+            <span><%= current_user.email_address %></span>
+          </div>
+          <%= link_to edit_profile_path, class: "menu__item" do %>
+            <%= svg_icon("user-circle") %> <%= t("nav.profile") %>
+          <% end %>
+          <%= button_to session_path, method: :delete, class: "menu__item menu__item--danger" do %>
+            <%= svg_icon("arrow-right-start-on-rectangle") %> <%= t("nav.sign_out") %>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+  </div>
+</header>

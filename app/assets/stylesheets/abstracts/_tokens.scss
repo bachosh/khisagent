@@ -1,0 +1,79 @@
+// Design tokens. Components use only these custom properties, so the dark theme is one block.
+:root {
+  color-scheme: light;
+
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-2: #f7f9fc;
+  --surface-3: #eef2f8;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f1b2d;
+  --text-muted: #5b6b82;
+  --text-faint: #8a97ab;
+
+  --primary: #2f5bea;
+  --primary-hover: #234bd1;
+  --primary-soft: #eaf0ff;
+  --primary-text: #ffffff;
+  --accent: #f5b301;               // khisfari's gold, used sparingly
+
+  --header-bg: #0b1736;
+  --header-bg-2: #13245a;
+  --header-text: #e8edf9;
+  --header-muted: #9fb0d6;
+
+  --success: #0f9d58;
+  --success-soft: #e6f6ee;
+  --warning: #c98a00;
+  --warning-soft: #fff6dc;
+  --danger: #d64545;
+  --danger-soft: #fdecec;
+  --info: #2f80ed;
+  --info-soft: #e8f1fd;
+
+  --risk-low: #12a150;
+  --risk-medium: #e0a100;
+  --risk-high: #e8590c;
+  --risk-critical: #c92a2a;
+
+  --shadow-sm: 0 1px 2px rgba(15, 27, 45, .06);
+  --shadow: 0 1px 3px rgba(15, 27, 45, .06), 0 6px 16px rgba(15, 27, 45, .06);
+  --shadow-lg: 0 12px 40px rgba(15, 27, 45, .14);
+  --ring: 0 0 0 .3rem rgba(47, 91, 234, .25);
+}
+
+@mixin dark-tokens {
+  color-scheme: dark;
+
+  --bg: #0b1120;
+  --surface: #111a2e;
+  --surface-2: #142038;
+  --surface-3: #1a2844;
+  --border: #22314f;
+  --border-strong: #2f4166;
+  --text: #e6ecf7;
+  --text-muted: #9aa8c1;
+  --text-faint: #6f7f9c;
+
+  --primary: #5b82ff;
+  --primary-hover: #7695ff;
+  --primary-soft: #1b2a55;
+  --header-bg: #070d1c;
+  --header-bg-2: #0d1730;
+
+  --success-soft: #0f2a20;
+  --warning-soft: #2e2510;
+  --danger-soft: #331618;
+  --info-soft: #132643;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 6px 16px rgba(0, 0, 0, .3);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, .5);
+  --ring: 0 0 0 .3rem rgba(91, 130, 255, .35);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { @include dark-tokens; }
+}
+:root[data-theme="dark"] { @include dark-tokens; }

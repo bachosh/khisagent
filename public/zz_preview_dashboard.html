@@ -1,0 +1,336 @@
+<!-- BEGIN app/views/layouts/application.html.erb
+--><!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <title>მიმოხილვა · KhisAgent</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="KhisAgent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0b1736">
+    <meta name="turbo-refresh-method" content="morph">
+    <meta name="turbo-refresh-scroll" content="preserve">
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="cjJ1DCcZek1u6MIODkN5s2tXUOvPBPTRHdiFXR_FK9-7PfJ6OhZ1V4VILRn9ZZAsHRrDTW33syBzTo-TT790Hw" />
+    
+
+    
+
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="stylesheet" href="/assets/application-3dc77f13.css" data-turbo-track="reload" />
+    <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "/assets/application-bfcdf840.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-9fd88cd5.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-4b1e420e.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-1fc53fe7.js",
+    "controllers/application": "/assets/controllers/application-3affb389.js",
+    "controllers/chat_scroll_controller": "/assets/controllers/chat_scroll_controller-4fbda368.js",
+    "controllers/composer_controller": "/assets/controllers/composer_controller-22b296de.js",
+    "controllers/drawer_controller": "/assets/controllers/drawer_controller-4a6c2987.js",
+    "controllers/dropzone_controller": "/assets/controllers/dropzone_controller-38d463f7.js",
+    "controllers/flash_controller": "/assets/controllers/flash_controller-1d51f3f0.js",
+    "controllers": "/assets/controllers/index-ee64e1f1.js",
+    "controllers/menu_controller": "/assets/controllers/menu_controller-2110ba2f.js",
+    "controllers/table_search_controller": "/assets/controllers/table_search_controller-a87801c0.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/application-bfcdf840.js">
+<link rel="modulepreload" href="/assets/turbo.min-9fd88cd5.js">
+<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
+<link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
+<link rel="modulepreload" href="/assets/controllers/chat_scroll_controller-4fbda368.js">
+<link rel="modulepreload" href="/assets/controllers/composer_controller-22b296de.js">
+<link rel="modulepreload" href="/assets/controllers/drawer_controller-4a6c2987.js">
+<link rel="modulepreload" href="/assets/controllers/dropzone_controller-38d463f7.js">
+<link rel="modulepreload" href="/assets/controllers/flash_controller-1d51f3f0.js">
+<link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<link rel="modulepreload" href="/assets/controllers/menu_controller-2110ba2f.js">
+<link rel="modulepreload" href="/assets/controllers/table_search_controller-a87801c0.js">
+<script type="module">import "application"</script>
+  </head>
+
+  <body class="" data-controller="drawer" data-action="keydown.esc@window->drawer#close">
+    <div class="container">
+      <!-- BEGIN app/views/layouts/_header.html.erb
+--><header class="header">
+  <div class="header__left-box">
+    <button type="button" class="header__menu-button" data-action="drawer#toggleSidebar" aria-label="მენიუ">
+      <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+</svg>
+    </button>
+    <!-- BEGIN app/views/layouts/_brand.html.erb
+--><a class="brand" aria-label="KhisAgent" href="/dashboard">
+  <span class="brand__mark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+</svg></span>
+  <span>Khis<span class="brand__accent">Agent</span></span>
+</a><!-- END app/views/layouts/_brand.html.erb -->
+  </div>
+
+  <nav class="header__middle-box" aria-label="მთავარი ნავიგაცია">
+    <a class="header__nav-link is-active" aria-current="page" href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg><span>მიმოხილვა</span></a>
+    <a class="header__nav-link" href="/conversations"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg><span>ჩატები</span></a>
+    <a class="header__nav-link" href="/statements"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg><span>რეპორტები</span></a>
+  </nav>
+
+  <div class="header__auth-box">
+    <!-- BEGIN app/views/layouts/_lang_switch.html.erb
+--><div class="lang-switch " role="group" aria-label="ენა">
+    <form data-turbo="false" class="button_to" method="post" action="/locale/ka"><input type="hidden" name="_method" value="patch" /><button class="is-active" aria-pressed="true" title="ქართული" type="submit">KA</button><input type="hidden" name="authenticity_token" value="7P_C2ePUyTgvUukZS29U8R6qmZlVJLjpW6illI2W2aCWbrVJWKNmMQrMxkx-bR3ID__nq_PqjgFVo38kSyioZg" /></form>
+    <form data-turbo="false" class="button_to" method="post" action="/locale/en"><input type="hidden" name="_method" value="patch" /><button aria-pressed="false" title="English" type="submit">EN</button><input type="hidden" name="authenticity_token" value="1Dsi25zOxd4J5jLupjrzZ1i_Su77LpezQ8H9i-WyYHRQg9dZ00wAcp74I15G5ebmuwpWHXaidBli7BKd5fbvkg" /></form>
+</div>
+<!-- END app/views/layouts/_lang_switch.html.erb -->
+
+      <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
+        <summary aria-label="ანგარიში">
+          <span class="avatar">ᲓᲠ</span>
+          <span class="menu__name">დემო რისკ-მენეჯერი</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+</svg>
+        </summary>
+        <div class="menu__panel">
+          <div class="menu__header">
+            <strong>დემო რისკ-მენეჯერი</strong>
+            <span>demo@khisagent.ge</span>
+          </div>
+          <a class="menu__item" href="/profile/edit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg> პროფილი
+</a>          <form class="button_to" method="post" action="/session"><input type="hidden" name="_method" value="delete" /><button class="menu__item menu__item--danger" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"/>
+</svg> გასვლა
+</button><input type="hidden" name="authenticity_token" value="2JrnKjNefigfJ8a5tfqevwwIJWH_6803GUJC8Eyu4beOztwYAZ2qJgqKZkRmZTCAvNucNY5osdmpNv6XPcM0AA" /></form>        </div>
+      </details>
+  </div>
+</header>
+<!-- END app/views/layouts/_header.html.erb -->
+      <!-- BEGIN app/views/layouts/_left-nav.html.erb
+--><nav class="left-nav" aria-label="ჩატების ისტორია">
+  <a class="btn-new-chat" href="/conversations/new">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg> ახალი ანალიზი
+</a>
+  <div class="left-nav__mobile-only">
+    <a class="chat-list__item is-active" aria-current="page" href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg><span>მიმოხილვა</span></a>
+    <a class="chat-list__item" href="/conversations"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg><span>ჩატები</span></a>
+    <a class="chat-list__item" href="/statements"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg><span>რეპორტები</span></a>
+  </div>
+
+  <div>
+    <div class="left-nav__section-title">ბოლო ჩატები</div>
+    <ul class="chat-list" id="sidebar_conversations">
+        <li>
+          <a class="chat-list__item" href="/conversations/1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg>
+            <span class="chat-list__title">რამდენს იხდის თვეში სესხებში და რომელ ორგანიზაციებს?</span>
+</a>        </li>
+        <li>
+          <a class="chat-list__item" href="/conversations/2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+</svg>
+            <span class="chat-list__title">ახალი ანალიზი</span>
+</a>        </li>
+    </ul>
+  </div>
+
+  <div class="left-nav__footer">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/>
+</svg> ლოკალური მოდელი · gemma4:12b
+  </div>
+</nav>
+<!-- END app/views/layouts/_left-nav.html.erb -->
+      <!-- BEGIN app/views/layouts/_messages-header.html.erb
+--><div class="messages-header" id="flash" role="status" aria-live="polite">
+  <!-- BEGIN app/views/layouts/_flash.html.erb
+--><!-- END app/views/layouts/_flash.html.erb -->
+</div>
+<!-- END app/views/layouts/_messages-header.html.erb -->
+      <!-- BEGIN app/views/dashboard/show.html.erb
+-->
+<header class="main-header">
+  <div class="main-header__titles">
+    <h1 class="main-header__title">მიმოხილვა</h1>
+    <p class="main-header__subtitle">11 ნოემბერი 2026</p>
+  </div>
+</header>
+
+<main class="main-content-root">
+  <section class="welcome-banner">
+    <div>
+      <h2>გამარჯობა, დემო 👋</h2>
+      <p>ატვირთეთ განმცხადებლის საბანკო ამონაწერი და მიიღეთ რისკის რეპორტი რამდენიმე წუთში.</p>
+    </div>
+    <a class="btn btn--lg" href="/conversations/new">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+</svg> ამონაწერის ატვირთვა
+</a>  </section>
+
+  <section class="stats" aria-label="მთავარი მაჩვენებლები">
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+</svg></span>გაანალიზებული ამონაწერები</div>
+      <div class="stat__value">1</div>
+      <div class="stat__hint">1 მუშავდება</div>
+    </div>
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon stat__icon--warning"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z"/>
+</svg></span>საშუალო რისკის ქულა</div>
+      <div class="stat__value">65<span class="stat__unit">/ 100</span></div>
+      <div class="stat__hint">0 — დაბალი, 100 — კრიტიკული</div>
+    </div>
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon stat__icon--danger"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z"/>
+</svg></span>მაღალი და კრიტიკული</div>
+      <div class="stat__value">1</div>
+      <div class="stat__hint">საჭიროებს დამატებით შემოწმებას</div>
+    </div>
+    <div class="stat">
+      <div class="stat__label"><span class="stat__icon stat__icon--success"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"/>
+</svg></span>დამუშავებული ოპერაციები</div>
+      <div class="stat__value">170</div>
+      <div class="stat__hint">ყველა ამონაწერიდან</div>
+    </div>
+  </section>
+
+  <div class="grid grid--main-side">
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg> ბოლო ამონაწერები</h2>
+        <a class="btn btn--sm btn--ghost" href="/statements">ყველა რეპორტი</a>
+      </div>
+        <!-- BEGIN app/views/statements/_table.html.erb
+--><div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ფაილი</th>
+        <th>ანგარიშის მფლობელი</th>
+        <th>პერიოდი</th>
+        <th class="text-right">ოპერაციები</th>
+        <th>რისკი</th>
+        <th>რეკომენდაცია</th>
+        <th class="text-right">ატვირთულია</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+            <a class="table__link" href="/conversations/2">
+              <span class="file-icon file-icon--xlsx">xlsx</span>
+              <span>
+                <span class="table__primary">sample_statement.xlsx</span><br>
+                <span class="table__secondary">Excel ცხრილი</span>
+              </span>
+</a>          </td>
+          <td><span class="faint">—</span></td>
+          <td class="nowrap muted">03.04.2026 – 26.09.2026</td>
+          <td class="num">85</td>
+          <td>
+              <span class="badge badge--processing"><span class="spinner"></span>კითხულობს</span>
+          </td>
+          <td class="muted">—</td>
+          <td class="text-right muted nowrap">11.11.2026 22:14</td>
+        </tr>
+        <tr>
+          <td>
+            <a class="table__link" href="/statements/1">
+              <span class="file-icon file-icon--csv">csv</span>
+              <span>
+                <span class="table__primary">sample_statement.csv</span><br>
+                <span class="table__secondary">CSV ცხრილი</span>
+              </span>
+</a>          </td>
+          <td><span class="faint">—</span></td>
+          <td class="nowrap muted">03.04.2026 – 26.09.2026</td>
+          <td class="num">85</td>
+          <td>
+              <div style="display:flex;align-items:center;gap:1rem">
+                <div class="gauge gauge--sm gauge--high" style="--value: 65;width:4rem;height:4rem">
+                  <div class="gauge__inner"><span class="gauge__value" style="font-size:1.3rem">65</span></div>
+                </div>
+                <span class="badge badge--dot badge--high">მაღალი</span>
+              </div>
+          </td>
+          <td class="muted">ხელით შემოწმება</td>
+          <td class="text-right muted nowrap">11.11.2026 22:14</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<!-- END app/views/statements/_table.html.erb -->
+    </section>
+
+    <section class="card">
+      <div class="card__header">
+        <h2 class="card__title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/>
+</svg> რისკის განაწილება</h2>
+      </div>
+      <div class="card__body">
+          <div class="level-split" role="img" aria-label="დაბალი: 0, საშუალო: 0, მაღალი: 1, კრიტიკული: 0">
+              <span class="high" style="width: 100.0%" title="მაღალი: 1"></span>
+          </div>
+          <ul class="level-legend">
+              <li>
+                <a href="/statements?level=low"><span class="badge badge--dot badge--low">დაბალი</span></a>
+                <b>0 <span class="faint">· 0%</span></b>
+              </li>
+              <li>
+                <a href="/statements?level=medium"><span class="badge badge--dot badge--medium">საშუალო</span></a>
+                <b>0 <span class="faint">· 0%</span></b>
+              </li>
+              <li>
+                <a href="/statements?level=high"><span class="badge badge--dot badge--high">მაღალი</span></a>
+                <b>1 <span class="faint">· 100%</span></b>
+              </li>
+              <li>
+                <a href="/statements?level=critical"><span class="badge badge--dot badge--critical">კრიტიკული</span></a>
+                <b>0 <span class="faint">· 0%</span></b>
+              </li>
+          </ul>
+      </div>
+    </section>
+  </div>
+</main>
+<!-- END app/views/dashboard/show.html.erb -->
+      <!-- BEGIN app/views/layouts/_right-nav.html.erb
+--><aside class="right-nav"></aside>
+<!-- END app/views/layouts/_right-nav.html.erb -->
+    </div>
+    <div class="scrim" data-action="click->drawer#close"></div>
+  </body>
+</html>
+<!-- END app/views/layouts/application.html.erb -->

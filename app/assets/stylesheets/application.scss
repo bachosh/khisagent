@@ -1,0 +1,20 @@
+// KhisAgent styles. Structure follows khisfari: abstracts → base → layout (ganlageba) → components → pages
+@use "abstracts/tokens";
+@use "fonts";
+@use "base";
+@use "layout";
+
+// Components
+@use "componentebi/svgicon";
+@use "componentebi/mybuttons";
+@use "componentebi/cards";
+@use "componentebi/badges";
+@use "componentebi/forms";
+@use "componentebi/mytables";
+@use "componentebi/dropdown";
+
+// Pages
+@use "pages/public";
+@use "pages/dashboard";
+@use "pages/chat";
+@use "pages/report";

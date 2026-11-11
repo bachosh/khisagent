@@ -1,0 +1,82 @@
+@use "../abstracts/variables" as *;
+
+.btn {
+  --btn-bg: var(--surface);
+  --btn-color: var(--text);
+  --btn-border: var(--border-strong);
+  --btn-hover: var(--surface-3);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  padding: .9rem 1.6rem;
+  min-height: 4rem;
+  border: 1px solid var(--btn-border);
+  border-radius: $radius-sm + .2rem;
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, transform .1s ease, box-shadow .15s ease;
+
+  svg { width: 1.8rem; height: 1.8rem; }
+
+  &:hover { background: var(--btn-hover); }
+  &:active { transform: translateY(1px); }
+  &:disabled, &[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+
+  &--primary {
+    --btn-bg: var(--primary);
+    --btn-color: var(--primary-text);
+    --btn-border: var(--primary);
+    --btn-hover: var(--primary-hover);
+    box-shadow: 0 1px 2px rgba(47, 91, 234, .3), inset 0 1px 0 rgba(255, 255, 255, .15);
+  }
+
+  &--danger {
+    --btn-color: var(--danger);
+    --btn-hover: var(--danger-soft);
+  }
+
+  &--ghost {
+    --btn-bg: transparent;
+    --btn-border: transparent;
+  }
+
+  &--sm { padding: .5rem 1.1rem; min-height: 3.2rem; font-size: 1.3rem; }
+  &--lg { padding: 1.2rem 2.2rem; min-height: 4.8rem; font-size: 1.55rem; }
+  &--block { width: 100%; }
+
+  &--icon {
+    padding: 0;
+    width: 4rem;
+    min-height: 4rem;
+    &.btn--sm { width: 3.2rem; min-height: 3.2rem; }
+  }
+}
+
+.btn-new-chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  width: 100%;
+  padding: 1.1rem 1.4rem;
+  border-radius: $radius;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.45rem;
+  box-shadow: 0 4px 14px rgba(47, 91, 234, .3);
+  transition: background-color .15s ease, transform .1s ease;
+
+  svg { width: 2rem; height: 2rem; }
+  &:hover { background: var(--primary-hover); }
+  &:active { transform: translateY(1px); }
+}
+
+.button_to_inline { display: inline; }
