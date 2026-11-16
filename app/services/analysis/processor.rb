@@ -57,6 +57,7 @@ module Analysis
       text = I18n.t("reports.chat_summary", file: @statement.filename, score: report.risk_score,
                     level: I18n.t("risk_levels.#{report.risk_level}"),
                     recommendation: I18n.t("recommendations.#{report.recommendation}"), summary: report.summary)
+      @statement.summary_messages.destroy_all # re-analysis replaces the old summary
       @statement.conversation.messages.create!(role: "assistant", content: text, status: "done", summarized_statement: @statement)
       @statement.conversation.touch_activity!
     end

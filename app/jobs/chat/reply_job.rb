@@ -16,7 +16,6 @@ module Chat
           return self.class.set(wait: WAIT).perform_later(reply, enqueued_at)
         end
 
-        reply = move_to_end(reply)
         started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         answer = Chat::Responder.new(reply).call
         reply.update!(content: answer, status: "done", progress: nil,
@@ -27,17 +26,6 @@ module Chat
         Rails.logger.error "[Chat::ReplyJob] #{e.class}: #{e.message}\n#{e.backtrace&.first(15)&.join("\n")}"
         reply.update!(content: I18n.t("chat.failed"), status: "failed", progress: nil)
       end
-    end
-
-    private
-
-    # While the reply waited for the files, the analysis posted its summary below it. Recreate the
-    # placeholder at the end so the answer comes after the summary it builds on.
-    def move_to_end(reply)
-      return reply if reply.conversation.messages.where("id > ?", reply.id).none?
-
-      reply.destroy!
-      reply.conversation.messages.create!(role: "assistant", status: "pending")
     end
   end
 end

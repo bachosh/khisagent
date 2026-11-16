@@ -21,6 +21,11 @@ module Chat
       update!(title: text.to_s.squish.truncate(60)) if title.blank? && text.present?
     end
 
+    # Messages in display order: a file's summary right after the message that uploaded it
+    def displayed_messages
+      messages.includes(:summarized_statement, statements: :risk_report).sort_by(&:display_key)
+    end
+
     def busy?
       messages.any?(&:pending?) || statements.any?(&:processing?)
     end

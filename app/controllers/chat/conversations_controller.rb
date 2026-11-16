@@ -20,7 +20,7 @@ module Chat
     end
 
     def show
-      @messages = @conversation.messages.includes(statements: :risk_report)
+      @messages = @conversation.displayed_messages
     end
 
     def update
