@@ -1,4 +1,4 @@
-module Statements
+module Analysis
   # Turns spreadsheet / PDF cell values into Dates and BigDecimals.
   # Bank exports mix formats: "03.01.2026", "2026-01-03 14:22", Excel serial numbers,
   # "1 234,56", "1,234.56", "(300.00)", "-300.00 GEL".

@@ -17,7 +17,7 @@ module Chat
     def call
       return fail_with(I18n.t("chat.empty_message")) if @content.blank? && @files.empty?
 
-      unsupported = @files.reject { |f| Statement.kind_for(f.original_filename) }
+      unsupported = @files.reject { |f| Analysis::Statement.kind_for(f.original_filename) }
       return fail_with(I18n.t("statements.errors.unsupported_files", names: unsupported.map(&:original_filename).join(", "))) if unsupported.any?
 
       ActiveRecord::Base.transaction do
@@ -29,8 +29,8 @@ module Chat
         @conversation.touch_activity!
       end
 
-      @statements.each { |s| StatementProcessingJob.perform_later(s) }
-      ChatReplyJob.perform_later(@reply) if @reply
+      @statements.each { |s| Analysis::ProcessingJob.perform_later(s) }
+      Chat::ReplyJob.perform_later(@reply) if @reply
       true
     rescue ActiveRecord::RecordInvalid => e
       fail_with(e.record.errors.full_messages.to_sentence)
@@ -40,7 +40,7 @@ module Chat
 
     def create_statement(file, message)
       @user.statements.create!(conversation: @conversation, message: message, filename: file.original_filename.to_s.truncate(200),
-                               file_kind: Statement.kind_for(file.original_filename), file: file)
+                               file_kind: Analysis::Statement.kind_for(file.original_filename), file: file)
     end
 
     def fail_with(error)

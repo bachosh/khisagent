@@ -41,11 +41,17 @@
               <dt><%= t("indicators.debt_service_ratio_pct") %></dt><dd class="num"><%= percent(ind["debt_service_ratio_pct"]) %></dd>
               <dt><%= t("indicators.gambling_per_month") %></dt><dd class="num"><%= money(ind["gambling_per_month"], statement.display_currency, precision: 0) %></dd>
             </dl>
-            <%= link_to statement_path(statement), class: "btn btn--block" do %>
-              <%= svg_icon("document-chart-bar") %> <%= t("statements.open_report") %>
-            <% end %>
+            <div style="display:flex;gap:.6rem">
+              <%= link_to statement_path(statement), class: "btn", style: "flex:1" do %>
+                <%= svg_icon("document-chart-bar") %> <%= t("statements.open_report") %>
+              <% end %>
+              <%= render "analysis/statements/delete_button", statement: statement, css: "btn btn--icon btn--danger" %>
+            </div>
           <% else %>
-            <%= statement_status_badge(statement) %>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem">
+              <%= statement_status_badge(statement) %>
+              <%= render "analysis/statements/delete_button", statement: statement %>
+            </div>
           <% end %>
         </div>
       </div>

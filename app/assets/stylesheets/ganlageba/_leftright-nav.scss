@@ -127,6 +127,39 @@
     white-space: nowrap;
   }
 
+  &__row {
+    position: relative;
+
+    &:hover .chat-list__delete,
+    &:focus-within .chat-list__delete { opacity: 1; }
+
+    .chat-list__item { padding-right: 3.6rem; }
+  }
+
+  &__delete {
+    position: absolute;
+    right: .4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 0;
+    border-radius: .6rem;
+    background: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .12s ease, background-color .12s ease, color .12s ease;
+
+    svg { width: 1.7rem; height: 1.7rem; }
+    &:hover { background: var(--danger-soft); color: var(--danger); }
+    &:focus-visible { opacity: 1; }
+
+    @media (hover: none) { opacity: .7; }
+  }
+
   &__empty {
     padding: 1rem;
     font-size: 1.35rem;

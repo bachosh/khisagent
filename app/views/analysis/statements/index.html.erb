@@ -16,7 +16,7 @@
   <div class="toolbar">
     <nav class="segmented" aria-label="<%= t("statements.filter") %>">
       <%= link_to t("statements.all"), statements_path(q: params[:q]), class: ("is-active" if params[:level].blank? && params[:status].blank?) %>
-      <% RiskReport::LEVELS.each do |level| %>
+      <% Analysis::RiskReport::LEVELS.each do |level| %>
         <%= link_to t("risk_levels.#{level}"), statements_path(level: level, q: params[:q]), class: ("is-active" if params[:level] == level) %>
       <% end %>
       <%= link_to t("statements.status.failed"), statements_path(status: "failed", q: params[:q]), class: ("is-active" if params[:status] == "failed") %>
@@ -30,7 +30,7 @@
 
   <div class="card">
     <% if @statements.any? %>
-      <%= render "statements/table", statements: @statements %>
+      <%= render "analysis/statements/table", statements: @statements %>
     <% else %>
       <div class="empty-state">
         <div class="empty-state__icon"><%= svg_icon("document-chart-bar") %></div>

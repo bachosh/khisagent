@@ -26,7 +26,7 @@ class WorkspaceTest < ActionDispatch::IntegrationTest
 
   test "uploading a statement starts a chat and queues the analysis" do
     sign_in_as @user
-    assert_enqueued_with(job: StatementProcessingJob) do
+    assert_enqueued_with(job: Analysis::ProcessingJob) do
       post conversations_path, params: { content: "", files: [ fixture_file_upload("sample_statement.csv", "text/csv") ] }
     end
     conversation = @user.conversations.last
@@ -41,7 +41,7 @@ class WorkspaceTest < ActionDispatch::IntegrationTest
   test "a question queues a pending reply" do
     sign_in_as @user
     conversation = @user.conversations.create!
-    assert_enqueued_with(job: ChatReplyJob) do
+    assert_enqueued_with(job: Chat::ReplyJob) do
       post conversation_messages_path(conversation), params: { content: "რა შემოსავალი აქვს?" }, as: :turbo_stream
     end
     assert conversation.messages.last.pending?

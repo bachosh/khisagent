@@ -1,4 +1,4 @@
-module Statements
+module Analysis
   # Stage II of the analysis (config/bank_codes.yml → indicators, warning_trends): financial risk
   # indicators computed from the categorized operations. Pure Ruby, deterministic; the agent reads
   # these through its tools and explains them, the UI shows them on the report page.

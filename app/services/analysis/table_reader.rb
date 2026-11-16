@@ -1,6 +1,6 @@
 require "csv"
 
-module Statements
+module Analysis
   # Reads CSV / XLSX / XLS files into rows of cell values (String, Numeric or Date).
   # For workbooks it picks the sheet with the most rows.
   class TableReader

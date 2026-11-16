@@ -1,6 +1,6 @@
 require "test_helper"
 
-module Statements
+module Analysis
   # The CSV/XLSX path needs no LLM: header keywords map the columns
   class ImporterTest < ActiveSupport::TestCase
     class NoLLM

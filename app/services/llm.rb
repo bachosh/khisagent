@@ -4,7 +4,9 @@ module LLM
     Rails.application.config.x.llm
   end
 
-  # think: nil = model default (gemma4 reasons before answering), false = answer directly
+  # think: nil = model default (gemma4 reasons before answering), false = answer directly.
+  # The agents use think: false: with thinking on, gemma4:12b sometimes loops until num_predict
+  # (seen in Georgian text), and runs took 20-300s instead of ~12s with no better reports.
   def self.agent_client(think: nil, temperature: nil)
     Agent::LLMClient.new(model: config.model, num_ctx: config.num_ctx, think: think, temperature: temperature,
                          num_predict: config.num_predict)

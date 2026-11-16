@@ -10,7 +10,7 @@
       <label class="composer__attach" title="<%= t("chat.attach") %>">
         <%= svg_icon("paper-clip") %>
         <span class="sr-only"><%= t("chat.attach") %></span>
-        <%= f.file_field :files, multiple: true, name: "files[]", accept: Statement.accepted_extensions,
+        <%= f.file_field :files, multiple: true, name: "files[]", accept: Analysis::Statement.accepted_extensions,
               data: { composer_target: "files", action: "change->composer#pick" } %>
       </label>
       <%= f.text_area :content, name: "content", rows: 1, class: "composer__input",

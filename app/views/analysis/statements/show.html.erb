@@ -19,7 +19,7 @@
     <%= link_to conversation_path(@statement.conversation), class: "btn" do %>
       <%= svg_icon("chat-bubble-left-right") %> <%= t("report.ask") %>
     <% end %>
-    <button type="button" class="btn" onclick="window.print()"><%= svg_icon("arrow-down-tray") %> <%= t("report.print") %></button>
+    <button type="button" class="btn" data-controller="print" data-action="print#print"><%= svg_icon("arrow-down-tray") %> <%= t("report.print") %></button>
     <details class="menu" data-controller="menu" data-action="click@window->menu#closeOutside keydown.esc@window->menu#close">
       <summary class="btn btn--icon" aria-label="<%= t("app.more") %>"><%= svg_icon("ellipsis-horizontal") %></summary>
       <div class="menu__panel">
@@ -29,16 +29,25 @@
         <%= button_to reanalyze_statement_path(@statement), class: "menu__item" do %>
           <%= svg_icon("arrow-path") %> <%= t("report.reanalyze") %>
         <% end %>
-        <%= button_to statement_path(@statement), method: :delete, class: "menu__item menu__item--danger",
-              form: { data: { turbo_confirm: t("statements.delete_confirm") } } do %>
-          <%= svg_icon("trash") %> <%= t("statements.delete") %>
-        <% end %>
       </div>
     </details>
+    <%= render "analysis/statements/delete_button", statement: @statement, css: "btn btn--danger", label: true %>
   </div>
 </header>
 
 <main class="main-content-root">
+  <% if @statement.extraction_method == "vision" && @statement.reconciliation != "ok" %>
+    <div class="flash-message flash-message--alert" role="note" style="--original-color: var(--warning-soft); color: var(--warning)">
+      <%= svg_icon("photo") %>
+      <div><%= t("reconciliation.vision_notice") %></div>
+    </div>
+  <% end %>
+  <% if @statement.reconciliation == "mismatch" %>
+    <div class="flash-message flash-message--alert" role="alert">
+      <%= svg_icon("exclamation-triangle") %>
+      <div><%= t("reconciliation.mismatch_warning", difference: money(@statement.reconciliation_difference, @statement.display_currency)) %></div>
+    </div>
+  <% end %>
   <% if @report.nil? %>
     <div class="card">
       <div class="empty-state">
@@ -65,6 +74,8 @@
         </span>
         <p class="score-hero__summary"><%= @report.summary %></p>
         <div class="report-meta">
+          <%= reconciliation_badge(@statement) %>
+          <span><%= svg_icon("document-text") %> <%= t("extraction_methods.#{@statement.extraction_method}", default: @statement.extraction_method.to_s) %></span>
           <span><%= svg_icon("cpu-chip") %> <%= @report.model %></span>
           <span><%= svg_icon("clock") %> <%= l(@report.updated_at, format: :short) %></span>
           <% if @report.duration_ms %><span><%= svg_icon("bolt") %> <%= t("report.duration", seconds: (@report.duration_ms / 1000.0).round) %></span><% end %>
@@ -88,7 +99,7 @@
         <div><dt><%= t("indicators.avg_free_cash_flow") %></dt><dd class="<%= "text-in" if ind["avg_free_cash_flow"].to_f.positive? %>" style="<%= "color: var(--danger)" if ind["avg_free_cash_flow"].to_f.negative? %>"><%= money(ind["avg_free_cash_flow"], currency, precision: 0) %></dd></div>
         <div><dt><%= t("indicators.financial_payments_per_month") %></dt><dd><%= money(ind["financial_payments_per_month"], currency, precision: 0) %><small><%= t("indicators.debt_service_ratio_pct") %>: <%= percent(ind["debt_service_ratio_pct"]) %></small></dd></div>
         <div><dt><%= t("indicators.gambling_per_month") %></dt><dd style="<%= "color: var(--risk-high)" if ind["gambling_per_month"].to_f.positive? %>"><%= money(ind["gambling_per_month"], currency, precision: 0) %></dd></div>
-        <div><dt><%= t("indicators.cash_withdrawals_per_month") %></dt><dd><%= money(ind["cash_withdrawals_per_month"], currency, precision: 0) %><small><%= t("indicators.times_per_month", count: ind["cash_withdrawal_count_per_month"]) %></small></dd></div>
+        <div><dt><%= t("indicators.cash_withdrawals_per_month") %></dt><dd><%= money(ind["cash_withdrawals_per_month"], currency, precision: 0) %><small><%= t("indicators.times_per_month", count: number_with_precision(ind["cash_withdrawal_count_per_month"].to_f, precision: 1, strip_insignificant_zeros: true)) %></small></dd></div>
         <div><dt><%= t("indicators.min_monthly_balance") %></dt><dd><%= money(ind["min_monthly_balance"], currency, precision: 0) %></dd></div>
       </dl>
     </section>
@@ -179,7 +190,7 @@
         <span class="card__subtitle"><%= currency %></span>
       </div>
       <div class="card__body">
-        <%= render "statements/cashflow_chart", metrics: @metrics, currency: currency %>
+        <%= render "analysis/statements/cashflow_chart", metrics: @metrics, currency: currency %>
       </div>
       <div class="table-wrap" style="border-top:1px solid var(--border)">
         <table class="table table--compact">

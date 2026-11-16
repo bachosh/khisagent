@@ -10,6 +10,7 @@
         <th><%= t("statements.columns.score") %></th>
         <% unless compact %><th><%= t("statements.columns.recommendation") %></th><% end %>
         <th class="text-right"><%= t("statements.columns.uploaded") %></th>
+        <th><span class="sr-only"><%= t("app.actions") %></span></th>
       </tr>
     </thead>
     <tbody>
@@ -44,6 +45,7 @@
           </td>
           <% unless compact %><td class="muted"><%= report ? t("recommendations.#{report.recommendation}") : "—" %></td><% end %>
           <td class="text-right muted nowrap"><%= l(statement.created_at, format: :short) %></td>
+          <td class="text-right"><%= render "analysis/statements/delete_button", statement: statement %></td>
         </tr>
       <% end %>
     </tbody>

@@ -1,9 +1,11 @@
-module Statements
+module Analysis
   # File → operations in the database.
   #   CSV / XLSX / XLS → TableReader + TableMapper (LLM only to map unusual headers)
-  #   text PDF          → pdftotext + LLMExtractor
+  #   text PDF          → pdftotext + PdfLayoutParser (no LLM, ~1s); LLMExtractor only when the layout is unknown
+  #                        or the parsed totals don't reconcile
   #   scanned PDF/image → page images + LLMExtractor (gemma4 vision)
-  # Then every operation is categorized (stage I, config/bank_codes.yml).
+  # Then every operation is categorized (stage I, config/bank_codes.yml) and the import is checked
+  # by Reconciler (opening + operations = closing balance), shown on the report.
   class Importer
     MAX_IMAGE_BYTES = 15.megabytes
 
@@ -17,7 +19,9 @@ module Statements
       operations = result[:operations]
       raise ImportError, I18n.t("statements.errors.no_operations") if operations.empty?
 
-      save(operations, result[:metadata].to_h, result[:mapping])
+      metadata = result[:metadata].to_h
+      reconciliation = result[:reconciliation] || reconcile(operations, metadata)
+      save(operations, metadata, result[:mapping], reconciliation)
     end
 
     private
@@ -41,24 +45,67 @@ module Statements
 
     def from_pdf(path)
       reader = PdfReader.new(path)
-      raise ImportError, I18n.t("statements.errors.too_many_pages", max: PdfReader::MAX_PAGES) if reader.page_count > PdfReader::MAX_PAGES
+      progress("reading")
+      reader.scanned? ? from_scan(reader) : from_pdf_text(reader)
+    end
 
-      if reader.scanned?
-        @statement.update!(extraction_method: "vision")
-        images = []
-        reader.each_page_image { |png| images << png }
-        extractor.from_images(images)
-      else
-        @statement.update!(extraction_method: "pdf_text")
-        extractor.from_text_pages(reader.text_pages)
+    def from_pdf_text(reader)
+      check_pages(reader, PdfReader::MAX_TEXT_PAGES)
+      pages = reader.text_pages
+
+      parsed = PdfLayoutParser.new(pages).call
+      if parsed
+        parsed[:reconciliation] = reconcile(parsed[:operations], parsed[:metadata])
+        @statement.update!(extraction_method: "pdf_layout")
+        return parsed unless parsed[:reconciliation][:status] == "mismatch"
       end
+
+      # Unknown layout, or the totals don't add up: let the LLM read the text
+      @statement.update!(extraction_method: "pdf_text")
+      by_llm = extractor.from_text_pages(pages)
+      by_llm[:reconciliation] = reconcile(by_llm[:operations], by_llm[:metadata])
+      parsed ? closer(parsed, by_llm) : by_llm
+    end
+
+    def from_scan(reader)
+      check_pages(reader, PdfReader::MAX_SCAN_PAGES)
+      @statement.update!(extraction_method: "vision")
+      pages = []
+      reader.each_page_image { |png| pages << ImagePreparer.strips(png) }
+      extractor.from_images(pages)
+    end
+
+    def check_pages(reader, max)
+      raise ImportError, I18n.t("statements.errors.too_many_pages", max: max) if reader.page_count > max
+    end
+
+    # Both readings disagree with the printed balances: keep the one closer to them
+    def closer(parsed, by_llm)
+      return by_llm if by_llm[:reconciliation][:status] == "ok"
+
+      chosen = [ parsed, by_llm ].min_by { |r| r[:reconciliation][:difference].to_d.abs }
+      @statement.update!(extraction_method: chosen.equal?(parsed) ? "pdf_layout" : "pdf_text")
+      chosen
+    end
+
+    # Opening/closing balances come per currency from PdfLayoutParser ({ "GEL" => 10 }),
+    # as single values from LLMExtractor (opening_balance: 10)
+    def reconcile(operations, metadata)
+      opening = metadata[:opening] || single_balance(metadata[:opening_balance])
+      closing = metadata[:closing] || single_balance(metadata[:closing_balance])
+      Reconciler.call(operations, opening: opening, closing: closing)
+    end
+
+    def single_balance(value)
+      amount = ValueParser.amount(value)
+      amount ? { "*" => amount } : nil
     end
 
     def from_image(path)
       raise ImportError, I18n.t("statements.errors.image_too_large") if File.size(path) > MAX_IMAGE_BYTES
 
       @statement.update!(extraction_method: "vision")
-      extractor.from_images([ File.binread(path) ])
+      extractor.from_images([ ImagePreparer.strips(File.binread(path)) ])
     end
 
     def extractor
@@ -69,18 +116,18 @@ module Statements
       @statement.progress!(status: "extracting", note: I18n.t("statements.progress.#{key}", **args))
     end
 
-    def save(rows, metadata, mapping)
+    def save(rows, metadata, mapping, reconciliation)
       progress("categorizing")
-      currency = metadata[:currency].presence || rows.filter_map { |r| r[:currency] }.tally.max_by(&:last)&.first
+      currency = rows.filter_map { |r| r[:currency] }.tally.max_by(&:last)&.first || metadata[:currency].presence
 
-      Statement.transaction do
+      Analysis::Statement.transaction do
         @statement.operations.delete_all
         records = rows.each_with_index.map do |row, i|
           codes = Categorizer.call(description: row[:description], counterparty: row[:counterparty], amount: row[:amount],
                                    mcc: row[:mcc], transaction_code: row[:transaction_code])
           row.merge(codes).merge(statement_id: @statement.id, position: i + 1, currency: row[:currency] || currency)
         end
-        Operation.insert_all!(records.map { |r| normalize_keys(r) })
+        Analysis::Operation.insert_all!(records.map { |r| normalize_keys(r) })
 
         dates = rows.filter_map { |r| r[:booked_on] }
         @statement.update!(
@@ -92,10 +139,18 @@ module Statements
           bank_name: metadata[:bank_name].presence || @statement.bank_name,
           account_holder: metadata[:account_holder].presence || @statement.account_holder,
           account_number: metadata[:account_number].presence || @statement.account_number,
-          opening_balance: ValueParser.amount(metadata[:opening_balance]),
-          closing_balance: ValueParser.amount(metadata[:closing_balance])
+          opening_balance: balance_in(metadata[:opening], currency) || ValueParser.amount(metadata[:opening_balance]),
+          closing_balance: balance_in(metadata[:closing], currency) || ValueParser.amount(metadata[:closing_balance]),
+          reconciliation: reconciliation[:status],
+          reconciliation_difference: reconciliation[:difference]
         )
       end
+    end
+
+    def balance_in(balances, currency)
+      return unless balances
+
+      balances[currency] || balances["*"]
     end
 
     COLUMNS = %i[ statement_id position booked_on description counterparty amount currency balance mcc

@@ -39,8 +39,11 @@ class OllamaChat
 
     data = post("/api/chat", body)
     Rails.logger.info "[Ollama] #{data[:eval_count]} tokens in #{(data[:total_duration].to_f / 1e9).round(1)}s (#{data[:done_reason]})"
-    Rails.logger.warn "[Ollama] reply cut at num_predict=#{num_predict} (model looping?)" if data[:done_reason] == "length"
-    data[:message]
+    if data[:done_reason] == "length"
+      tail = (data.dig(:message, :content).presence || data.dig(:message, :thinking)).to_s.last(300)
+      Rails.logger.warn "[Ollama] reply cut at num_predict=#{num_predict} (model looping?): ...#{tail.inspect}"
+    end
+    data[:message].merge(done_reason: data[:done_reason])
   end
 
   private

@@ -13,11 +13,12 @@
     <div class="left-nav__section-title"><%= t("nav.recent") %></div>
     <ul class="chat-list" id="sidebar_conversations">
       <% sidebar_conversations.each do |conversation| %>
-        <li>
+        <li class="chat-list__row">
           <%= link_to conversation, class: [ "chat-list__item", ("is-active" if @conversation == conversation) ] do %>
             <%= svg_icon("chat-bubble-left-right") %>
             <span class="chat-list__title"><%= conversation.display_title %></span>
           <% end %>
+          <%= render "chat/conversations/delete_button", conversation: conversation, variant: "nav" %>
         </li>
       <% end %>
       <% if sidebar_conversations.empty? %>

@@ -1,0 +1,7 @@
+<%# Deletes one statement: its file, operations, risk report and its summary in the chat %>
+<%= button_to statement_path(statement), method: :delete,
+      class: local_assigns.fetch(:css, "btn btn--ghost btn--icon btn--sm btn--danger"),
+      title: t("statements.delete"), aria: { label: "#{t("statements.delete")}: #{statement.filename}" },
+      form: { class: "button_to_inline", data: { turbo_confirm: t("statements.delete_confirm", name: statement.filename.truncate(60)) } } do %>
+  <%= svg_icon("trash") %><% if local_assigns[:label] %> <span><%= t("app.delete") %></span><% end %>
+<% end %>

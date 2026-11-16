@@ -63,14 +63,14 @@ module Agent
         result = KEY_GROUPS.to_h do |group|
           [ group, shown(statement.operations.where(category_group: group).reorder(Arel.sql("ABS(amount) DESC")).limit(8).map(&:to_tool_hash)) ]
         end
-        risky = Statements::BankCodes.categories.select { |c| Statements::BankCodes.risky?(c) }
+        risky = Analysis::BankCodes.categories.select { |c| Analysis::BankCodes.risky?(c) }
         result["risky_categories"] = shown(statement.operations.where(category: risky).where.not(category_group: KEY_GROUPS).limit(10).map(&:to_tool_hash))
         result["loan_disbursements"] = shown(statement.operations.where(category: "loan_disbursement").limit(5).map(&:to_tool_hash))
         result.compact_blank
       end
 
       def metrics_for(statement)
-        @metrics[statement.id] ||= Statements::Metrics.new(statement)
+        @metrics[statement.id] ||= Analysis::Metrics.new(statement)
       end
 
       def statement_overview
@@ -138,7 +138,7 @@ module Agent
             scope = scope.where("booked_on >= ?", date_from) if date_from.present?
             scope = scope.where("booked_on <= ?", date_to) if date_to.present?
             if query.present?
-              like = "%#{Operation.sanitize_sql_like(query.to_s.downcase)}%"
+              like = "%#{Analysis::Operation.sanitize_sql_like(query.to_s.downcase)}%"
               scope = scope.where("LOWER(description) LIKE :q OR LOWER(counterparty) LIKE :q OR mcc = :code", q: like, code: query.to_s)
             end
             scope = sort == "amount" ? scope.reorder(Arel.sql("ABS(amount) DESC")) : scope.reorder(:booked_on, :position)
@@ -153,8 +153,8 @@ module Agent
             type: "object",
             properties: {
               statement_id: statement_param,
-              category: { type: "string", enum: Statements::BankCodes.categories },
-              group: { type: "string", enum: Statements::BankCodes.groups },
+              category: { type: "string", enum: Analysis::BankCodes.categories },
+              group: { type: "string", enum: Analysis::BankCodes.groups },
               direction: { type: "string", enum: %w[ in out ] },
               query: { type: "string", description: "Text in the description or counterparty, or a 4-digit MCC" },
               min_amount: { type: "number", description: "Minimum absolute amount" },
@@ -219,14 +219,14 @@ module Agent
             type: "object",
             properties: {
               risk_score: { type: "integer", description: "0 (no risk) to 100 (certain default)" },
-              recommendation: { type: "string", enum: RiskReport::RECOMMENDATIONS },
+              recommendation: { type: "string", enum: Analysis::RiskReport::RECOMMENDATIONS },
               summary: { type: "string", description: "3 to 6 sentences in #{@language} for the risk manager" },
               findings: {
                 type: "array",
                 items: {
                   type: "object",
                   properties: {
-                    severity: { type: "string", enum: RiskReport::SEVERITIES },
+                    severity: { type: "string", enum: Analysis::RiskReport::SEVERITIES },
                     title: { type: "string", description: "Short title in #{@language}" },
                     description: { type: "string", description: "What was found and why it matters, with amounts, in #{@language}" },
                     evidence: { type: "array", items: { type: "integer" },
@@ -248,19 +248,19 @@ module Agent
       def build_report(score, recommendation, summary, findings, strengths, income, debt)
         score = Integer(score, exception: false) || raise(ArgumentError, "risk_score must be an integer 0-100")
         raise ArgumentError, "risk_score must be between 0 and 100" unless score.between?(0, 100)
-        raise ArgumentError, "recommendation must be one of #{RiskReport::RECOMMENDATIONS.join(', ')}" unless RiskReport::RECOMMENDATIONS.include?(recommendation)
+        raise ArgumentError, "recommendation must be one of #{Analysis::RiskReport::RECOMMENDATIONS.join(', ')}" unless Analysis::RiskReport::RECOMMENDATIONS.include?(recommendation)
         raise ArgumentError, "summary is empty" if summary.blank?
 
         findings = Array(findings).map do |f|
           f = f.to_h.stringify_keys
           raise ArgumentError, "each finding needs title and description" if f["title"].blank? || f["description"].blank?
 
-          { "severity" => RiskReport::SEVERITIES.include?(f["severity"]) ? f["severity"] : "medium",
+          { "severity" => Analysis::RiskReport::SEVERITIES.include?(f["severity"]) ? f["severity"] : "medium",
             "title" => f["title"].to_s.squish, "description" => f["description"].to_s.strip,
             "evidence" => Array(f["evidence"]).filter_map { |id| Integer(id, exception: false) }.select { |id| @seen_ids.include?(id) }.first(5) }
         end
 
-        { risk_score: score, risk_level: RiskReport.level_for(score), recommendation: recommendation,
+        { risk_score: score, risk_level: Analysis::RiskReport.level_for(score), recommendation: recommendation,
           summary: summary.strip, findings: findings, strengths: Array(strengths).map(&:to_s).compact_blank,
           estimated_monthly_income: income, estimated_monthly_debt_payments: debt }
       end

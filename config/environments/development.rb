@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require_relative "../../lib/local_network_only"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -69,6 +70,16 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Testing from other devices on the local Wi-Fi (BIND=0.0.0.0 bin/dev):
+  # 1. only this computer and the Wi-Fi subnet may connect at all (403 for everyone else);
+  config.middleware.insert_before 0, LocalNetworkOnly
+  # 2. only these host names are answered (blocks DNS rebinding through a LAN browser);
+  config.hosts = [ "localhost", ".localhost", "127.0.0.1", "[::1]", *LocalNetworkOnly.wifi_addresses ]
+  # 3. Action Cable (live chat / statement updates) accepts pages opened from those addresses.
+  config.action_cable.allowed_request_origins = [
+    %r{\Ahttps?://(localhost|127\.0\.0\.1|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})(:\d+)?\z}
+  ]
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true

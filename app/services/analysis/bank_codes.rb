@@ -1,4 +1,4 @@
-module Statements
+module Analysis
   # Reference data from config/bank_codes.yml (MCC, ISO 8583 processing codes, stage I groups)
   module BankCodes
     module_function
@@ -37,6 +37,11 @@ module Statements
 
     def processing_code(code)
       data["processing_codes"][code.to_s.first(2)] if code.present?
+    end
+
+    # "GE41BG0000000553472857" -> "საქართველოს ბანკი" (positions 5-6 are the bank code)
+    def bank_for_iban(iban, locale = I18n.locale)
+      data.dig("iban_banks", iban.to_s[4, 2], locale.to_s)
     end
 
     def indicators

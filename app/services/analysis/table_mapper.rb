@@ -1,4 +1,4 @@
-module Statements
+module Analysis
   # Finds the header row and the meaning of each column in a statement table, then turns the rows
   # into operation hashes. Header keywords cover Georgian, English and Russian bank exports;
   # when they don't match, the LLM is asked to map the columns from a sample.
@@ -12,9 +12,9 @@ module Statements
                          "назначение", "описание", "детали", "particulars", "memo", "reference", "კომენტარი" ],
       "counterparty" => [ "მიმღები", "გამგზავნი", "კონტრაგენტ", "პარტნიორ", "beneficiary", "counterparty", "payee",
                           "payer", "partner", "merchant", "контрагент", "получатель", "отправитель", "recipient", "sender" ],
-      "debit" => [ "დებეტი", "გასავალი", "გადახდილი", "ხარჯი", "debit", "withdrawal", "paid out", "outflow", "out",
+      "debit" => [ "დებეტი", "გასავალი", "გასული", "გასული თანხა", "გადახდილი", "ხარჯი", "debit", "withdrawal", "paid out", "outflow", "out",
                    "дебет", "расход", "списание" ],
-      "credit" => [ "კრედიტი", "შემოსავალი", "ჩარიცხული", "credit", "deposit", "paid in", "inflow", "in",
+      "credit" => [ "კრედიტი", "შემოსავალი", "შემოსული", "შემოსული თანხა", "ჩარიცხული", "credit", "deposit", "paid in", "inflow", "in",
                     "кредит", "приход", "поступление", "зачисление" ],
       "amount" => [ "თანხა", "amount", "сумма", "sum", "value" ],
       "balance" => [ "ნაშთი", "ბალანსი", "balance", "остаток", "баланс", "running balance" ],
@@ -152,29 +152,9 @@ module Statements
       outgoing ? -amount.abs : amount.abs
     end
 
-    HOLDER_LABEL = /(?:მფლობელი|კლიენტი|ანგარიშის\s+მფლობელი|account\s+holder|holder|customer|client|владелец|клиент)\s*[:\-]\s*/i
-    BANK_LABEL = /(?:ბანკი|bank|банк)\s*[:\-]\s*/i
-
     # Lines above the table often hold the bank, account holder, account number and currency
     def metadata_from_preamble(header_row)
-      cells = @rows.first(header_row).flatten.map { |cell| ValueParser.text(cell) }.compact_blank
-      text = cells.join(" ")
-      {
-        account_number: text[/\bGE\d{2}[A-Z]{2}\d{16}\b/],
-        currency: text[/\b(GEL|USD|EUR|GBP|RUB|TRY)\b/, 1],
-        account_holder: labelled(cells, HOLDER_LABEL),
-        bank_name: labelled(cells, BANK_LABEL)
-      }.compact
-    end
-
-    # "მფლობელი: გიორგი მაისურაძე" -> "გიორგი მაისურაძე" (stops at the next "label:")
-    def labelled(cells, label)
-      cells.each do |cell|
-        value = cell.split(label, 2)[1] or next
-        value = value.split(/\s+\S+:\s/).first.to_s.squish
-        return value.truncate(80) if value.present?
-      end
-      nil
+      StatementHeader.from_lines(@rows.first(header_row).map { |row| row.map { |cell| ValueParser.text(cell) }.join("  ") })
     end
   end
 end

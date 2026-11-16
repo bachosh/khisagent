@@ -7,6 +7,8 @@ en:
       en: "English"
     close: "Close"
     more: "More"
+    delete: "Delete"
+    actions: "Actions"
     save: "Save"
 
   nav:
@@ -120,7 +122,7 @@ en:
     empty_text: "Start a new analysis and upload a client's bank statement."
     rename: "Rename"
     delete: "Delete chat"
-    delete_confirm: "Delete this chat with its files and reports?"
+    delete_confirm: "Delete the analysis \"%{title}\"? The chat, its uploaded files (%{files}), their operations and reports will be permanently deleted. This cannot be undone."
 
   chat:
     attach: "Attach file"
@@ -147,6 +149,7 @@ en:
     welcome_title: "Hi %{name}! Which client are we analyzing?"
     welcome_lead: "Upload a bank statement — I'll classify the operations, compute the risk indicators and prepare a report."
     drop_title: "Drop a statement here or click to choose"
+    drop_tip: "For exact results upload the PDF or Excel from internet banking; photos are read approximately."
     drop_hint: "Up to 5 files, %{max} MB each"
     empty_message: "Write a question or attach a file."
     no_answer: "Couldn't prepare an answer. Try asking differently."
@@ -157,12 +160,30 @@ en:
     title: "Analysis"
     empty: "Attach a statement and its risk score and key indicators will appear here."
 
+  reconciliation:
+    ok: "Balances match"
+    mismatch: "Balances don't match"
+    unknown: "Balances not checked"
+    ok_hint: "Opening balance + all operations = closing balance: the statement was read completely and correctly."
+    mismatch_hint: "The operations don't add up to the closing balance (difference %{difference})."
+    unknown_hint: "The statement has no opening/closing balance or balance column to check against."
+    vision_notice: "The AI read this statement from a photo or scan and it couldn't be checked against balances. Verify key amounts against the original. For exact results upload the PDF or Excel export from internet banking."
+    mismatch_warning: "Warning: the operations don't add up to the statement's closing balance (difference %{difference}). Some operations may be missing or misread — check the original file."
+  extraction_methods:
+    table: "From table"
+    pdf_layout: "PDF, read directly"
+    pdf_text: "PDF, read by AI"
+    vision: "Scan, read by AI"
+
   statements:
     errors:
       columns_not_found: "Couldn't find date and amount columns. Make sure the file is a statement of operations."
       no_operations: "No operations found in the file."
       empty_file: "The file is empty."
       too_many_pages: "The PDF is too long (max %{max} pages)."
+      image_too_small: "The image is too small (%{width}×%{height}) to read. Upload the original picture or, better, the statement PDF."
+      photo_unreadable: "Couldn't read the photo. Take it straight and well lit, or upload the statement PDF from internet banking."
+      image_support_missing: "Image support needs libvips on the server (sudo apt install libvips42t64)."
       image_too_large: "The image is too large."
       unexpected: "Unexpected error while processing. Please try again."
       unsupported_files: "Unsupported file format: %{names}. Allowed: CSV, XLSX, XLS, PDF, JPG, PNG."
@@ -200,7 +221,7 @@ en:
     reanalyze_started: "Re-analysis started."
     deleted: "Statement deleted."
     delete: "Delete statement"
-    delete_confirm: "Delete this statement and its report?"
+    delete_confirm: "Delete \"%{name}\"? The file, its operations, the risk report and its summary in the chat will be permanently deleted. This cannot be undone."
     columns:
       file: "File"
       holder: "Account holder"
@@ -382,7 +403,7 @@ en:
   activerecord:
     errors:
       models:
-        statement:
+        analysis/statement:
           attributes:
             file_kind:
               unsupported: "is not supported"

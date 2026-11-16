@@ -1,25 +1,27 @@
-class RegistrationsController < ApplicationController
-  allow_unauthenticated_access
-  rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_registration_path, alert: t("auth.try_later") }
-  layout "public"
+module Auth
+  class RegistrationsController < ApplicationController
+    allow_unauthenticated_access
+    rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_registration_path, alert: t("auth.try_later") }
+    layout "public"
 
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.new(registration_params.merge(locale: I18n.locale.to_s))
-    if @user.save
-      start_new_session_for @user
-      redirect_to dashboard_path, notice: t("auth.welcome", name: @user.first_name)
-    else
-      render :new, status: :unprocessable_entity
+    def new
+      @user = User.new
     end
-  end
 
-  private
+    def create
+      @user = User.new(registration_params.merge(locale: I18n.locale.to_s))
+      if @user.save
+        start_new_session_for @user
+        redirect_to dashboard_path, notice: t("auth.welcome", name: @user.first_name)
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
 
-  def registration_params
-    params.expect(user: %i[ name company email_address password password_confirmation ])
+    private
+
+    def registration_params
+      params.expect(user: %i[ name company email_address password password_confirmation ])
+    end
   end
 end

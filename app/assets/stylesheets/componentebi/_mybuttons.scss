@@ -42,6 +42,9 @@
     --btn-hover: var(--danger-soft);
   }
 
+  &--ghost.btn--danger { --btn-color: var(--text-faint); }
+  &--ghost.btn--danger:hover { --btn-color: var(--danger); }
+
   &--ghost {
     --btn-bg: transparent;
     --btn-border: transparent;

@@ -30,6 +30,7 @@
               <th><%= t("conversations.columns.files") %></th>
               <th><%= t("conversations.columns.risk") %></th>
               <th class="text-right"><%= t("conversations.columns.updated") %></th>
+              <th><span class="sr-only"><%= t("app.actions") %></span></th>
             </tr>
           </thead>
           <tbody>
@@ -52,6 +53,7 @@
                   <% end %>
                 </td>
                 <td class="text-right muted nowrap"><%= l(conversation.last_activity_at, format: :short) %></td>
+                <td class="text-right"><%= render "chat/conversations/delete_button", conversation: conversation %></td>
               </tr>
             <% end %>
           </tbody>

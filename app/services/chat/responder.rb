@@ -5,11 +5,11 @@ module Chat
     MAX_ITERATIONS = 10
     HISTORY = 16
 
-    def initialize(reply, llm_client: LLM.agent_client)
+    def initialize(reply, llm_client: LLM.agent_client(think: false, temperature: 0.4))
       @reply = reply
       @conversation = reply.conversation
       @llm_client = llm_client
-      @language = Statements::RiskAgent::LANGUAGES.fetch(I18n.locale.to_s, "English")
+      @language = Analysis::RiskAgent::LANGUAGES.fetch(I18n.locale.to_s, "English")
     end
 
     def call
@@ -27,7 +27,8 @@ module Chat
 
       memory = runner.run(question.content, memory: memory, max_iterations: MAX_ITERATIONS)
       answer = memory.final_output
-      answer.is_a?(String) && answer.present? ? answer : I18n.t("chat.no_answer")
+      answer = answer.to_s.sub(/\s*\bterminate\s*\z/i, "").strip # gemma sometimes writes the tool name as text
+      answer.presence || I18n.t("chat.no_answer")
     end
 
     private

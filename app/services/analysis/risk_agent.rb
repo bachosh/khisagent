@@ -1,4 +1,4 @@
-module Statements
+module Analysis
   # The agent that writes the credit risk report for one statement.
   # Method and caveats follow the risk notes behind config/bank_codes.yml.
   class RiskAgent
@@ -7,7 +7,7 @@ module Statements
 
     attr_reader :report_attributes
 
-    def initialize(statement, llm_client: LLM.agent_client(temperature: 0.3), locale: I18n.locale, on_action: nil)
+    def initialize(statement, llm_client: LLM.agent_client(think: false, temperature: 0.3), locale: I18n.locale, on_action: nil)
       @statement = statement
       @llm_client = llm_client
       @language = LANGUAGES.fetch(locale.to_s, "English")
@@ -21,7 +21,7 @@ module Statements
       )
       runner = Agent::Runner.new(
         goals: goals, agent_language: Agent::Languages::FunctionCalling.new, action_registry: registry,
-        llm_client: @llm_client, environment: Agent::ProgressEnvironment.new(on_action: @on_action || ->(_) {})
+        llm_client: @llm_client, environment: Agent::ProgressEnvironment.new(on_action: @on_action || ->(_) { })
       )
       runner.run("Assess the credit risk of the holder of statement #{@statement.id} (#{@statement.filename}) " \
                  "and submit the report in #{@language}.", max_iterations: MAX_ITERATIONS)
@@ -68,6 +68,15 @@ module Statements
 
     private
 
+    def data_check
+      case @statement.reconciliation
+      when "ok" then "opening balance + all operations = closing balance (the statement was read completely)"
+      when "mismatch" then "WARNING: operations do not add up to the closing balance (difference " \
+                           "#{@statement.reconciliation_difference}); some rows may be missing or misread. Mention this in the report."
+      else "balances could not be checked"
+      end
+    end
+
     def facts
       {
         "file" => @statement.filename,
@@ -76,6 +85,7 @@ module Statements
         "period" => [ @statement.period_start, @statement.period_end ].compact.join(" to "),
         "operations" => @statement.operations_count,
         "currency" => @statement.display_currency,
+        "Data check" => data_check,
         "MCC codes present" => @statement.operations.where.not(mcc: nil).exists? ? "yes" : "no (categories come from descriptions)"
       }.compact_blank.map { |k, v| "#{k}: #{v}" }.join("; ")
     end

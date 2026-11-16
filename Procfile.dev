@@ -1,2 +1,2 @@
-web: bin/rails server -p 3000
+web: bin/rails server -p 3000 -b ${BIND:-127.0.0.1}
 css: bin/rails dartsass:watch

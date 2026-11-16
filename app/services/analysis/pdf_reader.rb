@@ -1,10 +1,11 @@
 require "open3"
 
-module Statements
+module Analysis
   # Text PDFs -> one string per page (pdftotext -layout keeps the table columns aligned).
   # Scanned PDFs (little or no text) -> PNG page images for the vision model.
   class PdfReader
-    MAX_PAGES = 40
+    MAX_TEXT_PAGES = 300 # text PDFs are read directly (PdfLayoutParser), so long statements are fine
+    MAX_SCAN_PAGES = 40  # every scanned page is one vision call to the LLM
     MIN_CHARS_PER_PAGE = 80 # below this, the page is treated as a scan
     RENDER_DPI = 150
 
@@ -21,7 +22,7 @@ module Statements
 
     def text_pages
       @text_pages ||= begin
-        out, err, status = Open3.capture3("pdftotext", "-layout", "-enc", "UTF-8", "-l", MAX_PAGES.to_s, @path.to_s, "-")
+        out, err, status = Open3.capture3("pdftotext", "-layout", "-enc", "UTF-8", "-l", MAX_TEXT_PAGES.to_s, @path.to_s, "-")
         raise ImportError, "PDF: #{err.presence || 'unreadable file'}" unless status.success?
 
         out.split("\f").map(&:rstrip).reject(&:blank?)
@@ -36,7 +37,7 @@ module Statements
     # Yields the PNG bytes of each page
     def each_page_image
       Dir.mktmpdir("statement-pages") do |dir|
-        _out, err, status = Open3.capture3("pdftoppm", "-png", "-r", RENDER_DPI.to_s, "-l", MAX_PAGES.to_s,
+        _out, err, status = Open3.capture3("pdftoppm", "-png", "-r", RENDER_DPI.to_s, "-l", MAX_SCAN_PAGES.to_s,
                                            @path.to_s, File.join(dir, "page"))
         raise ImportError, "PDF: #{err.presence || 'cannot render pages'}" unless status.success?
 

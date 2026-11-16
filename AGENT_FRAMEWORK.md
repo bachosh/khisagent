@@ -1,5 +1,9 @@
 # AI Agent Framework (local Ollama)
 
+> Copied from khisfari. KhisAgent uses the core (Runner, Memory, FunctionCalling, ToolRegistry,
+> SystemTools) plus its own `Agent::Tools::StatementTools` and `Agent::ProgressEnvironment`; the
+> examples, FileTools and AccessLogTools mentioned below live only in khisfari. See CLAUDE.md.
+
 This document describes the AI agent framework in `app/services/agent/`. It is a Ruby/Rails
 implementation of the **GAME** architecture (Goals, Actions, Memory, Environment). It runs
 entirely on a **local Ollama** server: no cloud API, no API key, no per-token cost.

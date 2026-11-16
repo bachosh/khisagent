@@ -11,7 +11,8 @@
       <div class="dropzone" data-controller="dropzone" data-action="click->dropzone#open" role="button" tabindex="0">
         <div class="dropzone__icon"><%= svg_icon("arrow-up-tray") %></div>
         <strong><%= t("chat.drop_title") %></strong>
-        <span><%= t("chat.drop_hint", max: Statement::MAX_FILE_SIZE / 1.megabyte) %></span>
+        <span><%= t("chat.drop_hint", max: Analysis::Statement::MAX_FILE_SIZE / 1.megabyte) %></span>
+        <span class="faint"><%= t("chat.drop_tip") %></span>
         <div class="formats">
           <% %w[ CSV XLSX XLS PDF JPG PNG ].each do |format| %>
             <span class="badge badge--outline"><%= format %></span>
@@ -22,6 +23,6 @@
   </div>
 
   <div class="chat__footer">
-    <%= render "messages/composer", conversation: nil, suggestions: true %>
+    <%= render "chat/messages/composer", conversation: nil, suggestions: true %>
   </div>
 </main>

@@ -19,7 +19,7 @@
       <% if message.statements.any? %>
         <div class="message__files">
           <% message.statements.each do |statement| %>
-            <%= render "statements/statement", statement: statement %>
+            <%= render "analysis/statements/statement", statement: statement %>
           <% end %>
         </div>
       <% end %>

@@ -1,6 +1,6 @@
 require "test_helper"
 
-module Statements
+module Analysis
   # Codes come from config/bank_codes.yml (the risk team's notes in tmp/bankcodes)
   class CategorizerTest < ActiveSupport::TestCase
     def categorize(description, amount, **codes)

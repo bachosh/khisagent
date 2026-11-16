@@ -1,7 +1,7 @@
 <% content_for :title, @conversation.display_title %>
 <% content_for :body_class, "page-chat" %>
 <% content_for :right_nav do %>
-  <%= render "conversations/insights", conversation: @conversation %>
+  <%= render "chat/conversations/insights", conversation: @conversation %>
 <% end %>
 
 <%= turbo_stream_from @conversation %>
@@ -21,23 +21,20 @@
           <%= f.text_field :title, value: @conversation.title, class: "input", placeholder: t("conversations.rename"), maxlength: 80, aria: { label: t("conversations.rename") } %>
           <button type="submit" class="btn btn--icon" aria-label="<%= t("app.save") %>"><%= svg_icon("check") %></button>
         <% end %>
-        <%= button_to conversation_path(@conversation), method: :delete, class: "menu__item menu__item--danger",
-              form: { data: { turbo_confirm: t("conversations.delete_confirm") } } do %>
-          <%= svg_icon("trash") %> <%= t("conversations.delete") %>
-        <% end %>
       </div>
     </details>
+    <%= render "chat/conversations/delete_button", conversation: @conversation, variant: "full" %>
   </div>
 </header>
 
 <main class="main-content-chat">
   <div class="chat__scroll" data-controller="chat-scroll">
     <div class="chat__messages" id="messages" data-chat-scroll-target="list">
-      <%= render partial: "messages/message", collection: @messages, as: :message %>
+      <%= render partial: "chat/messages/message", collection: @messages, as: :message %>
     </div>
   </div>
 
   <div class="chat__footer">
-    <%= render "messages/composer", conversation: @conversation %>
+    <%= render "chat/messages/composer", conversation: @conversation %>
   </div>
 </main>

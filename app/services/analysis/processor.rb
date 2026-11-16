@@ -1,4 +1,4 @@
-module Statements
+module Analysis
   # Full pipeline for one uploaded statement: import → metrics → risk agent → report → chat message.
   # Every step updates the statement, which broadcasts its card to the open chat.
   class Processor
@@ -29,13 +29,18 @@ module Statements
         post_summary(report)
       end
     rescue ImportError, OllamaChat::Error => e
-      @statement.fail!(e.message)
+      fail_unless_deleted(e.message)
     rescue StandardError => e
       Rails.logger.error "[Processor] statement #{@statement.id}: #{e.class}: #{e.message}\n#{e.backtrace&.first(15)&.join("\n")}"
-      @statement.fail!(I18n.t("statements.errors.unexpected", locale: @locale))
+      fail_unless_deleted(I18n.t("statements.errors.unexpected", locale: @locale))
     end
 
     private
+
+    # The user may delete the statement while it is being analyzed: then there is nothing to mark
+    def fail_unless_deleted(message)
+      @statement.fail!(message) if Analysis::Statement.exists?(@statement.id)
+    end
 
     def tool_progress(tool_name)
       @statement.progress!(note: I18n.t("statements.tools.#{tool_name}", default: tool_name))
@@ -44,7 +49,7 @@ module Statements
     # The model did not submit a report within its iterations: keep the computed indicators
     def fallback_report(metrics)
       score = metrics.dig("indicator_score", "score")
-      { risk_score: score, risk_level: RiskReport.level_for(score), recommendation: "manual_review",
+      { risk_score: score, risk_level: Analysis::RiskReport.level_for(score), recommendation: "manual_review",
         summary: I18n.t("reports.fallback_summary"), findings: [], strengths: [] }
     end
 
@@ -52,7 +57,7 @@ module Statements
       text = I18n.t("reports.chat_summary", file: @statement.filename, score: report.risk_score,
                     level: I18n.t("risk_levels.#{report.risk_level}"),
                     recommendation: I18n.t("recommendations.#{report.recommendation}"), summary: report.summary)
-      @statement.conversation.messages.create!(role: "assistant", content: text, status: "done")
+      @statement.conversation.messages.create!(role: "assistant", content: text, status: "done", summarized_statement: @statement)
       @statement.conversation.touch_activity!
     end
   end

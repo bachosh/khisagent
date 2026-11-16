@@ -48,7 +48,7 @@
         <%= link_to t("dashboard.all_reports"), statements_path, class: "btn btn--sm btn--ghost" %>
       </div>
       <% if @recent_statements.any? %>
-        <%= render "statements/table", statements: @recent_statements, compact: true %>
+        <%= render "analysis/statements/table", statements: @recent_statements, compact: true %>
       <% else %>
         <div class="empty-state">
           <div class="empty-state__icon"><%= svg_icon("document-arrow-up") %></div>
@@ -65,14 +65,14 @@
       <div class="card__body">
         <% total = @level_counts.values.sum %>
         <% if total.positive? %>
-          <div class="level-split" role="img" aria-label="<%= RiskReport::LEVELS.map { |l| "#{t("risk_levels.#{l}")}: #{@level_counts[l].to_i}" }.join(", ") %>">
-            <% RiskReport::LEVELS.each do |level| %>
+          <div class="level-split" role="img" aria-label="<%= Analysis::RiskReport::LEVELS.map { |l| "#{t("risk_levels.#{l}")}: #{@level_counts[l].to_i}" }.join(", ") %>">
+            <% Analysis::RiskReport::LEVELS.each do |level| %>
               <% next unless @level_counts[level].to_i.positive? %>
               <span class="<%= level %>" style="width: <%= (@level_counts[level] * 100.0 / total).round(2) %>%" title="<%= t("risk_levels.#{level}") %>: <%= @level_counts[level] %>"></span>
             <% end %>
           </div>
           <ul class="level-legend">
-            <% RiskReport::LEVELS.each do |level| %>
+            <% Analysis::RiskReport::LEVELS.each do |level| %>
               <li>
                 <%= link_to risk_badge(level), statements_path(level: level) %>
                 <b><%= @level_counts[level].to_i %> <span class="faint">· <%= percent(@level_counts[level].to_i * 100.0 / total) %></span></b>

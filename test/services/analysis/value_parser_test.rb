@@ -1,6 +1,6 @@
 require "test_helper"
 
-module Statements
+module Analysis
   class ValueParserTest < ActiveSupport::TestCase
     test "parses Georgian, ISO and Excel dates" do
       assert_equal Date.new(2026, 1, 3), ValueParser.date("03.01.2026")

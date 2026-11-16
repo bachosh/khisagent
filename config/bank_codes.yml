@@ -104,3 +104,10 @@ warning_trends:
   - "ხელფასის ჩარიცხვიდან რამდენიმე დღეში ანგარიშზე თანხა თითქმის აღარ რჩება"
   - "ნაღდი ფულის განაღდების სიხშირის ზრდა"
   - "ახალი რეგულარული გადახდები რამდენიმე საფინანსო ორგანიზაციაში"
+
+# Georgian IBAN bank codes (GEkk BB ...), only to name the bank on the report.
+# Not from the risk notes; add banks as their statements appear.
+iban_banks:
+  BG: { ka: "საქართველოს ბანკი", en: "Bank of Georgia" }
+  TB: { ka: "თიბისი ბანკი", en: "TBC Bank" }
+  LB: { ka: "ლიბერთი ბანკი", en: "Liberty Bank" }

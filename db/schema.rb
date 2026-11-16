@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_11_180500) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_16_190000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,30 +39,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_11_180500) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "conversations", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.string "title"
-    t.datetime "last_activity_at", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id", "last_activity_at"], name: "index_conversations_on_user_id_and_last_activity_at"
-    t.index ["user_id"], name: "index_conversations_on_user_id"
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.integer "conversation_id", null: false
-    t.string "role", null: false
-    t.text "content", default: "", null: false
-    t.string "status", default: "done", null: false
-    t.string "progress"
-    t.json "tool_steps", default: [], null: false
-    t.integer "duration_ms"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
-  end
-
-  create_table "operations", force: :cascade do |t|
+  create_table "analysis_operations", force: :cascade do |t|
     t.integer "statement_id", null: false
     t.integer "position", null: false
     t.date "booked_on"
@@ -75,14 +52,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_11_180500) do
     t.string "transaction_code"
     t.string "category", default: "other", null: false
     t.string "category_group", default: "unknown", null: false
-    t.index ["statement_id", "booked_on"], name: "index_operations_on_statement_id_and_booked_on"
-    t.index ["statement_id", "category"], name: "index_operations_on_statement_id_and_category"
-    t.index ["statement_id", "category_group"], name: "index_operations_on_statement_id_and_category_group"
-    t.index ["statement_id", "position"], name: "index_operations_on_statement_id_and_position"
-    t.index ["statement_id"], name: "index_operations_on_statement_id"
+    t.index ["statement_id", "booked_on"], name: "index_analysis_operations_on_statement_id_and_booked_on"
+    t.index ["statement_id", "category"], name: "index_analysis_operations_on_statement_id_and_category"
+    t.index ["statement_id", "category_group"], name: "index_analysis_operations_on_statement_id_and_category_group"
+    t.index ["statement_id", "position"], name: "index_analysis_operations_on_statement_id_and_position"
+    t.index ["statement_id"], name: "index_analysis_operations_on_statement_id"
   end
 
-  create_table "risk_reports", force: :cascade do |t|
+  create_table "analysis_risk_reports", force: :cascade do |t|
     t.integer "statement_id", null: false
     t.integer "risk_score", null: false
     t.string "risk_level", null: false
@@ -98,19 +75,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_11_180500) do
     t.integer "duration_ms"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["statement_id"], name: "index_risk_reports_on_statement_id", unique: true
+    t.index ["statement_id"], name: "index_analysis_risk_reports_on_statement_id", unique: true
   end
 
-  create_table "sessions", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.string "ip_address"
-    t.string "user_agent"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_sessions_on_user_id"
-  end
-
-  create_table "statements", force: :cascade do |t|
+  create_table "analysis_statements", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "conversation_id", null: false
     t.integer "message_id"
@@ -132,9 +100,45 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_11_180500) do
     t.integer "operations_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["conversation_id"], name: "index_statements_on_conversation_id"
-    t.index ["message_id"], name: "index_statements_on_message_id"
-    t.index ["user_id"], name: "index_statements_on_user_id"
+    t.string "reconciliation"
+    t.decimal "reconciliation_difference", precision: 15, scale: 2
+    t.index ["conversation_id"], name: "index_analysis_statements_on_conversation_id"
+    t.index ["message_id"], name: "index_analysis_statements_on_message_id"
+    t.index ["user_id"], name: "index_analysis_statements_on_user_id"
+  end
+
+  create_table "chat_conversations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "title"
+    t.datetime "last_activity_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "last_activity_at"], name: "index_chat_conversations_on_user_id_and_last_activity_at"
+    t.index ["user_id"], name: "index_chat_conversations_on_user_id"
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.integer "conversation_id", null: false
+    t.string "role", null: false
+    t.text "content", default: "", null: false
+    t.string "status", default: "done", null: false
+    t.string "progress"
+    t.json "tool_steps", default: [], null: false
+    t.integer "duration_ms"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "summarized_statement_id"
+    t.index ["conversation_id"], name: "index_chat_messages_on_conversation_id"
+    t.index ["summarized_statement_id"], name: "index_chat_messages_on_summarized_statement_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -150,12 +154,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_11_180500) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "conversations", "users"
-  add_foreign_key "messages", "conversations"
-  add_foreign_key "operations", "statements"
-  add_foreign_key "risk_reports", "statements"
+  add_foreign_key "analysis_operations", "analysis_statements", column: "statement_id"
+  add_foreign_key "analysis_risk_reports", "analysis_statements", column: "statement_id"
+  add_foreign_key "analysis_statements", "chat_conversations", column: "conversation_id"
+  add_foreign_key "analysis_statements", "chat_messages", column: "message_id"
+  add_foreign_key "analysis_statements", "users"
+  add_foreign_key "chat_conversations", "users"
+  add_foreign_key "chat_messages", "analysis_statements", column: "summarized_statement_id"
+  add_foreign_key "chat_messages", "chat_conversations", column: "conversation_id"
   add_foreign_key "sessions", "users"
-  add_foreign_key "statements", "conversations"
-  add_foreign_key "statements", "messages"
-  add_foreign_key "statements", "users"
 end

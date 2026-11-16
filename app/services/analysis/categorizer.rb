@@ -1,4 +1,4 @@
-module Statements
+module Analysis
   # Stage I of the analysis (see config/bank_codes.yml): one category per operation.
   #
   # Order of evidence:

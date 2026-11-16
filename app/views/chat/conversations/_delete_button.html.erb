@@ -1,0 +1,11 @@
+<%# Deletes the whole analysis: chat, messages, uploaded files, operations and reports.
+    variant: "icon" (lists), "nav" (sidebar), "full" (chat header) %>
+<% variant = local_assigns.fetch(:variant, "icon") %>
+<% confirm = t("conversations.delete_confirm", title: conversation.display_title.truncate(60), files: conversation.statements.size) %>
+<%= button_to conversation_path(conversation), method: :delete,
+      class: { "icon" => "btn btn--ghost btn--icon btn--sm btn--danger", "nav" => "chat-list__delete",
+               "full" => "btn btn--sm btn--danger" }.fetch(variant),
+      title: t("conversations.delete"), aria: { label: "#{t("conversations.delete")}: #{conversation.display_title}" },
+      form: { class: "button_to_inline", data: { turbo_confirm: confirm } } do %>
+  <%= svg_icon("trash") %><% if variant == "full" %> <span><%= t("app.delete") %></span><% end %>
+<% end %>

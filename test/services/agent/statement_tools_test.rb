@@ -8,7 +8,7 @@ module Agent
         path = file_fixture("sample_statement.csv")
         @statement = user.statements.create!(conversation: user.conversations.create!, filename: "s.csv", file_kind: "csv",
                                              file: { io: path.open, filename: "s.csv" })
-        Statements::Importer.new(@statement).call
+        Analysis::Importer.new(@statement).call
         @report = nil
         @registry = StatementTools.action_registry([ @statement ], mode: :report, report_for: @statement,
                                                    on_report: ->(attrs) { @report = attrs })
